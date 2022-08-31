@@ -1,2 +1,2 @@
 install:
-	npm ci frontend
+	cd frontend && npm ci
