@@ -1,0 +1,23 @@
+{
+  "name": "frontend-project-12",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zubkov99/frontend-project-12.git"
+  },
+  "author": "Zubkov99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zubkov99/frontend-project-12/issues"
+  },
+  "homepage": "https://github.com/Zubkov99/frontend-project-12#readme",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.6"
+  }
+}
