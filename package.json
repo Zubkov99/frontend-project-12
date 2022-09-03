@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Zubkov99/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6"
+    "@hexlet/chat-server": "^1.1.6",
+    "formik": "^2.2.9"
   }
 }
