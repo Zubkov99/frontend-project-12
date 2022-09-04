@@ -1,7 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Form, Col, InputGroup, Button } from "react-bootstrap";
+import {ThemeProvider} from "react-bootstrap";
 
+const checkDisabledButton = (data) => {
+   const errors = Object.keys(data.errors).length === 0 ? false : true;
+   const values = Object.values(data.values).includes('');
+   return errors && values;
+}
 
 const LoginPage = () => {
     const formik = useFormik({
@@ -12,7 +19,7 @@ const LoginPage = () => {
         validationSchema: Yup.object({
             login: Yup.string()
                 .max(15, 'Must be 15 characters or less')
-                .min(10, 'Must be 5 characters or more')
+                .min(5, 'Must be 5 characters or more')
                 .required('Login is required'),
             password: Yup.string()
                 .max(20, 'Must be 20 characters or less')
@@ -25,39 +32,38 @@ const LoginPage = () => {
         },
     });
     return (
-        <div className='loginContainer'>
-            <h1>Log in</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Login</label>
-                    <input type="login"
-                           className="form-control"
-                           id="login"
-                           {...formik.getFieldProps('login')}
-                    />
-                    {formik.touched.login && formik.errors.login ? (
-                        <div style={{
-                            color:"red"
-                        }}>{formik.errors.login}</div>
-                    ) : null}
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input type="password"
-                           className="form-control"
-                           id="password"
-                           {...formik.getFieldProps('password')}
-                    />
-                    {formik.touched.password && formik.errors.password ? (
-                        <div style={{
-                            color:"red"
-                        }}>{formik.errors.password}</div>
-                    ) : null}
-                </div>
-                <button type="submit" className="btn btn-primary">Log in</button>
-            </form>
-        </div>
+            <div className='loginContainer w-50 mx-auto'>
+                <h1>Log in</h1>
+                <Form noValidate onSubmit={formik.handleSubmit}>
+                    <Form.Group className="mb-3" controlId="login">
+                        <Form.Label>Your login</Form.Label>
+                        <Form.Control type="login" placeholder="Enter login"
+                                      isValid={formik.touched.login && !formik.errors.login}
+                                      isInvalid={!!formik.errors.login}
+                                      {...formik.getFieldProps('login')}/>
+                        <Form.Control.Feedback type="invalid">
+                            {formik.errors.login}
+                        </Form.Control.Feedback>
+                    </Form.Group>
 
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Your password</Form.Label>
+                        <Form.Control type="password" placeholder="Password"
+                                      isValid={formik.touched.password && !formik.errors.password}
+                                      isInvalid={!!formik.errors.password}
+                                      {...formik.getFieldProps('password')}>
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                            {formik.errors.password}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Button variant="primary" type="submit"
+                            disabled={checkDisabledButton(formik)}
+                    >
+                        Log in
+                    </Button>
+                </Form>
+            </div>
     );
 };
 
