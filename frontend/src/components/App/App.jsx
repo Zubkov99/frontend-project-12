@@ -1,7 +1,6 @@
 import './App.css';
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Layout from "../Layout/Layout";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 

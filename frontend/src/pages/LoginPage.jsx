@@ -1,14 +1,21 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Col, InputGroup, Button } from "react-bootstrap";
-import {ThemeProvider} from "react-bootstrap";
+import axios from "axios";
+import { Form, Button } from "react-bootstrap";
 
 const checkDisabledButton = (data) => {
-   const errors = Object.keys(data.errors).length === 0 ? false : true;
+   const errors = Object.keys(data.errors).length !== 0;
    const values = Object.values(data.values).includes('');
    return errors && values;
 }
+
+const loginUser = () => {
+    axios.post('/api/v1/login', { username: 'admin1', password: 'admin1' }).then((response) => {
+        console.log(response.data); // => { token: ..., username: 'admin' }
+    });
+}
+
 
 const LoginPage = () => {
     const formik = useFormik({
@@ -19,18 +26,19 @@ const LoginPage = () => {
         validationSchema: Yup.object({
             login: Yup.string()
                 .max(15, 'Must be 15 characters or less')
-                .min(5, 'Must be 5 characters or more')
+                // .min(5, 'Must be 5 characters or more')
                 .required('Login is required'),
             password: Yup.string()
                 .max(20, 'Must be 20 characters or less')
-                .min(8, 'Must be 8 characters or more')
-                .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Must contain one number and one lowercase')
+                // .min(8, 'Must be 8 characters or more')
+                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Must contain one number and one lowercase')
                 .required('Password is required'),
         }),
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
         },
     });
+    loginUser()
     return (
             <div className='loginContainer w-50 mx-auto'>
                 <h1>Log in</h1>
