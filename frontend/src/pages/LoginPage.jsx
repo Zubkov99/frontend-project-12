@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
+import AppContext from "../helpers/сontext";
+import {useNavigate} from "react-router-dom";
 
 const checkDisabledButton = (data) => {
    const errors = Object.keys(data.errors).length !== 0;
@@ -10,14 +12,21 @@ const checkDisabledButton = (data) => {
    return errors && values;
 }
 
-const loginUser = () => {
-    axios.post('/api/v1/login', { username: 'admin1', password: 'admin1' }).then((response) => {
-        console.log(response.data); // => { token: ..., username: 'admin' }
-    });
-}
-
+const logIn = async (username, password, setKey, redirect, setStatus) => {
+    try {
+        const response = await axios.post('/api/v1/login', { username, password });
+        setKey(response.data.token);
+        redirect('/');
+        setStatus(true)
+    } catch (e) {
+        setStatus(false)
+    }
+};
 
 const LoginPage = () => {
+    const { setKey } = useContext(AppContext);
+    const [status, setStatus] = useState(true);
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             login:'',
@@ -34,20 +43,21 @@ const LoginPage = () => {
                 // .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Must contain one number and one lowercase')
                 .required('Password is required'),
         }),
-        onSubmit: values => {
+        onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
+            const {login, password} = values;
+            await logIn(login, password, setKey, navigate, setStatus);
         },
     });
-    loginUser()
     return (
             <div className='loginContainer w-50 mx-auto'>
                 <h1>Log in</h1>
-                <Form noValidate onSubmit={formik.handleSubmit}>
+                    <Form noValidate onSubmit={formik.handleSubmit}>
                     <Form.Group className="mb-3" controlId="login">
                         <Form.Label>Your login</Form.Label>
                         <Form.Control type="login" placeholder="Enter login"
                                       isValid={formik.touched.login && !formik.errors.login}
-                                      isInvalid={!!formik.errors.login}
+                                      isInvalid={!!formik.errors.login || !status}
                                       {...formik.getFieldProps('login')}/>
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.login}
@@ -58,13 +68,18 @@ const LoginPage = () => {
                         <Form.Label>Your password</Form.Label>
                         <Form.Control type="password" placeholder="Password"
                                       isValid={formik.touched.password && !formik.errors.password}
-                                      isInvalid={!!formik.errors.password}
+                                      isInvalid={!!formik.errors.password || !status}
                                       {...formik.getFieldProps('password')}>
                         </Form.Control>
                         <Form.Control.Feedback type="invalid">
                             {formik.errors.password}
                         </Form.Control.Feedback>
                     </Form.Group>
+                        {!status &&
+                            <Alert variant='danger' >
+                                You have entered an incorrect username or password
+                            </Alert>
+                        }
                     <Button variant="primary" type="submit"
                             disabled={checkDisabledButton(formik)}
                     >
