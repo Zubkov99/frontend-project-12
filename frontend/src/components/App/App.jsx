@@ -6,7 +6,8 @@ import LoginPage from "../../pages/LoginPage";
 import NotFoundPage from "../../pages/NotFoundPage";
 import AppContext from "../../helpers/сontext";
 import {useLocalStorage} from "../../helpers/useLocalStorage";
-
+import { useDispatch, useSelector } from "react-redux";
+import {fetchChannels} from "../../slices/channels";
 
 const App = () => {
     const [key, setKey] = useLocalStorage(null, 'token');

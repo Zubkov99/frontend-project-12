@@ -23,6 +23,10 @@
   "homepage": "https://github.com/Zubkov99/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6",
-    "formik": "^2.2.9"
+    "@reduxjs/toolkit": "^1.8.5",
+    "formik": "^2.2.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2"
   }
 }

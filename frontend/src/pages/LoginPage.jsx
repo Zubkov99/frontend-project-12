@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Card} from "react-bootstrap";
 import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
 
@@ -51,41 +51,47 @@ const LoginPage = () => {
     });
     return (
             <div className='loginContainer w-50 mx-auto'>
-                <h1>Log in</h1>
-                    <Form noValidate onSubmit={formik.handleSubmit}>
-                    <Form.Group className="mb-3" controlId="login">
-                        <Form.Label>Your login</Form.Label>
-                        <Form.Control type="login" placeholder="Enter login"
-                                      isValid={formik.touched.login && !formik.errors.login}
-                                      isInvalid={!!formik.errors.login || !status}
-                                      {...formik.getFieldProps('login')}/>
-                        <Form.Control.Feedback type="invalid">
-                            {formik.errors.login}
-                        </Form.Control.Feedback>
-                    </Form.Group>
+                {/*<h1>Log in to your account</h1>*/}
+                <Card>
+                    <Card.Header>Log in to your account</Card.Header>
+                    <Card.Body>
+                        <Form noValidate onSubmit={formik.handleSubmit}>
+                            <Form.Group className="mb-3" controlId="login">
+                                <Form.Label>Your login</Form.Label>
+                                <Form.Control type="login" placeholder="Enter login"
+                                              isValid={formik.touched.login && !formik.errors.login}
+                                              isInvalid={!!formik.errors.login || !status}
+                                              {...formik.getFieldProps('login')}/>
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.login}
+                                </Form.Control.Feedback>
+                            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Your password</Form.Label>
-                        <Form.Control type="password" placeholder="Password"
-                                      isValid={formik.touched.password && !formik.errors.password}
-                                      isInvalid={!!formik.errors.password || !status}
-                                      {...formik.getFieldProps('password')}>
-                        </Form.Control>
-                        <Form.Control.Feedback type="invalid">
-                            {formik.errors.password}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                        {!status &&
-                            <Alert variant='danger' >
-                                You have entered an incorrect username or password
-                            </Alert>
-                        }
-                    <Button variant="primary" type="submit"
-                            disabled={checkDisabledButton(formik)}
-                    >
-                        Log in
-                    </Button>
-                </Form>
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Your password</Form.Label>
+                                <Form.Control type="password" placeholder="Password"
+                                              isValid={formik.touched.password && !formik.errors.password}
+                                              isInvalid={!!formik.errors.password || !status}
+                                              {...formik.getFieldProps('password')}>
+                                </Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    {formik.errors.password}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            {!status &&
+                                <Alert variant='danger' >
+                                    You have entered an incorrect username or password
+                                </Alert>
+                            }
+                            <Button variant="primary" type="submit"
+                                    disabled={checkDisabledButton(formik)}
+                            >
+                                Log in
+                            </Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+
             </div>
     );
 };
