@@ -1,14 +1,18 @@
 import { Outlet } from "react-router-dom";
 import React from "react";
+import {Navbar, Container, Nav, Button} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const Layout = () => {
     return (
          <div className='App'>
-             <h1>DRAFT: my SPA</h1>
+             <Navbar variant="light">
+                 <Container>
+                     <Navbar.Brand href="/">Zubkov_D</Navbar.Brand>
+                     <Button>Log out</Button>
+                 </Container>
+             </Navbar>
              <Outlet />
-             <footer>
-                 <p>Here well be my footer</p>
-             </footer>
          </div>
     )
 };

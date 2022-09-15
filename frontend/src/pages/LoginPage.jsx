@@ -6,6 +6,7 @@ import { Form, Button, Alert, Card} from "react-bootstrap";
 import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
 
+
 const checkDisabledButton = (data) => {
    const errors = Object.keys(data.errors).length !== 0;
    const values = Object.values(data.values).includes('');
@@ -16,13 +17,12 @@ const logIn = async (username, password, setKey, redirect, setStatus) => {
     try {
         const response = await axios.post('/api/v1/login', { username, password });
         setKey(response.data.token);
-        redirect('/');
+        redirect('/', {replace: true});
         setStatus(true)
     } catch (e) {
         setStatus(false)
     }
 };
-
 const LoginPage = () => {
     const { setKey } = useContext(AppContext);
     const [status, setStatus] = useState(true);
@@ -51,7 +51,6 @@ const LoginPage = () => {
     });
     return (
             <div className='loginContainer w-50 mx-auto'>
-                {/*<h1>Log in to your account</h1>*/}
                 <Card>
                     <Card.Header>Log in to your account</Card.Header>
                     <Card.Body>

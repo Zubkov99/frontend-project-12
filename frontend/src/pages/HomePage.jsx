@@ -1,44 +1,57 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChannels } from "../slices/channels";
-import axios from "axios";
+import { Row, Col, Container, Button, Card, ListGroup} from "react-bootstrap";
 
-const HomePage = () => {
-    // const { key } = useContext(AppContext);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+const ChatWindow = () => {
+    return (
+        <Card style={{ width: '80%', marginLeft: "auto", marginRight: "auto", height:'85vh', marginTop: '2vh'}}>
+            <Card.Body>
+                <Container>
+                    <Row>
+                        <Col xs={4}>
+                            <Channels />
+                        </Col>
+                        <Col>Здесь будет чат</Col>
+                    </Row>
+                </Container>
+            </Card.Body>
+        </Card>
+    )
+};
 
-
-    // const dispatch = useDispatch();
-
-
-  // useEffect(() => {
-  //     return async () => {
-  //         const response = await axios.get('/api/v1/data', {
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 'Authorization': key,
-  //             }
-  //         });
-  //         console.log(response.data)
-  //     };
-  // }, [])
-
-    // useEffect(() => {
-    //     if(!key) {
-    //         navigate('/login');
-    //         return;
-    //     }
-    //     dispatch(fetchChannels(key))
-    // }, [])
-
+const Channels = () => {
+    const { channels } = useSelector(state => state.content);
     return (
         <>
-            <h2>Welcome to the homepage!</h2>
-            <p>You can do this, I believe in you.</p>
+            <div style={{marginBottom: '5vh'}}>
+                <b>Channels</b>
+            </div>
+            <ListGroup variant="flush">
+                {channels.map(({ name, id }) => {
+                    return <ListGroup.Item action key={id}>{name}</ListGroup.Item>
+                })}
+            </ListGroup>
         </>
+
+    )
+};
+
+const HomePage = () => {
+    const { key:token } = useContext(AppContext);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect( () => {
+      if(!token) {
+          navigate('/login');
+          return;
+      }
+      dispatch(fetchChannels(token));
+  }, [])
+    return (
+        <ChatWindow />
     );
 }
 

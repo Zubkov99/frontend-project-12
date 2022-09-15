@@ -6,8 +6,7 @@ import LoginPage from "../../pages/LoginPage";
 import NotFoundPage from "../../pages/NotFoundPage";
 import AppContext from "../../helpers/сontext";
 import {useLocalStorage} from "../../helpers/useLocalStorage";
-import { useDispatch, useSelector } from "react-redux";
-import {fetchChannels} from "../../slices/channels";
+import Layout from "../Layout/Layout";
 
 const App = () => {
     const [key, setKey] = useLocalStorage(null, 'token');
@@ -17,9 +16,11 @@ const App = () => {
             setKey,
         }}>
             <Routes>
-                <Route index element={<HomePage />} />
-                <Route path="*" element={< NotFoundPage/>}></Route>
-                <Route path='/login' element={<LoginPage />}></Route>
+                <Route path='/' element={<Layout />}>
+                    <Route index element={<HomePage />} />
+                    <Route path="*" element={< NotFoundPage/>}></Route>
+                    <Route path='/login' element={<LoginPage />}></Route>
+                </Route>
             </Routes>
         </AppContext.Provider>
     );

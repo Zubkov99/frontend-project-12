@@ -6,7 +6,7 @@ export const fetchChannels = createAsyncThunk(
     async (token) => {
         const response = await axios.get('/api/v1/data', {
             headers: {
-                'Authorization': token,
+                'Authorization': `Bearer ${token}`,
             }
         });
         return response.data
@@ -14,7 +14,8 @@ export const fetchChannels = createAsyncThunk(
 )
 
 const initialState = {
-    content: [],
+    channels: [],
+    messages: [],
 };
 
 const channelsSlice = createSlice({
@@ -23,7 +24,9 @@ const channelsSlice = createSlice({
     extraReducers: (builder) => {
         builder.
             addCase(fetchChannels.fulfilled, (state, action) => {
-                state.content = action.payload;
+                const { channels, messages }= action.payload;
+                state.channels = channels;
+                state.messages = messages;
         })
     }
 });
