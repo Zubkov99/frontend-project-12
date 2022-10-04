@@ -5,6 +5,7 @@ import axios from "axios";
 import { Form, Button, Alert, Card} from "react-bootstrap";
 import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
+import routes from "../helpers/routes";
 
 
 const checkDisabledButton = (data) => {
@@ -15,14 +16,16 @@ const checkDisabledButton = (data) => {
 
 const logIn = async (username, password, setKey, redirect, setStatus) => {
     try {
-        const response = await axios.post('/api/v1/login', { username, password });
-        setKey(response.data.token);
+        const response = await axios.post(routes.loginPath(), { username, password });
+        // setKey(response.data.token);
+        setKey(response.data);
         redirect('/', {replace: true});
         setStatus(true)
     } catch (e) {
         setStatus(false)
     }
 };
+
 const LoginPage = () => {
     const { setKey } = useContext(AppContext);
     const [status, setStatus] = useState(true);
