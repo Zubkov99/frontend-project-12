@@ -93,7 +93,6 @@ const LoginPage = () => {
                         </Form>
                     </Card.Body>
                 </Card>
-
             </div>
     );
 };
