@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Form, InputGroup, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 
 import SocketContext from "../../helpers/SocketContext";
 import { getChannels } from "../../slices/channels";
+import {setActiveChannel} from "../../slices/channels";
 
+const errorStatus = {
+    notUniqValue: 'The channel name must be a unique value',
+    emptyField: 'the channel name should not be empty',
+    networkError: 'Network error',
+}
 
 const ModalChannelWindow = (props) => {
     const {show, handleClose} = props;
@@ -16,14 +22,6 @@ const ModalChannelWindow = (props) => {
 
     const { channels }  = useSelector(state => state.content);
 
-    const errorStatus = {
-        notUniqValue: 'The channel name must be a unique value',
-        emptyField: 'the channel name should not be empty'
-    }
-
-    //TODO:
-    // фильтровать каналы с помощью мидлвар редакса либо разобраться как читать стор в редьюсерах
-
     useEffect(() => {
         socket.on('newChannel', (payload) =>{
             dispatch(getChannels(payload))
@@ -32,7 +30,7 @@ const ModalChannelWindow = (props) => {
 
     const sendingСhannels = (event) => {
         event.preventDefault();
-        
+
         //TODO:
         // оценить, насколько это норм делать проверку в функции
 
@@ -46,13 +44,18 @@ const ModalChannelWindow = (props) => {
             setError(errorStatus.emptyField)
             throw new Error(errorStatus.emptyField);
         }
+
         socket.emit('newChannel', {
             name: channelName
         }, (response) => {
-            if (response.status !== 'ok') throw new Error('Network error');
+            if (response.status !== 'ok') {
+                setError(errorStatus.networkError)
+                throw new Error(errorStatus.networkError);
+            }
             setChannelName('')
         });
         setError('')
+        // dispatch(setActiveChannel())
         handleClose();
     };
 

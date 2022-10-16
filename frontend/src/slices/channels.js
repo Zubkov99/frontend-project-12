@@ -19,15 +19,16 @@ const initialState = {
     messages: [],
 };
 
+
+//TODO
+// После срабатывания getChannels нужно передавать редьюсер setActiveChannel
+
 const channelsSlice = createSlice({
     name:'channels',
     initialState,
     reducers: {
         getMessage(state, {payload}) {
             state.messages.push(payload);
-        },
-        getChannels(state, {payload}) {
-            state.channels.push(payload);
         },
         setActiveChannel(state, {payload}) {
             state.channels = state.channels.map(item => {
@@ -40,7 +41,11 @@ const channelsSlice = createSlice({
                     active: false
                 }
             });
-        }
+        },
+        getChannels(state, {payload}) {
+            state.channels.push(payload);
+            setActiveChannel(payload.id)
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchChannels.fulfilled, (state, action) => {
@@ -48,6 +53,9 @@ const channelsSlice = createSlice({
                 state.channels = channels.map(item => item.id === 1 ? {...item, active: true} : item);
                 state.messages = messages;
         })
+        // builder.addCase(getChannels, (state, action) => {
+        //     console.log(action.payload)
+        // })
     }
 });
 export const { getMessage, setActiveChannel, getChannels } = channelsSlice.actions;
