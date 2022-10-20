@@ -45,6 +45,11 @@ const channelsSlice = createSlice({
             state.messages.push(payload);
         },
         setActiveChannel(state, {payload}) {
+            const activeChannelIds = state.channels.filter(item => item.id === payload);
+            if(!activeChannelIds.length) {
+                setActiveHelper(state, 1)
+                return;
+            }
             setActiveHelper(state, payload)
         },
         getChannels(state, {payload}) {
