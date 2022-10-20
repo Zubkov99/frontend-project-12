@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
 import { fetchChannels } from "../slices/channels";
-import ChatWindow from "../components/ChatWindow/ChatWindow";
+import ChatWindow from "../components/ChatWindow";
 
 const HomePage = () => {
-
     const { key } = useContext(AppContext);
 
     const navigate = useNavigate();

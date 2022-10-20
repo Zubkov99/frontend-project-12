@@ -1,0 +1,9 @@
+.ChannelsContainer {
+    height: 60vh;
+    overflow-y: scroll;
+}
+
+.ListGroup {
+    display: flex;
+    justify-content: space-between;
+}

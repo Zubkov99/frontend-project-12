@@ -1,40 +1,26 @@
 import {useSelector} from "react-redux";
 import {Card, Col, Container, Row} from "react-bootstrap";
 import React from "react";
-import Messages from "../Messages/Messages";
-import Channels from "../Channels/Channels";
+import Messages from "../Messages";
+import Channels from "../Channels";
+import styles from './ChatWindow.module.css';
 
 const ChatWindow = () => {
     const activeChannel = useSelector(state => state.content.channels.find(({active}) => active));
     return (
-        <Card style={{ width: '80%', marginLeft: "auto", marginRight: "auto", minHeight:'80vh', height:'80vh', marginTop: '2vh'
-
-        }}>
-            <Card.Body style={{
-                paddingRight: '0',
-                paddingTop: '0'
-            }} >
+        <Card className={styles.cardMain}>
+            <Card.Body className={styles.cardBody}>
                 <Container>
                     <Row>
-                        <Col xs={4} style={{
-                            paddingTop: '5vh'
-                        }}>
+                        <Col xs={4} className={styles.ColChannels}>
                             <Channels />
                         </Col>
-                        <Col style={{
-                            paddingRight: '0',
-                        }}>
-                            <div id='test'
-                                 className='shadow-sm'
-                                 style={{
-                                     background: '#FCFCFC',
-                                     textAlign: 'left',
-                                     padding: "2vh 1vw"
-                                 }}>
+                        <Col className={styles.ColMessages}>
                                 {activeChannel &&
-                                    <h5># {activeChannel.name}</h5>
+                                    <div className={`${styles.activeChannel} shadow-sm`}>
+                                        <h5># {activeChannel.name}</h5>
+                                    </div>
                                 }
-                            </div>
                             <Messages />
                         </Col>
                     </Row>

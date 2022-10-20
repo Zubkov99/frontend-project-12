@@ -1,0 +1,13 @@
+.messagesBox {
+    padding-top: 3vh;
+    overflow-y: scroll;
+    padding-left: 1vw;
+    text-align: left;
+    height: 60vh;
+}
+
+.inputGroup {
+    position: absolute;
+    bottom: 0;
+    width: 60%;
+}

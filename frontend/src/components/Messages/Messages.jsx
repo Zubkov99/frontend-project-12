@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
-import SocketContext from "../../helpers/SocketContext";
 import {useDispatch, useSelector} from "react-redux";
 import _ from "lodash";
+import {Button, Form, InputGroup} from "react-bootstrap";
 import AppContext from "../../helpers/сontext";
 import {getMessage} from "../../slices/channels";
-import {Button, Form, InputGroup} from "react-bootstrap";
+import SocketContext from "../../helpers/SocketContext";
 import send from "../../send.png";
+import styles from './Messages.module.css'
 
 const Messages = () => {
     const socket = useContext(SocketContext);
@@ -41,13 +42,7 @@ const Messages = () => {
 
     return (
         <div id='messages'>
-            <div id='messages-box' className="chat-messages" style={{
-                paddingTop: '3vh',
-                overflowY: 'scroll',
-                paddingLeft: '1vw',
-                textAlign: 'left',
-                height: '60vh'
-            }}>
+            <div id='messages-box' className={styles.messagesBox}>
                 {messages.map((item) => {
                     return (
                         <div key={item.id}>
@@ -58,11 +53,7 @@ const Messages = () => {
                 })}
             </div>
             <Form onSubmit={submitHandler}>
-                <InputGroup className="mb-3" style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '60%',
-                }} >
+                <InputGroup className={`${styles.inputGroup} mb-3`}>
                     <Form.Control
                         aria-describedby="basic-addon2"
                         placeholder='enter a message'
