@@ -4,20 +4,13 @@ import * as Yup from 'yup';
 import axios from "axios";
 import { Form, Button, Alert, Card} from "react-bootstrap";
 import AppContext from "../helpers/сontext";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import routes from "../helpers/routes";
-
-
-const checkDisabledButton = (data) => {
-   const errors = Object.keys(data.errors).length !== 0;
-   const values = Object.values(data.values).includes('');
-   return errors && values;
-}
+import checkDisabledButton from "../helpers/checkDisabledButton";
 
 const logIn = async (username, password, setKey, redirect, setStatus) => {
     try {
         const response = await axios.post(routes.loginPath(), { username, password });
-        // setKey(response.data.token);
         setKey(response.data);
         redirect('/', {replace: true});
         setStatus(true)
@@ -81,7 +74,7 @@ const LoginPage = () => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             {!status &&
-                                <Alert variant='danger' >
+                                <Alert variant='danger' onClick={() => setStatus(true)}>
                                     You have entered an incorrect username or password
                                 </Alert>
                             }
@@ -92,6 +85,10 @@ const LoginPage = () => {
                             </Button>
                         </Form>
                     </Card.Body>
+                    <Card.Footer>
+                        Don't you have an account?&nbsp;
+                        <Link to="/signup">Create it!</Link>
+                    </Card.Footer>
                 </Card>
             </div>
     );
