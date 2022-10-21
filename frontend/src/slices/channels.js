@@ -1,20 +1,8 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import routes from "../helpers/routes";
-import _ from "lodash";
 
-const setActiveHelper = (state, data) => {
-    state.channels = state.channels.map(item => {
-        if (item.id === data) return {
-            ...item,
-            active: true
-        };
-        return {
-            ...item,
-            active: false
-        }
-    });
-}
+const setActiveHelper = (state, id) => state.activeChannelId = id;
 
 export const fetchChannels = createAsyncThunk(
     'channels/fetchChannels',
@@ -31,6 +19,7 @@ export const fetchChannels = createAsyncThunk(
 const initialState = {
     channels: [],
     messages: [],
+    activeChannelId: 1,
 };
 
 
@@ -44,31 +33,43 @@ const channelsSlice = createSlice({
         getMessage(state, {payload}) {
             state.messages.push(payload);
         },
-        setActiveChannel(state, {payload}) {
-            const activeChannelIds = state.channels.filter(item => item.id === payload);
-            if(!activeChannelIds.length) {
-                setActiveHelper(state, 1)
-                return;
-            }
-            setActiveHelper(state, payload)
-        },
         getChannels(state, {payload}) {
             state.channels.push(payload);
             setActiveHelper(state, payload.id)
         },
         deleteChannel(state, {payload}) {
             const channelId = Number(payload.id);
-            state.channels = state.channels.filter((item) => item.id !== channelId);
+            state.channels = state.channels.filter(item => item.id !== channelId);
+            state.messages = state.messages.filter(item => item.channelId !== channelId);
             setActiveHelper(state, 1)
-        }
+        },
+        setActiveChannel(state, {payload}) {
+                const activeChannelIds = state.channels.filter(item => item.id === payload);
+                if(!activeChannelIds.length) {
+                    state.activeChannelId = 1;
+                    return;
+                }
+            state.activeChannelId = payload;
+        },
+        renameLocalChannel(state, {payload}) {
+            const channelId = Number(payload.id);
+            state.channels = state.channels.map(item => {
+                if (item.id !== channelId) return item;
+                return  {
+                    ...item,
+                    name: payload.name
+                }
+            })
     },
+},
     extraReducers: (builder) => {
         builder.addCase(fetchChannels.fulfilled, (state, action) => {
                 const { channels, messages } = action.payload;
-                state.channels = channels.map(item => item.id === 1 ? {...item, active: true} : item);
+                // state.channels = channels.map(item => item.id === 1 ? {...item, active: true} : item);
+                state.channels = channels;
                 state.messages = messages;
         })
     }
 });
-export const { getMessage, setActiveChannel, getChannels, deleteChannel } = channelsSlice.actions;
+export const { getMessage, setActiveChannel, getChannels, deleteChannel, renameLocalChannel } = channelsSlice.actions;
 export default channelsSlice.reducer;

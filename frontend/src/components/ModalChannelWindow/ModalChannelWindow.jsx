@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 
 import SocketContext from "../../helpers/SocketContext";
 import { getChannels } from "../../slices/channels";
-import {setActiveChannel} from "../../slices/channels";
 
 const errorStatus = {
     notUniqValue: 'The channel name must be a unique value',
@@ -55,7 +54,6 @@ const ModalChannelWindow = (props) => {
             setChannelName('')
         });
         setError('')
-        // dispatch(setActiveChannel())
         handleClose();
     };
 
@@ -66,24 +64,27 @@ const ModalChannelWindow = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={sendingСhannels}>
-                        <Form.Control
-                            aria-describedby="basic-addon2"
-                            value={channelName}
-                            onChange={(event) => {
-                                setChannelName(event.target.value)
-                                setError('')
-                            }}
-                            isInvalid={!!statusError}
-                            isValid={!statusError && channelName}
-                        />
-                        {statusError &&
-                            <p style={{
-                                color: "#CA0A0A",
-                                marginTop: "3vh"
-                            }} >
-                                {statusError}
-                            </p>
-                        }
+                        <InputGroup
+                        >
+                            <Form.Control
+                                aria-describedby="basic-addon2"
+                                value={channelName}
+                                onChange={(event) => {
+                                    setChannelName(event.target.value)
+                                    setError('')
+                                }}
+                                isInvalid={!!statusError}
+                                isValid={!statusError && channelName}
+                            />
+                            {statusError &&
+                                <p style={{
+                                    color: "#CA0A0A",
+                                    marginTop: "3vh"
+                                }} >
+                                    {statusError}
+                                </p>
+                            }
+                        </InputGroup>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

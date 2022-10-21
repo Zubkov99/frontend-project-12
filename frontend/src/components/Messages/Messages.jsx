@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import _ from "lodash";
 import {Button, Form, InputGroup} from "react-bootstrap";
@@ -12,19 +12,25 @@ const Messages = () => {
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
 
-    const activeChannel = useSelector(state => state.content.channels.find(({active}) => active));
+    const activeChannelId = useSelector(state => state.content.activeChannelId);
     const messages = useSelector(state => {
         const uniqMessages = _.uniqBy(state.content.messages, 'id');
-        return uniqMessages.filter(item => item.channelId === activeChannel.id)
+        return uniqMessages.filter(item => item.channelId === activeChannelId)
     });
 
     const { key } = useContext(AppContext);
+    const inputEl = useRef(null);
 
     useEffect(() => {
         socket.on('newMessage', (payload) => {
             dispatch(getMessage(payload))
         })
-    },[socket])
+        inputEl.current.focus();
+    },[])
+
+    useEffect(() => {
+        inputEl.current.focus();
+    }, [activeChannelId])
 
     const [text, setText] = useState('');
 
@@ -33,7 +39,7 @@ const Messages = () => {
         socket.emit('newMessage', {
             message: text,
             username: key.username,
-            channelId: activeChannel.id,
+            channelId: activeChannelId,
         }, (response) => {
             if (response.status !== 'ok') throw new Error('Network error');
             setText('');
@@ -61,6 +67,7 @@ const Messages = () => {
                             setText(event.target.value)
                         }}
                         value={text}
+                        ref={inputEl}
                     />
                     <Button variant="outline-secondary">
                         <img src={send} height="17vh" width="17vw"/>

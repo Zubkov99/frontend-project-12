@@ -1,9 +1,11 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { ListGroup, Dropdown } from "react-bootstrap";
 import styles from './ChannelList.module.css'
 import SocketContext from "../../helpers/SocketContext";
 import { deleteChannel, setActiveChannel } from "../../slices/channels";
+import ModalWindowEdit from "../ModalWindowEdit";
+
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -23,43 +25,62 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     </a>
 ));
 
+
 const ChannelsList = (props) => {
     const { channels } = props;
     const dispatch = useDispatch();
     const socket = useContext(SocketContext);
 
-    const deleteChannelHelper = (id, removable) => {
+    const activeChannel = useSelector(state => state.content.channels.find(item => item.id === state.content.activeChannelId) || {id: null});
+
+    const deleteChannelHandler = (id, removable) => {
         if(!removable) return;
-        socket.emit('removeChannel', {id})
+        socket.emit('removeChannel',
+            {id},
+            (response) => {
+                if (response.status !== 'ok') throw new Error('Network error');
+            })
         dispatch(deleteChannel({id}))
     }
 
+    const [show, setShow] = useState(false);
+    const [currentId, setCurrentId] = useState(null);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
-        <ListGroup variant="flush"
-            className={styles.ChannelsContainer}
-        >
-            {channels.map(({ name, id, active, removable }) => {
-                return (
-                    <ListGroup.Item action
-                                    variant="dark"
-                                    active={active}
-                                    key={id}
-                                    onClick={() => {
-                                        dispatch(setActiveChannel(id))
-                                    }}
-                                    className={styles.ListGroup}>
-                        {name}
-                        <Dropdown>
-                            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"></Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item>Edit</Dropdown.Item>
-                            <Dropdown.Item onClick={() => deleteChannelHelper(id, removable)}>Remove</Dropdown.Item>
-                        </Dropdown.Menu>
-                        </Dropdown>
-                    </ListGroup.Item>
-                )
-            })}
-        </ListGroup>
+        <>
+            <ListGroup variant="flush"
+                       className={styles.ChannelsContainer}
+            >
+                {channels.map(({ name, id, removable }) => {
+                    return (
+                        <ListGroup.Item action
+                                        variant="dark"
+                                        active={activeChannel.id === id}
+                                        key={id}
+                                        onClick={() => dispatch(setActiveChannel(id)) }
+                                        className={styles.ListGroup}>
+                            {name}
+                            <Dropdown>
+                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"></Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={() => {
+                                        setCurrentId(id)
+                                        handleShow()
+                                    }}>
+                                        Edit
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={() => deleteChannelHandler(id, removable)}>Remove</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </ListGroup.Item>
+                    )
+                })}
+            </ListGroup>
+            <ModalWindowEdit show={show} handleClose={handleClose} currentId={currentId}/>
+        </>
     )
 }
 

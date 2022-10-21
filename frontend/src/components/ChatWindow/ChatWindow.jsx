@@ -6,7 +6,10 @@ import Channels from "../Channels";
 import styles from './ChatWindow.module.css';
 
 const ChatWindow = () => {
-    const activeChannel = useSelector(state => state.content.channels.find(({active}) => active));
+    const activeChannel = useSelector(state => {
+       return state.content.channels.find(item => item.id === state.content.activeChannelId)
+    });
+
     return (
         <Card className={styles.cardMain}>
             <Card.Body className={styles.cardBody}>
