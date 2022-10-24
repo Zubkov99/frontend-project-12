@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 
 const Layout = () => {
 
-    const { key, setKey, lang, setLang } = useContext(AppContext);
+    const { key, setKey, setLang } = useContext(AppContext);
     const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 

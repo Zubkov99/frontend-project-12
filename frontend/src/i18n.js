@@ -3,6 +3,8 @@ import { initReactI18next } from "react-i18next";
 
 const activeLanguage = localStorage.getItem('lang');
 
+console.log(activeLanguage)
+
 const resources = {
     en: {
         translation: {
@@ -134,7 +136,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: JSON.parse(activeLanguage),
+        lng: JSON.parse(activeLanguage) || 'ru',
         interpolation: {
             escapeValue: false
         }
