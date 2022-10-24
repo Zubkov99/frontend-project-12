@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import SocketContext from "../../helpers/SocketContext";
 import { getChannels } from "../../slices/channels";
+import {useTranslation} from "react-i18next";
 
 const errorStatus = {
     notUniqValue: 'The channel name must be a unique value',
@@ -12,6 +13,7 @@ const errorStatus = {
 }
 
 const ModalChannelWindow = (props) => {
+    const { t } = useTranslation();
     const {show, handleClose} = props;
     const [channelName, setChannelName] = useState('');
     const [statusError, setError] = useState('');
@@ -58,44 +60,44 @@ const ModalChannelWindow = (props) => {
     };
 
     return (
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add new channel, bro</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={sendingСhannels}>
-                        <InputGroup
-                        >
-                            <Form.Control
-                                aria-describedby="basic-addon2"
-                                value={channelName}
-                                onChange={(event) => {
-                                    setChannelName(event.target.value)
-                                    setError('')
-                                }}
-                                isInvalid={!!statusError}
-                                isValid={!statusError && channelName}
-                            />
-                            {statusError &&
-                                <p style={{
-                                    color: "#CA0A0A",
-                                    marginTop: "3vh"
-                                }} >
-                                    {statusError}
-                                </p>
-                            }
-                        </InputGroup>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose} >
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={sendingСhannels}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form onSubmit={sendingСhannels}>
+                    <InputGroup
+                    >
+                        <Form.Control
+                            aria-describedby="basic-addon2"
+                            value={channelName}
+                            onChange={(event) => {
+                                setChannelName(event.target.value)
+                                setError('')
+                            }}
+                            isInvalid={!!statusError}
+                            isValid={!statusError && channelName}
+                        />
+                    </InputGroup>
+                    {statusError &&
+                        <p style={{
+                            color: "#CA0A0A",
+                            marginTop: "3vh"
+                        }} >
+                            {statusError}
+                        </p>
+                    }
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose} >
+                    {t('addChannelModal.closeButton')}
+                </Button>
+                <Button variant="primary" onClick={sendingСhannels}>
+                    {t('addChannelModal.saveButton')}
+                </Button>
+            </Modal.Footer>
+        </Modal>
     );
 }
 

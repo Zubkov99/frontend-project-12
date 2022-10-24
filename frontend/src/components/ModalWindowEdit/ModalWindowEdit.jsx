@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import SocketContext from "../../helpers/SocketContext";
 import {renameLocalChannel} from "../../slices/channels";
 import {Button, Form, Modal} from "react-bootstrap";
+import {useTranslation} from "react-i18next";
 
 const ModalWindowEdit = (props) => {
 
@@ -11,6 +12,7 @@ const ModalWindowEdit = (props) => {
         emptyField: 'the channel name should not be empty',
         networkError: 'Network error',
     }
+    const { t } = useTranslation();
 
     const { show, handleClose, currentId } = props;
     const [channelName, setChannelName] = useState('');
@@ -47,13 +49,14 @@ const ModalWindowEdit = (props) => {
             }))
             setChannelName('');
             setError('');
+            handleClose()
         })
     };
 
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Rename channel</Modal.Title>
+                <Modal.Title>{t('renameChannelModal.header')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={editChannelHandler}>
@@ -79,10 +82,10 @@ const ModalWindowEdit = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose} >
-                    Close
+                    {t('renameChannelModal.closeButton')}
                 </Button>
                 <Button variant="primary" onClick={editChannelHandler}>
-                    Save Changes
+                    {t('renameChannelModal.saveButton')}
                 </Button>
             </Modal.Footer>
         </Modal>

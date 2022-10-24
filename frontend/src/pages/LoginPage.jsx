@@ -7,6 +7,7 @@ import AppContext from "../helpers/сontext";
 import {Link, useNavigate} from "react-router-dom";
 import routes from "../helpers/routes";
 import checkDisabledButton from "../helpers/checkDisabledButton";
+import { useTranslation } from 'react-i18next';
 
 const logIn = async (username, password, setKey, redirect, setStatus) => {
     try {
@@ -20,6 +21,8 @@ const logIn = async (username, password, setKey, redirect, setStatus) => {
 };
 
 const LoginPage = () => {
+    const { t } = useTranslation();
+
     const { setKey } = useContext(AppContext);
     const [status, setStatus] = useState(true);
     const navigate = useNavigate();
@@ -30,14 +33,14 @@ const LoginPage = () => {
         },
         validationSchema: Yup.object({
             login: Yup.string()
-                .max(15, 'Must be 15 characters or less')
-                // .min(5, 'Must be 5 characters or more')
-                .required('Login is required'),
+                .max(20, t('validationFeedback.loginMax'))
+                .min(3, t('validationFeedback.loginMin'))
+                .required(t('validationFeedback.loginRequired')),
             password: Yup.string()
-                .max(20, 'Must be 20 characters or less')
-                // .min(8, 'Must be 8 characters or more')
-                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Must contain one number and one lowercase')
-                .required('Password is required'),
+                .max(20,  t('validationFeedback.passwordMax'))
+                // .min(6, t('validationFeedback.passwordMin'))
+                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+                .required(t('validationFeedback.passwordRequired')),
         }),
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
@@ -48,12 +51,12 @@ const LoginPage = () => {
     return (
             <div className='loginContainer w-50 mx-auto'>
                 <Card>
-                    <Card.Header>Log in to your account</Card.Header>
+                    <Card.Header>{t('loginPage.loginHeader')}</Card.Header>
                     <Card.Body>
                         <Form noValidate onSubmit={formik.handleSubmit}>
                             <Form.Group className="mb-3" controlId="login">
-                                <Form.Label>Your login</Form.Label>
-                                <Form.Control type="login" placeholder="Enter login"
+                                <Form.Label>{t('loginPage.loginInput')}</Form.Label>
+                                <Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
                                               isValid={formik.touched.login && !formik.errors.login}
                                               isInvalid={!!formik.errors.login || !status}
                                               {...formik.getFieldProps('login')}/>
@@ -63,8 +66,8 @@ const LoginPage = () => {
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Your password</Form.Label>
-                                <Form.Control type="password" placeholder="Password"
+                                <Form.Label>{t('loginPage.passwordInput')}</Form.Label>
+                                <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
                                               isValid={formik.touched.password && !formik.errors.password}
                                               isInvalid={!!formik.errors.password || !status}
                                               {...formik.getFieldProps('password')}>
@@ -75,19 +78,19 @@ const LoginPage = () => {
                             </Form.Group>
                             {!status &&
                                 <Alert variant='danger' onClick={() => setStatus(true)}>
-                                    You have entered an incorrect username or password
+                                    {t('loginPage.alertMessage')}
                                 </Alert>
                             }
                             <Button variant="primary" type="submit"
                                     disabled={checkDisabledButton(formik)}
                             >
-                                Log in
+                                {t('loginPage.logInButton')}
                             </Button>
                         </Form>
                     </Card.Body>
                     <Card.Footer>
-                        Don't you have an account?&nbsp;
-                        <Link to="/signup">Create it!</Link>
+                        {t('loginPage.footer')}&nbsp;
+                        <Link to="/signup">{t('loginPage.footerLink')}</Link>
                     </Card.Footer>
                 </Card>
             </div>

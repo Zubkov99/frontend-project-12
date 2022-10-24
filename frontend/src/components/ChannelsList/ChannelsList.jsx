@@ -5,6 +5,7 @@ import styles from './ChannelList.module.css'
 import SocketContext from "../../helpers/SocketContext";
 import { deleteChannel, setActiveChannel } from "../../slices/channels";
 import ModalWindowEdit from "../ModalWindowEdit";
+import {useTranslation} from "react-i18next";
 
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -27,6 +28,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 
 const ChannelsList = (props) => {
+    const { t } = useTranslation();
     const { channels } = props;
     const dispatch = useDispatch();
     const socket = useContext(SocketContext);
@@ -64,15 +66,17 @@ const ChannelsList = (props) => {
                                         className={styles.ListGroup}>
                             {name}
                             <Dropdown>
-                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"></Dropdown.Toggle>
+                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"/>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={() => {
                                         setCurrentId(id)
                                         handleShow()
                                     }}>
-                                        Edit
+                                        {t('chatPage.editChannelButton')}
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => deleteChannelHandler(id, removable)}>Remove</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => deleteChannelHandler(id, removable)}>
+                                        {t('chatPage.removeChannelButton')}
+                                    </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </ListGroup.Item>

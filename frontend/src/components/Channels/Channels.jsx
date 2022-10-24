@@ -4,8 +4,10 @@ import { Button } from "react-bootstrap";
 import ChannelsList from "../ChannelsList";
 import ModalChannelWindow from "../ModalChannelWindow";
 import _ from "lodash";
+import {useTranslation} from "react-i18next";
 
 const Channels = () => {
+    const { t, i18n } = useTranslation();
 
     const channels = useSelector(state => {
         return _.uniqBy(state.content.channels, 'id');
@@ -21,13 +23,13 @@ const Channels = () => {
             <div style={{
                 marginBottom: '5vh',
             }}>
-                <b>Channels</b>
+                <b>{t('chatPage.channelsHeader')}</b>
                 <Button variant="outline-dark"
                         size="sm"
                         style={{marginLeft: "1vw"}}
                         onClick={handleShow}
                 >
-                    add
+                    {t('chatPage.channelsAddButton')}
                 </Button>
             </div>
             <ChannelsList channels={channels} />

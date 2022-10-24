@@ -7,10 +7,13 @@ import {getMessage} from "../../slices/channels";
 import SocketContext from "../../helpers/SocketContext";
 import send from "../../send.png";
 import styles from './Messages.module.css'
+import {useTranslation} from "react-i18next";
 
 const Messages = () => {
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
+
+    const { t } = useTranslation();
 
     const activeChannelId = useSelector(state => state.content.activeChannelId);
     const messages = useSelector(state => {
@@ -62,7 +65,7 @@ const Messages = () => {
                 <InputGroup className={`${styles.inputGroup} mb-3`}>
                     <Form.Control
                         aria-describedby="basic-addon2"
-                        placeholder='enter a message'
+                        placeholder={t('chatPage.messagePlaceholder')}
                         onChange={(event) => {
                             setText(event.target.value)
                         }}

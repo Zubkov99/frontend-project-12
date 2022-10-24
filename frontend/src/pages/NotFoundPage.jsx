@@ -1,11 +1,22 @@
 import {Link} from "react-router-dom";
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 const NotFoundPage = () => {
+    const { t } = useTranslation();
     return (
         <>
-            <h1>Not Found!</h1>
-            <Link to="/">Go to main</Link>
+            <div style={{
+                marginRight: 'auto',
+                marginLeft: 'auto',
+                width: '40%',
+                marginTop: '10vh'
+            }}>
+                <h1>
+                    {t('notFoundPage.header')}
+                </h1>
+                <p>{t('notFoundPage.description')}&nbsp; <Link to="/">{t('notFoundPage.link')}</Link></p>
+            </div>
         </>
     )
 }

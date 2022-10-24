@@ -11,10 +11,13 @@ import Layout from "../Layout/Layout";
 
 const App = () => {
     const [key, setKey] = useLocalStorage(null, 'user');
+    const [lang, setLang] = useLocalStorage('ru', 'lang');
     return (
         <AppContext.Provider value={{
             key,
             setKey,
+            lang,
+            setLang
         }}>
             <Routes>
                 <Route path='/' element={<Layout />}>

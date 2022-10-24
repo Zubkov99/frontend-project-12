@@ -7,6 +7,7 @@ import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
+import './i18n';
 import store from "./slices/index";
 import SocketContext from "./helpers/SocketContext";
 

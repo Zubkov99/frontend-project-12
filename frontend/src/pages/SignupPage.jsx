@@ -7,6 +7,7 @@ import AppContext from "../helpers/сontext";
 import {useNavigate} from "react-router-dom";
 import routes from "../helpers/routes";
 import checkDisabledButton from "../helpers/checkDisabledButton";
+import {useTranslation} from "react-i18next";
 
 const signup = async (username, password, setKey, redirect, setStatus) => {
     try {
@@ -21,6 +22,7 @@ const signup = async (username, password, setKey, redirect, setStatus) => {
 
 const SignupPage = () => {
     const { setKey } = useContext(AppContext);
+    const { t, i18n } = useTranslation();
     const [status, setStatus] = useState(true);
     const navigate = useNavigate();
     const formik = useFormik({
@@ -31,17 +33,17 @@ const SignupPage = () => {
         },
         validationSchema: Yup.object({
             login: Yup.string()
-                .max(15, 'Must be 15 characters or less')
-                // .min(5, 'Must be 5 characters or more')
-                .required('Login is required'),
+                .max(20, t('validationFeedback.loginMax'))
+                .min(3, t('validationFeedback.loginMin'))
+                .required(t('validationFeedback.loginRequired')),
             password: Yup.string()
-                .max(20, 'Must be 20 characters or less')
-                // .min(8, 'Must be 8 characters or more')
-                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'Must contain one number and one lowercase')
-                .required('Password is required'),
+                .max(20,  t('validationFeedback.passwordMax'))
+                .min(6, t('validationFeedback.passwordMin'))
+                .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+                .required(t('validationFeedback.passwordRequired')),
             passwordConfirmation: Yup.string()
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
-                .required('You need to confirm the password'),
+                .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
+                .required(t('validationFeedback.passwordConfirmationRequired')),
         }),
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
@@ -52,12 +54,12 @@ const SignupPage = () => {
     return (
         <div className='loginContainer w-50 mx-auto'>
             <Card>
-                <Card.Header>Register your account</Card.Header>
+                <Card.Header>{t('signupPage.header')}</Card.Header>
                 <Card.Body>
                     <Form noValidate onSubmit={formik.handleSubmit}>
                         <Form.Group className="mb-3" controlId="login">
-                            <Form.Label>Come up with a name</Form.Label>
-                            <Form.Control type="login" placeholder="Enter login"
+                            <Form.Label>{t('signupPage.loginLabel')}</Form.Label>
+                            <Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
                                           isValid={!formik.errors.login && !!formik.values.login}
                                           isInvalid={!!formik.errors.login || !status}
                                           {...formik.getFieldProps('login')}/>
@@ -67,8 +69,8 @@ const SignupPage = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Come up with a password</Form.Label>
-                            <Form.Control type="password" placeholder="Password"
+                            <Form.Label>{t('signupPage.passwordLabel')}</Form.Label>
+                            <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
                                           isValid={!formik.errors.password && !!formik.values.passwordConfirmation}
                                           isInvalid={!!formik.errors.password}
                                           {...formik.getFieldProps('password')}>
@@ -79,8 +81,10 @@ const SignupPage = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPasswordConfirmation">
-                            <Form.Label>Enter your password again</Form.Label>
-                            <Form.Control type="password" placeholder="Password"
+                            <Form.Label>
+                                {t('signupPage.confirmPassword')}
+                            </Form.Label>
+                            <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
                                           isValid={
                                               !formik.errors.password && !!formik.values.passwordConfirmation
                                           }
@@ -93,13 +97,13 @@ const SignupPage = () => {
                         </Form.Group>
                         {!status &&
                             <Alert variant='danger' onClick={() => setStatus(true)}>
-                                The login is already used by another user
+                                {t('signupPage.alertMessage')}
                             </Alert>
                         }
                         <Button variant="primary" type="submit"
                                 disabled={checkDisabledButton(formik)}
                         >
-                            Sign up
+                            {t('signupPage.signupButton')}
                         </Button>
                     </Form>
                 </Card.Body>
