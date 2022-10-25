@@ -44,13 +44,8 @@ const Messages = () => {
             message: text,
             username: key.username,
             channelId: activeChannelId,
-        }, (err, response) => {
-            if (err) {
-                console.log('some text')
-            }
-            if (response.status !== 'ok') {
-                throw new Error('Network error');
-            }
+        }, (response) => {
+            if (response.status !== 'ok') throw new Error('Network error');
             setText('');
         });
     }
