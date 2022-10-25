@@ -1,10 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 
 import SocketContext from "../../helpers/SocketContext";
 import { getChannels } from "../../slices/channels";
 import {useTranslation} from "react-i18next";
+
+import { ToastContainer, toast } from 'react-toastify';
 
 const errorStatus = {
     notUniqValue: 'The channel name must be a unique value',
@@ -57,6 +59,7 @@ const ModalChannelWindow = (props) => {
         });
         setError('')
         handleClose();
+        toast(t('notificationBlock.channelAdded'));
     };
 
     return (
@@ -97,6 +100,7 @@ const ModalChannelWindow = (props) => {
                     {t('addChannelModal.saveButton')}
                 </Button>
             </Modal.Footer>
+            <ToastContainer />
         </Modal>
     );
 }

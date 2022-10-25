@@ -8,22 +8,25 @@ import {useNavigate} from "react-router-dom";
 import routes from "../helpers/routes";
 import checkDisabledButton from "../helpers/checkDisabledButton";
 import {useTranslation} from "react-i18next";
+import { ToastContainer, toast } from 'react-toastify';
 
-const signup = async (username, password, setKey, redirect, setStatus) => {
+const signup = async (username, password, setKey, redirect, setStatus, t) => {
     try {
         const response = await axios.post(routes.signupPath(), { username, password });
         setKey(response.data);
         redirect('/', {replace: true});
-        setStatus(true)
+        setStatus('')
     } catch (e) {
-        setStatus(false)
+        toast.error(t(`signupPage.${e.code}`));
+        if(e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST')
+        if(e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
     }
 };
 
 const SignupPage = () => {
     const { setKey } = useContext(AppContext);
-    const { t, i18n } = useTranslation();
-    const [status, setStatus] = useState(true);
+    const { t } = useTranslation();
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -38,8 +41,8 @@ const SignupPage = () => {
                 .required(t('validationFeedback.loginRequired')),
             password: Yup.string()
                 .max(20,  t('validationFeedback.passwordMax'))
-                .min(6, t('validationFeedback.passwordMin'))
-                .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+                // .min(6, t('validationFeedback.passwordMin'))
+                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
                 .required(t('validationFeedback.passwordRequired')),
             passwordConfirmation: Yup.string()
                 .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
@@ -48,7 +51,7 @@ const SignupPage = () => {
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
             const {login, password} = values;
-            await signup(login, password, setKey, navigate, setStatus);
+            await signup(login, password, setKey, navigate, setStatus, t);
         },
     });
     return (
@@ -61,7 +64,7 @@ const SignupPage = () => {
                             <Form.Label>{t('signupPage.loginLabel')}</Form.Label>
                             <Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
                                           isValid={!formik.errors.login && !!formik.values.login}
-                                          isInvalid={!!formik.errors.login || !status}
+                                          isInvalid={!!formik.errors.login || !!status}
                                           {...formik.getFieldProps('login')}/>
                             <Form.Control.Feedback type="invalid">
                                 {formik.errors.login}
@@ -95,9 +98,9 @@ const SignupPage = () => {
                                 {formik.errors.passwordConfirmation}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        {!status &&
-                            <Alert variant='danger' onClick={() => setStatus(true)}>
-                                {t('signupPage.alertMessage')}
+                        {!!status &&
+                            <Alert variant='danger' onClick={() => setStatus('')}>
+                                {t(`signupPage.${status}`)}
                             </Alert>
                         }
                         <Button variant="primary" type="submit"
@@ -107,6 +110,7 @@ const SignupPage = () => {
                         </Button>
                     </Form>
                 </Card.Body>
+                <ToastContainer />
             </Card>
         </div>
     );

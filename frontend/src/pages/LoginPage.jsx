@@ -8,24 +8,28 @@ import {Link, useNavigate} from "react-router-dom";
 import routes from "../helpers/routes";
 import checkDisabledButton from "../helpers/checkDisabledButton";
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
 
-const logIn = async (username, password, setKey, redirect, setStatus) => {
+
+const logIn = async (username, password, setKey, redirect, setStatus, t) => {
     try {
         const response = await axios.post(routes.loginPath(), { username, password });
         setKey(response.data);
         redirect('/', {replace: true});
         setStatus(true)
     } catch (e) {
-        setStatus(false)
+        if(e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST')
+        if(e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
+        toast.error(t(`errorFeedback.${e.code}`));
     }
 };
 
 const LoginPage = () => {
     const { t } = useTranslation();
-
     const { setKey } = useContext(AppContext);
-    const [status, setStatus] = useState(true);
+    const [status, setStatus] = useState('');
     const navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             login:'',
@@ -37,15 +41,12 @@ const LoginPage = () => {
                 .min(3, t('validationFeedback.loginMin'))
                 .required(t('validationFeedback.loginRequired')),
             password: Yup.string()
-                .max(20,  t('validationFeedback.passwordMax'))
-                // .min(6, t('validationFeedback.passwordMin'))
-                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
                 .required(t('validationFeedback.passwordRequired')),
         }),
         onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
             const {login, password} = values;
-            await logIn(login, password, setKey, navigate, setStatus);
+            await logIn(login, password, setKey, navigate, setStatus, t);
         },
     });
     return (
@@ -58,7 +59,7 @@ const LoginPage = () => {
                                 <Form.Label>{t('loginPage.loginInput')}</Form.Label>
                                 <Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
                                               isValid={formik.touched.login && !formik.errors.login}
-                                              isInvalid={!!formik.errors.login || !status}
+                                              isInvalid={!!formik.errors.login || status}
                                               {...formik.getFieldProps('login')}/>
                                 <Form.Control.Feedback type="invalid">
                                     {formik.errors.login}
@@ -69,16 +70,16 @@ const LoginPage = () => {
                                 <Form.Label>{t('loginPage.passwordInput')}</Form.Label>
                                 <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
                                               isValid={formik.touched.password && !formik.errors.password}
-                                              isInvalid={!!formik.errors.password || !status}
+                                              isInvalid={!!formik.errors.password || status}
                                               {...formik.getFieldProps('password')}>
                                 </Form.Control>
                                 <Form.Control.Feedback type="invalid">
                                     {formik.errors.password}
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            {!status &&
-                                <Alert variant='danger' onClick={() => setStatus(true)}>
-                                    {t('loginPage.alertMessage')}
+                            {!!status &&
+                                <Alert variant='danger' onClick={() => setStatus('')}>
+                                    {t(`errorFeedback.${status}`)}
                                 </Alert>
                             }
                             <Button variant="primary" type="submit"
@@ -93,6 +94,7 @@ const LoginPage = () => {
                         <Link to="/signup">{t('loginPage.footerLink')}</Link>
                     </Card.Footer>
                 </Card>
+                <ToastContainer />
             </div>
     );
 };

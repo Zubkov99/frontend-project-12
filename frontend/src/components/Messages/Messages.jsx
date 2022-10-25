@@ -8,6 +8,7 @@ import SocketContext from "../../helpers/SocketContext";
 import send from "../../send.png";
 import styles from './Messages.module.css'
 import {useTranslation} from "react-i18next";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Messages = () => {
     const socket = useContext(SocketContext);
@@ -43,8 +44,13 @@ const Messages = () => {
             message: text,
             username: key.username,
             channelId: activeChannelId,
-        }, (response) => {
-            if (response.status !== 'ok') throw new Error('Network error');
+        }, (err, response) => {
+            if (err) {
+                console.log('some text')
+            }
+            if (response.status !== 'ok') {
+                throw new Error('Network error');
+            }
             setText('');
         });
     }
@@ -77,6 +83,7 @@ const Messages = () => {
                     </Button>
                 </InputGroup>
             </Form>
+            <ToastContainer />
         </div>
     )
 }

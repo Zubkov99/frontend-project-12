@@ -65,7 +65,6 @@ const channelsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchChannels.fulfilled, (state, action) => {
                 const { channels, messages } = action.payload;
-                // state.channels = channels.map(item => item.id === 1 ? {...item, active: true} : item);
                 state.channels = channels;
                 state.messages = messages;
         })

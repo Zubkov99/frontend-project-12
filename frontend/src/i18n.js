@@ -3,8 +3,6 @@ import { initReactI18next } from "react-i18next";
 
 const activeLanguage = localStorage.getItem('lang');
 
-console.log(activeLanguage)
-
 const resources = {
     en: {
         translation: {
@@ -17,7 +15,6 @@ const resources = {
                 logInButton: 'Log in',
                 footer: 'Don\'t you have an account?',
                 footerLink: 'Create it!',
-                alertMessage: 'You have entered an incorrect username or password',
             },
             validationFeedback: {
                 loginMax: 'Must be 20 characters or less',
@@ -34,9 +31,10 @@ const resources = {
                 header: 'Register your account',
                 loginLabel: 'Come up with a name',
                 passwordLabel: 'Come up with a password',
-                alertMessage: 'The login is already used by another user',
+                ERR_BAD_REQUEST: 'The login is already used by another user',
                 signupButton: 'Sign up',
                 confirmPassword: 'Enter your password again',
+                ERR_NETWORK: 'Something happened to the network :C',
             },
             chatPage: {
                 channelsHeader: 'Channels',
@@ -65,7 +63,16 @@ const resources = {
                 header: '404: Page not found',
                 description: 'Most likely you have the wrong address, we suggest you return to the',
                 link: 'main page',
-            }
+            },
+            errorFeedback: {
+                ERR_NETWORK: 'Something happened to the network :C',
+                ERR_BAD_REQUEST: 'You have entered an incorrect username or password',
+            },
+            notificationBlock: {
+                channelAdded: 'Channel added',
+                channelRemoved: 'Channel deleted',
+                channelRenamed: 'The channel has been renamed',
+            },
         }
     },
     ru: {
@@ -79,7 +86,7 @@ const resources = {
                 logInButton: 'Войти',
                 footer: 'Еще нет аккаунта?',
                 footerLink: 'Создайте его!',
-                alertMessage: 'Вы ввели неверный логин или пароль',
+                ERR_BAD_REQUEST: 'Вы ввели неверный логин или пароль',
             },
             validationFeedback: {
                 loginMax: 'Должен содержать 20 символов или меньше',
@@ -96,7 +103,8 @@ const resources = {
                 header: 'Зарегистрируй аккаунт',
                 loginLabel: 'Придумай логин',
                 passwordLabel: 'Придумай пароль',
-                alertMessage: 'Этот логин уже использует другой пользователь',
+                ERR_BAD_REQUEST: 'Этот логин уже использует другой пользователь',
+                ERR_NETWORK: 'Ошибка сети',
                 signupButton: 'Зарегистрироваться',
                 confirmPassword: 'Введите ваш пароль еще раз',
             },
@@ -127,7 +135,16 @@ const resources = {
                 header: '404: страница не найдена',
                 description: 'Скорее всего вы ошиблись адресом, предлагаем вам вернусть на',
                 link: 'главную страницу',
-            }
+            },
+            errorFeedback: {
+                ERR_NETWORK: 'Ошибка сети',
+                ERR_BAD_REQUEST: 'Вы ввели неверный логин или пароль',
+            },
+            notificationBlock: {
+                channelAdded: 'Канал добавлен',
+                channelRemoved: 'Канал удален',
+                channelRenamed: 'Канал переименован',
+            },
         }
     }
 };

@@ -7,7 +7,7 @@ import _ from "lodash";
 import {useTranslation} from "react-i18next";
 
 const Channels = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const channels = useSelector(state => {
         return _.uniqBy(state.content.channels, 'id');

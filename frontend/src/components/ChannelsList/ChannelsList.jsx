@@ -6,6 +6,7 @@ import SocketContext from "../../helpers/SocketContext";
 import { deleteChannel, setActiveChannel } from "../../slices/channels";
 import ModalWindowEdit from "../ModalWindowEdit";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -74,7 +75,10 @@ const ChannelsList = (props) => {
                                     }}>
                                         {t('chatPage.editChannelButton')}
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => deleteChannelHandler(id, removable)}>
+                                    <Dropdown.Item onClick={() => {
+                                        deleteChannelHandler(id, removable)
+                                        toast(t('notificationBlock.channelRemoved'));
+                                    }}>
                                         {t('chatPage.removeChannelButton')}
                                     </Dropdown.Item>
                                 </Dropdown.Menu>

@@ -4,6 +4,7 @@ import SocketContext from "../../helpers/SocketContext";
 import {renameLocalChannel} from "../../slices/channels";
 import {Button, Form, Modal} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
+import { toast } from "react-toastify";
 
 const ModalWindowEdit = (props) => {
 
@@ -23,7 +24,6 @@ const ModalWindowEdit = (props) => {
 
     const editChannelHandler = (event) => {
         event.preventDefault();
-
         const duplicatedChannel = channels.find(({name}) => name === channelName);
 
         if(duplicatedChannel) {
@@ -51,6 +51,7 @@ const ModalWindowEdit = (props) => {
             setError('');
             handleClose()
         })
+        toast(t('notificationBlock.channelRenamed'));
     };
 
     return (
