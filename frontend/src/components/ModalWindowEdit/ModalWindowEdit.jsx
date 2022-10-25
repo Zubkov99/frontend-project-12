@@ -5,6 +5,10 @@ import {renameLocalChannel} from "../../slices/channels";
 import {Button, Form, Modal} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import { toast } from "react-toastify";
+import filter from 'leo-profanity';
+
+const censorship = filter.add(filter.getDictionary('ru'));
+
 
 const ModalWindowEdit = (props) => {
 
@@ -12,7 +16,9 @@ const ModalWindowEdit = (props) => {
         notUniqValue: 'The channel name must be a unique value',
         emptyField: 'the channel name should not be empty',
         networkError: 'Network error',
-    }
+        stopWords: 'Incorrect word',
+    };
+    
     const { t } = useTranslation();
 
     const { show, handleClose, currentId } = props;
@@ -33,6 +39,10 @@ const ModalWindowEdit = (props) => {
         if(!channelName) {
             setError(errorStatus.emptyField)
             throw new Error(errorStatus.emptyField);
+        }
+        if(censorship.check(channelName)) {
+            setError(errorStatus.stopWords)
+            throw new Error(errorStatus.stopWords);
         }
 
         socket.emit('renameChannel', {

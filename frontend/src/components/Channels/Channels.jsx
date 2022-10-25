@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import { useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
+import {useTranslation} from "react-i18next";
+import _ from "lodash";
 import ChannelsList from "../ChannelsList";
 import ModalChannelWindow from "../ModalChannelWindow";
-import _ from "lodash";
-import {useTranslation} from "react-i18next";
+
 
 const Channels = () => {
     const { t } = useTranslation();

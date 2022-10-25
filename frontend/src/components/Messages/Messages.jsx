@@ -8,7 +8,10 @@ import SocketContext from "../../helpers/SocketContext";
 import send from "../../send.png";
 import styles from './Messages.module.css'
 import {useTranslation} from "react-i18next";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import filter from 'leo-profanity';
+
+const censorship = filter.add(filter.getDictionary('ru'));
 
 const Messages = () => {
     const socket = useContext(SocketContext);
@@ -57,7 +60,8 @@ const Messages = () => {
                     return (
                         <div key={item.id}>
                             <b>{item.username}</b>
-                            <p>{item.message}</p>
+
+                            <p>{censorship.clean(item.message)}</p>
                         </div>
                     )
                 })}

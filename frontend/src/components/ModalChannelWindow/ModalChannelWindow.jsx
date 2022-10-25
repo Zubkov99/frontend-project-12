@@ -7,11 +7,15 @@ import { getChannels } from "../../slices/channels";
 import {useTranslation} from "react-i18next";
 
 import { ToastContainer, toast } from 'react-toastify';
+import filter from 'leo-profanity';
+
+const censorship = filter.add(filter.getDictionary('ru'));
 
 const errorStatus = {
     notUniqValue: 'The channel name must be a unique value',
     emptyField: 'the channel name should not be empty',
     networkError: 'Network error',
+    stopWords: 'Incorrect word',
 }
 
 const ModalChannelWindow = (props) => {
@@ -46,6 +50,10 @@ const ModalChannelWindow = (props) => {
         if(!channelName) {
             setError(errorStatus.emptyField)
             throw new Error(errorStatus.emptyField);
+        }
+        if(censorship.check(channelName)) {
+            setError(errorStatus.stopWords)
+            throw new Error(errorStatus.stopWords);
         }
 
         socket.emit('newChannel', {
