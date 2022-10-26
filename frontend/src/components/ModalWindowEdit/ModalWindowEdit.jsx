@@ -18,7 +18,7 @@ const ModalWindowEdit = (props) => {
         networkError: 'Network error',
         stopWords: 'Incorrect word',
     };
-    
+
     const { t } = useTranslation();
 
     const { show, handleClose, currentId } = props;
