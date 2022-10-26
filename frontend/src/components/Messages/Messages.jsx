@@ -13,6 +13,12 @@ import filter from 'leo-profanity';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
+const scrollTo = (ref) => {
+    if (ref && ref.current) {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+}
+
 const Messages = () => {
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
@@ -28,12 +34,18 @@ const Messages = () => {
     const { key } = useContext(AppContext);
     const inputEl = useRef(null);
 
+    const lastMessage = useRef(null);
+
     useEffect(() => {
         socket.on('newMessage', (payload) => {
             dispatch(getMessage(payload))
         })
         inputEl.current.focus();
     },[])
+
+    useEffect(() => {
+        scrollTo(lastMessage)
+    }, [messages])
 
     useEffect(() => {
         inputEl.current.focus();
@@ -56,11 +68,10 @@ const Messages = () => {
     return (
         <div id='messages'>
             <div id='messages-box' className={styles.messagesBox}>
-                {messages.map((item) => {
+                {messages.map((item, index) => {
                     return (
-                        <div key={item.id}>
+                        <div key={item.id} ref={messages.length === index + 1 ? lastMessage : null}>
                             <b>{item.username}</b>
-
                             <p>{censorship.clean(item.message)}</p>
                         </div>
                     )
