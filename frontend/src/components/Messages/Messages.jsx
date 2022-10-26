@@ -14,9 +14,7 @@ import filter from 'leo-profanity';
 const censorship = filter.add(filter.getDictionary('ru'));
 
 const scrollTo = (ref) => {
-    if (ref && ref.current) {
-        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 const Messages = () => {
@@ -71,8 +69,8 @@ const Messages = () => {
                 {messages.map((item, index) => {
                     return (
                         <div key={item.id} ref={messages.length === index + 1 ? lastMessage : null}>
-                            <b>{item.username}</b>
-                            <p>{censorship.clean(item.message)}</p>
+                            <b>{item.username}</b>:&nbsp;
+                            {censorship.clean(item.message)}
                         </div>
                     )
                 })}
