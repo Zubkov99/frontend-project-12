@@ -80,7 +80,7 @@ const resources = {
             loginPage: {
                 loginHeader: "Войдите в аккаунт",
                 loginInput: 'Ваш ник',
-                passwordInput: "Введите ваш пароль",
+                passwordInput: "Пароль",
                 loginPlaceholder: "Имя пользователя",
                 passwordPlaceholder: "Пароль",
                 logInButton: 'Войти',
@@ -90,7 +90,7 @@ const resources = {
             },
             validationFeedback: {
                 loginMax: 'От 3 до 20 символов',
-                loginMin: 'Не менее 6 символов',
+                loginMin: 'От 3 до 20 символов',
                 passwordMax: 'Должен содержать 20 символов или меньше',
                 passwordMin: 'Не менее 6 символов',
                 loginRequired: 'Логин обязателен',
