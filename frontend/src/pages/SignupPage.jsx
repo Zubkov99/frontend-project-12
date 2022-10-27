@@ -40,7 +40,7 @@ const SignupPage = () => {
                 .min(3, t('validationFeedback.loginMin'))
                 .required(t('validationFeedback.loginRequired')),
             password: Yup.string()
-                .max(20,  t('validationFeedback.passwordMax'))
+                // .max(20,  t('validationFeedback.passwordMax'))
                 .min(6, t('validationFeedback.passwordMin'))
                 // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
                 .required(t('validationFeedback.passwordRequired')),
