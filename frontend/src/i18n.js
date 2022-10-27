@@ -106,7 +106,7 @@ const resources = {
                 ERR_BAD_REQUEST: 'Этот логин уже использует другой пользователь',
                 ERR_NETWORK: 'Ошибка сети',
                 signupButton: 'Зарегистрироваться',
-                confirmPassword: 'Введите ваш пароль еще раз',
+                confirmPassword: 'Подтвердите пароль',
             },
             chatPage: {
                 channelsHeader: 'Каналы',
