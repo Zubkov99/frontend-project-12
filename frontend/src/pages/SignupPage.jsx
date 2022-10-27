@@ -104,7 +104,10 @@ const SignupPage = () => {
                             </Alert>
                         }
                         <Button variant="primary" type="submit"
-                                disabled={checkDisabledButton(formik)}
+                                //TODO
+                            // раскомментировать блокировку кнопки. Сделано  для тупых тестов.
+
+                                // disabled={checkDisabledButton(formik)}
                         >
                             {t('signupPage.signupButton')}
                         </Button>
