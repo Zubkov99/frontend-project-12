@@ -54,6 +54,7 @@ const resources = {
               header: 'Rename channel',
               closeButton: 'Close',
               saveButton: 'Save Changes',
+              placeholder: 'Channel name',
             },
             layout: {
                 logoutButton: 'Log out',
@@ -126,6 +127,7 @@ const resources = {
             },
             renameChannelModal: {
                 header: 'Переименовать канал',
+                placeholder: 'Имя канала',
                 closeButton: 'Закрыть',
                 saveButton: 'Отправить',
             },
@@ -146,7 +148,7 @@ const resources = {
             },
             notificationBlock: {
                 channelAdded: 'Канал создан',
-                channelRemoved: 'Канал удален',
+                channelRemoved: 'Канал удалён',
                 channelRenamed: 'Канал переименован',
             },
         }
