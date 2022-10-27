@@ -101,8 +101,8 @@ const resources = {
             },
             signupPage: {
                 header: 'Регистрация',
-                loginLabel: 'Введите ваш логин',
-                passwordLabel: 'Введите ваш пароль',
+                loginLabel: 'Имя пользователя',
+                passwordLabel: 'Пароль',
                 ERR_BAD_REQUEST: 'Этот логин уже использует другой пользователь',
                 ERR_NETWORK: 'Ошибка сети',
                 signupButton: 'Зарегистрироваться',
