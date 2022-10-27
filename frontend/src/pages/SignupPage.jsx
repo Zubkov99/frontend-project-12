@@ -42,7 +42,7 @@ const SignupPage = () => {
             password: Yup.string()
                 .max(20,  t('validationFeedback.passwordMax'))
                 .min(6, t('validationFeedback.passwordMin'))
-                .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+                // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
                 .required(t('validationFeedback.passwordRequired')),
             passwordConfirmation: Yup.string()
                 .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
