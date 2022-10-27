@@ -42,6 +42,7 @@ const resources = {
                 messagePlaceholder: 'enter a message',
                 editChannelButton: 'Edit',
                 removeChannelButton: 'Remove',
+                messageAriaLabel: 'New message',
             },
             addChannelModal: {
                 header: 'Add new channel, bro',
@@ -112,6 +113,7 @@ const resources = {
                 channelsHeader: 'Каналы',
                 channelsAddButton: 'Добавить',
                 messagePlaceholder: 'Введите сообщение',
+                messageAriaLabel: 'Новое сообщение',
                 editChannelButton: 'Переименовать',
                 removeChannelButton: 'Удалить',
             },

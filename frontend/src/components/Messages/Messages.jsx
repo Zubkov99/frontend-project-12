@@ -79,6 +79,7 @@ const Messages = () => {
                 <InputGroup className={`${styles.inputGroup} mb-3`}>
                     <Form.Control
                         aria-describedby="basic-addon2"
+                        aria-label={t('chatPage.messageAriaLabel')}
                         placeholder={t('chatPage.messagePlaceholder')}
                         onChange={(event) => {
                             setText(event.target.value)
