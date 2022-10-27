@@ -88,6 +88,7 @@ const ModalChannelWindow = (props) => {
                             }}
                             isInvalid={!!statusError}
                             isValid={!statusError && channelName}
+                            placeholder={t('addChannelModal.placeholder')}
                         />
                     </InputGroup>
                     {statusError &&

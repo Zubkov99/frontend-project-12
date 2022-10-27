@@ -48,6 +48,7 @@ const resources = {
                 header: 'Add new channel, bro',
                 saveButton: 'Save Changes',
                 closeButton: 'Close',
+                placeholder: 'Channel name',
             },
             renameChannelModal: {
               header: 'Rename channel',
@@ -111,7 +112,7 @@ const resources = {
             },
             chatPage: {
                 channelsHeader: 'Каналы',
-                channelsAddButton: 'Добавить',
+                channelsAddButton: '+',
                 messagePlaceholder: 'Введите сообщение',
                 messageAriaLabel: 'Новое сообщение',
                 editChannelButton: 'Переименовать',
@@ -121,6 +122,7 @@ const resources = {
                 header: 'Добавь новый канал',
                 saveButton: 'Отправить',
                 closeButton: 'Закрыть',
+                placeholder: 'Имя канала',
             },
             renameChannelModal: {
                 header: 'Переименовать канал',
