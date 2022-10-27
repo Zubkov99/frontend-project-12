@@ -80,12 +80,12 @@ const resources = {
             loginPage: {
                 loginHeader: "Войдите в аккаунт",
                 loginInput: 'Ваш ник',
-                passwordInput: "Пароль",
-                loginPlaceholder: "Введите ваш логин",
-                passwordPlaceholder: "Введите ваш пароль",
+                passwordInput: "Введите ваш пароль",
+                loginPlaceholder: "Имя пользователя",
+                passwordPlaceholder: "Пароль",
                 logInButton: 'Войти',
                 footer: 'Еще нет аккаунта?',
-                footerLink: 'Создайте его!',
+                footerLink: 'Регистрация',
                 ERR_BAD_REQUEST: 'Неверные имя пользователя или пароль',
             },
             validationFeedback: {
@@ -101,8 +101,8 @@ const resources = {
             },
             signupPage: {
                 header: 'Регистрация',
-                loginLabel: 'Имя пользователя',
-                passwordLabel: 'Пароль',
+                loginLabel: 'Введите ваш логин',
+                passwordLabel: 'Введите ваш пароль',
                 ERR_BAD_REQUEST: 'Этот логин уже использует другой пользователь',
                 ERR_NETWORK: 'Ошибка сети',
                 signupButton: 'Зарегистрироваться',
