@@ -15,7 +15,7 @@ const Layout = () => {
          <div className='App'>
              <Navbar variant="light">
                     <Container>
-                        <Navbar.Brand href="/">Zubkov_D</Navbar.Brand>
+                        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
                         <div style={{
                             display: 'flex',
                         }}>
