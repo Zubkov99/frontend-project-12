@@ -10,6 +10,11 @@ const ChatWindow = () => {
        return state.content.channels.find(item => item.id === state.content.activeChannelId)
     });
 
+    //TODO
+    // Костыль для фронтовых тестов, потом убрать
+    let activeChannelName;
+    if (activeChannel) activeChannelName = `# ${activeChannel.name}`;
+
     return (
         <Card className={styles.cardMain}>
             <Card.Body className={styles.cardBody}>
@@ -21,7 +26,8 @@ const ChatWindow = () => {
                         <Col className={styles.ColMessages}>
                                 {activeChannel &&
                                     <div className={`${styles.activeChannel} shadow-sm`}>
-                                        <h5># {activeChannel.name}</h5>
+                                        {/*<h5># {activeChannel.name}</h5>*/}
+                                        <h5>{activeChannelName}</h5>
                                     </div>
                                 }
                             <Messages />
