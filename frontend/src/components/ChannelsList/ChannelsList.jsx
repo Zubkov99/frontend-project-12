@@ -66,7 +66,7 @@ const ChannelsList = (props) => {
                                         key={id}
                                         onClick={() => dispatch(setActiveChannel(id)) }
                                         className={styles.ListGroup}>
-                            {newName}
+                            <span>{newName}</span>
                             <Dropdown>
                                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"/>
                                 <Dropdown.Menu>
