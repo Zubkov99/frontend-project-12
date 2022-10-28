@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-
 import SocketContext from "../../helpers/SocketContext";
 import { getChannels } from "../../slices/channels";
 import {useTranslation} from "react-i18next";
-
-import { ToastContainer, toast } from 'react-toastify';
 import filter from 'leo-profanity';
+import AppContext from "../../helpers/сontext";
+import {toast} from "react-toastify";
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -20,9 +19,11 @@ const errorStatus = {
 
 const ModalChannelWindow = (props) => {
     const { t } = useTranslation();
-    const {show, handleClose, ref} = props;
+    const {show, handleClose} = props;
     const [channelName, setChannelName] = useState('');
     const [statusError, setError] = useState('');
+
+    const { key } = useContext(AppContext);
 
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
@@ -66,7 +67,8 @@ const ModalChannelWindow = (props) => {
         }
 
         socket.emit('newChannel', {
-            name: channelName
+            name: channelName,
+            author: key.username,
         }, (response) => {
             if (response.status !== 'ok') {
                 setError(errorStatus.networkError)

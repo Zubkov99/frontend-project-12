@@ -7,6 +7,7 @@ import { deleteChannel, setActiveChannel } from "../../slices/channels";
 import ModalWindowEdit from "../ModalWindowEdit";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
+import AppContext from "../../helpers/сontext";
 
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -35,6 +36,7 @@ const ChannelsList = (props) => {
     const { channels } = props;
     const dispatch = useDispatch();
     const socket = useContext(SocketContext);
+    const { key } = useContext(AppContext);
 
     const activeChannel = useSelector(state => state.content.channels.find(item => item.id === state.content.activeChannelId) || {id: null});
 
@@ -59,7 +61,8 @@ const ChannelsList = (props) => {
             <ListGroup variant="flush"
                        className={styles.ChannelsContainer}
             >
-                {channels.map(({ name, id, removable }) => {
+                {channels.map(({ name, id, removable, author }) => {
+                    // console.log(author)
                     const newName = `# ${name}`;
                     return (
                         <ListGroup.Item action
@@ -69,7 +72,8 @@ const ChannelsList = (props) => {
                                         onClick={() => dispatch(setActiveChannel(id)) }
                                         className={styles.ListGroup}>
                             {newName}
-                            <Dropdown>
+                            { author === key.username &&
+                                <Dropdown>
                                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"/>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={() => {
@@ -85,7 +89,7 @@ const ChannelsList = (props) => {
                                         {t('chatPage.removeChannelButton')}
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
-                            </Dropdown>
+                            </Dropdown>}
                         </ListGroup.Item>
                     )
                 })}
