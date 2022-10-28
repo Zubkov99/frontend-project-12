@@ -90,7 +90,9 @@ const ModalChannelWindow = (props) => {
                             isValid={!statusError && channelName}
                             placeholder={t('addChannelModal.placeholder')}
                         />
-                        <label htmlFor='name' className="visually-hidden">{t('renameChannelModal.placeholder')}</label>
+                        <label htmlFor='name'
+                               // className="visually-hidden"
+                        >{t('renameChannelModal.placeholder')}</label>
                     </InputGroup>
                     {statusError &&
                         <p style={{
