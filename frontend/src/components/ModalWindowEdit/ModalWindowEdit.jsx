@@ -73,7 +73,9 @@ const ModalWindowEdit = (props) => {
                 <Form onSubmit={editChannelHandler}>
                     <label htmlFor='name' className="visually-hidden">{t('renameChannelModal.placeholder')}</label>
                     <Form.Control
-                        aria-describedby="basic-addon2"
+                        id='name'
+                        htmlFor='name'
+                        // aria-describedby="basic-addon2"
                         placeholder={t('renameChannelModal.placeholder')}
                         value={channelName}
                         onChange={(event) => {
