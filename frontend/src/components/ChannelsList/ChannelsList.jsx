@@ -24,7 +24,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         }}
     >
         {/*//TODO*/}
-        <span className='visually-hidden'>Управление каналом</span>
+        <span
+            // className='visually-hidden'
+        >Управление каналом</span>
         {children}
         &#x25bc;
     </a>
@@ -62,7 +64,6 @@ const ChannelsList = (props) => {
                        className={styles.ChannelsContainer}
             >
                 {channels.map(({ name, id, removable, author }) => {
-                    // console.log(author)
                     const newName = `# ${name}`;
                     return (
                         <ListGroup.Item action
