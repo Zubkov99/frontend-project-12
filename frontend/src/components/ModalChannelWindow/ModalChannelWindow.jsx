@@ -89,6 +89,7 @@ const ModalChannelWindow = (props) => {
                     <InputGroup>
                         <Form.Control
                             ref={myRef}
+                            id='name'
                             htmlFor='name'
                             aria-describedby="basic-addon2"
                             value={channelName}
