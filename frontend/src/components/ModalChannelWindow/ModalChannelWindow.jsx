@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { Button, Form, Modal, InputGroup } from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -20,7 +20,7 @@ const errorStatus = {
 
 const ModalChannelWindow = (props) => {
     const { t } = useTranslation();
-    const {show, handleClose} = props;
+    const {show, handleClose, ref} = props;
     const [channelName, setChannelName] = useState('');
     const [statusError, setError] = useState('');
 
@@ -28,6 +28,15 @@ const ModalChannelWindow = (props) => {
     const dispatch = useDispatch();
 
     const { channels }  = useSelector(state => state.content);
+
+    const myRef = useRef();
+
+    useEffect(()=>{
+        if (myRef && myRef.current) {
+            myRef.current.focus()
+        }
+    })
+
 
     useEffect(() => {
         socket.on('newChannel', (payload) =>{
@@ -79,6 +88,7 @@ const ModalChannelWindow = (props) => {
                 <Form onSubmit={sendingСhannels}>
                     <InputGroup>
                         <Form.Control
+                            ref={myRef}
                             htmlFor='name'
                             aria-describedby="basic-addon2"
                             value={channelName}

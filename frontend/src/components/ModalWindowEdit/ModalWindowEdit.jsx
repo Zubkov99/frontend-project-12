@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import SocketContext from "../../helpers/SocketContext";
 import {renameLocalChannel} from "../../slices/channels";
@@ -20,6 +20,14 @@ const ModalWindowEdit = (props) => {
     };
 
     const { t } = useTranslation();
+
+    const myRef = useRef();
+
+    useEffect(()=>{
+        if (myRef && myRef.current) {
+            myRef.current.focus()
+        }
+    })
 
     const { show, handleClose, currentId } = props;
     const [channelName, setChannelName] = useState('');
@@ -73,6 +81,7 @@ const ModalWindowEdit = (props) => {
                 <Form onSubmit={editChannelHandler}>
                     <label htmlFor='name' className="visually-hidden">{t('renameChannelModal.placeholder')}</label>
                     <Form.Control
+                        ref={myRef}
                         id='name'
                         htmlFor='name'
                         // aria-describedby="basic-addon2"
