@@ -84,7 +84,6 @@ const ModalWindowEdit = (props) => {
                         ref={myRef}
                         id='name'
                         htmlFor='name'
-                        // aria-describedby="basic-addon2"
                         placeholder={t('renameChannelModal.placeholder')}
                         value={channelName}
                         onChange={(event) => {
