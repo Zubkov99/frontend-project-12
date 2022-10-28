@@ -77,9 +77,9 @@ const ModalChannelWindow = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={sendingСhannels}>
-                    <InputGroup
-                    >
+                    <InputGroup>
                         <Form.Control
+                            htmlFor='name'
                             aria-describedby="basic-addon2"
                             value={channelName}
                             onChange={(event) => {
@@ -91,7 +91,7 @@ const ModalChannelWindow = (props) => {
                             placeholder={t('addChannelModal.placeholder')}
                         />
                         <label htmlFor='name'
-                               // className="visually-hidden"
+                               className="visually-hidden"
                         >{t('renameChannelModal.placeholder')}</label>
                     </InputGroup>
                     {statusError &&
