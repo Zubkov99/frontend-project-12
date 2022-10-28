@@ -123,7 +123,6 @@ const ModalChannelWindow = (props) => {
                     {t('addChannelModal.saveButton')}
                 </Button>
             </Modal.Footer>
-            <ToastContainer />
         </Modal>
     );
 }
