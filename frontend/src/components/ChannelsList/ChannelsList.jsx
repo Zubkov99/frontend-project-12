@@ -25,8 +25,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         {/* //TODO */}
         {/* Раскомментить класснейм или выпилить */}
         <span
-
-            // className='visually-hidden'
+            className='visually-hidden'
         >Управление каналом</span>
         {children}
         &#x25bc;
