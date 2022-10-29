@@ -4,6 +4,7 @@ import React from "react";
 import Messages from "../Messages";
 import Channels from "../Channels";
 import styles from './ChatWindow.module.css';
+import {ToastContainer} from "react-toastify";
 
 const ChatWindow = () => {
     const activeChannel = useSelector(state => {
@@ -35,6 +36,7 @@ const ChatWindow = () => {
                     </Row>
                 </Container>
             </Card.Body>
+            <ToastContainer />
         </Card>
     )
 };

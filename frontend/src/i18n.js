@@ -76,6 +76,12 @@ const resources = {
                 channelRemoved: 'Channel deleted',
                 channelRenamed: 'The channel has been renamed',
             },
+            removeModalChannel: {
+                header: 'Remove channel',
+                body: 'Are you sure?',
+                closeButton: 'Cansel',
+                actionButton: 'Remove',
+            },
         }
     },
     ru: {
@@ -150,6 +156,12 @@ const resources = {
                 channelAdded: 'Канал создан',
                 channelRemoved: 'Канал удалён',
                 channelRenamed: 'Канал переименован',
+            },
+            removeModalChannel: {
+                header: 'Удалить канал',
+                body: 'Уверены?',
+                closeButton: 'Отменить',
+                actionButton: 'Удалить',
             },
         }
     }

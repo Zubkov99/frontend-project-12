@@ -17,7 +17,7 @@ const errorStatus = {
     stopWords: 'Incorrect word',
 }
 
-const ModalChannelWindow = (props) => {
+const AddModalChannelWindow = (props) => {
     const { t } = useTranslation();
     const {show, handleClose} = props;
     const [channelName, setChannelName] = useState('');
@@ -37,7 +37,6 @@ const ModalChannelWindow = (props) => {
             myRef.current.focus()
         }
     })
-
 
     useEffect(() => {
         socket.on('newChannel', (payload) =>{
@@ -78,7 +77,7 @@ const ModalChannelWindow = (props) => {
         });
         setError('')
         handleClose();
-        toast(t('notificationBlock.channelAdded'));
+        toast.success(t('notificationBlock.channelAdded'));
     };
 
     return (
@@ -129,4 +128,4 @@ const ModalChannelWindow = (props) => {
     );
 }
 
-export default ModalChannelWindow
+export default AddModalChannelWindow

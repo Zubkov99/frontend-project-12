@@ -10,7 +10,6 @@ import checkDisabledButton from "../helpers/checkDisabledButton";
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 
-
 const logIn = async (username, password, setKey, redirect, setStatus, t) => {
     try {
         const response = await axios.post(routes.loginPath(), { username, password });

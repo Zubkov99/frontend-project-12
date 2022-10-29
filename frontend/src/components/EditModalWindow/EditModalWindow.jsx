@@ -10,7 +10,7 @@ import filter from 'leo-profanity';
 const censorship = filter.add(filter.getDictionary('ru'));
 
 
-const ModalWindowEdit = (props) => {
+const EditModalWindow = (props) => {
 
     const errorStatus = {
         notUniqValue: 'The channel name must be a unique value',
@@ -32,6 +32,7 @@ const ModalWindowEdit = (props) => {
     const { show, handleClose, currentId } = props;
     const [channelName, setChannelName] = useState('');
     const [statusError, setError] = useState('');
+
     const { channels }  = useSelector(state => state.content);
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const ModalWindowEdit = (props) => {
             setError('');
             handleClose()
         })
-        toast(t('notificationBlock.channelRenamed'));
+        toast.success(t('notificationBlock.channelRenamed'));
     };
 
     return (
@@ -115,4 +116,4 @@ const ModalWindowEdit = (props) => {
     )
 }
 
-export default ModalWindowEdit
+export default EditModalWindow

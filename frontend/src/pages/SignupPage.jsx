@@ -49,7 +49,6 @@ const SignupPage = () => {
                 .required(t('validationFeedback.passwordConfirmationRequired')),
         }),
         onSubmit: async (values) => {
-            // alert(JSON.stringify(values, null, 2));
             const {login, password} = values;
             await signup(login, password, setKey, navigate, setStatus, t);
         },

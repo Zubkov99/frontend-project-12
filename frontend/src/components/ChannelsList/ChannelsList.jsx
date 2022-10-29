@@ -2,13 +2,11 @@ import React, {useContext, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { ListGroup, Dropdown } from "react-bootstrap";
 import styles from './ChannelList.module.css'
-import SocketContext from "../../helpers/SocketContext";
-import { deleteChannel, setActiveChannel } from "../../slices/channels";
-import ModalWindowEdit from "../ModalWindowEdit";
+import { setActiveChannel } from "../../slices/channels";
+import EditModalWindow from "../EditModalWindow";
 import {useTranslation} from "react-i18next";
-import {toast} from "react-toastify";
 import AppContext from "../../helpers/сontext";
-
+import RemoveChannelModal from "../RemoveChannelModal";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -24,7 +22,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         }}
     >
         {/*//TODO*/}
+        {/*Раскомментить класснейм или выпилить*/}
         <span
+
             // className='visually-hidden'
         >Управление каналом</span>
         {children}
@@ -32,31 +32,24 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     </a>
 ));
 
-
 const ChannelsList = (props) => {
     const { t } = useTranslation();
     const { channels } = props;
     const dispatch = useDispatch();
-    const socket = useContext(SocketContext);
     const { key } = useContext(AppContext);
 
     const activeChannel = useSelector(state => state.content.channels.find(item => item.id === state.content.activeChannelId) || {id: null});
 
-    const deleteChannelHandler = (id, removable) => {
-        if(!removable) return;
-        socket.emit('removeChannel',
-            {id},
-            (response) => {
-                if (response.status !== 'ok') throw new Error('Network error');
-            })
-        dispatch(deleteChannel({id}))
-    }
-
-    const [show, setShow] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [currentId, setCurrentId] = useState(null);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showRemoveModal, setShowRemoveModal] = useState(false);
+
+    const handleCloseRemoveModal = () => setShowRemoveModal(false);
+    const handleShowRemoveModal = () => setShowRemoveModal(true);
+
+    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleShowEditModal = () => setShowEditModal(true);
 
     return (
         <>
@@ -66,36 +59,42 @@ const ChannelsList = (props) => {
                 {channels.map(({ name, id, removable, author }) => {
                     const newName = `# ${name}`;
                     return (
-                        <ListGroup.Item action
-                                        variant="dark"
-                                        active={activeChannel.id === id}
-                                        key={id}
-                                        onClick={() => dispatch(setActiveChannel(id)) }
-                                        className={styles.ListGroup}>
-                            {newName}
-                            { author === key.username &&
-                                <Dropdown>
-                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"/>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item onClick={() => {
-                                        setCurrentId(id)
-                                        handleShow()
-                                    }}>
-                                        {t('chatPage.editChannelButton')}
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => {
-                                        deleteChannelHandler(id, removable)
-                                        toast(t('notificationBlock.channelRemoved'));
-                                    }}>
-                                        {t('chatPage.removeChannelButton')}
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>}
-                        </ListGroup.Item>
-                    )
+                        <>
+                            <ListGroup.Item action
+                                            variant="dark"
+                                            active={activeChannel.id === id}
+                                            key={id}
+                                            onClick={() => dispatch(setActiveChannel(id)) }
+                                            className={styles.ListGroup}>
+                                {newName}
+                                { author === key.username &&
+                                    <Dropdown>
+                                        <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components"/>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={() => {
+                                                setCurrentId(id)
+                                                handleShowEditModal()
+                                            }}>
+                                                {t('chatPage.editChannelButton')}
+                                            </Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                if(!removable) return;
+                                                setCurrentId(id)
+                                                handleShowRemoveModal()
+                                                // deleteChannelHandler(id, removable)
+                                                // toast(t('notificationBlock.channelRemoved'));
+                                            }}>
+                                                {t('chatPage.removeChannelButton')}
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>}
+                            </ListGroup.Item>
+                        </>
+                )
                 })}
             </ListGroup>
-            <ModalWindowEdit show={show} handleClose={handleClose} currentId={currentId}/>
+            <EditModalWindow show={showEditModal} handleClose={handleCloseEditModal} currentId={currentId}/>
+            <RemoveChannelModal show={showRemoveModal} handleClose={handleCloseRemoveModal} currentId={currentId}/>
         </>
     )
 }

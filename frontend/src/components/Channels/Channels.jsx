@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import _ from "lodash";
 import ChannelsList from "../ChannelsList";
-import ModalChannelWindow from "../ModalChannelWindow";
+import AddModalChannelWindow from "../AddModalChannelWindow";
 
 
 const Channels = () => {
@@ -34,7 +34,7 @@ const Channels = () => {
                 </Button>
             </div>
             <ChannelsList channels={channels} />
-            <ModalChannelWindow show={show} handleClose={handleClose}/>
+            <AddModalChannelWindow show={show} handleClose={handleClose}/>
         </>
     )
 };
