@@ -1,2 +1,3 @@
-import RemoveChannelModal from "./RemoveChannelModal";
+import RemoveChannelModal from './RemoveChannelModal';
+
 export default RemoveChannelModal;

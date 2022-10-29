@@ -1,2 +1,3 @@
-import AddModalChannelWindow from "./AddModalChannelWindow";
-export default AddModalChannelWindow
+import AddModalChannelWindow from './AddModalChannelWindow';
+
+export default AddModalChannelWindow;

@@ -1,78 +1,78 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import _ from "lodash";
-import {Button, Form, InputGroup} from "react-bootstrap";
-import AppContext from "../../helpers/сontext";
-import {getMessage} from "../../slices/channels";
-import SocketContext from "../../helpers/SocketContext";
-import send from "../../send.png";
-import styles from './Messages.module.css'
-import {useTranslation} from "react-i18next";
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
+import AppContext from '../../helpers/сontext';
+import { getMessage } from '../../slices/channels';
+import SocketContext from '../../helpers/SocketContext';
+import send from '../../send.png';
+import styles from './Messages.module.css';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
 const scrollTo = (ref) => {
-    if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
+  if (ref && ref.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
 const Messages = () => {
-    const socket = useContext(SocketContext);
-    const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
+  const dispatch = useDispatch();
 
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    const activeChannelId = useSelector(state => state.content.activeChannelId);
-    const messages = useSelector(state => {
-        const uniqMessages = _.uniqBy(state.content.messages, 'id');
-        return uniqMessages.filter(item => item.channelId === activeChannelId)
+  const activeChannelId = useSelector((state) => state.content.activeChannelId);
+  const messages = useSelector((state) => {
+    const uniqMessages = _.uniqBy(state.content.messages, 'id');
+    return uniqMessages.filter((item) => item.channelId === activeChannelId);
+  });
+
+  const { key } = useContext(AppContext);
+  const inputEl = useRef(null);
+
+  const lastMessage = useRef(null);
+
+  useEffect(() => {
+    socket.on('newMessage', (payload) => {
+      dispatch(getMessage(payload));
     });
+    inputEl.current.focus();
+  }, []);
 
-    const { key } = useContext(AppContext);
-    const inputEl = useRef(null);
+  useEffect(() => {
+    scrollTo(lastMessage);
+  }, [messages]);
 
-    const lastMessage = useRef(null);
+  useEffect(() => {
+    inputEl.current.focus();
+  }, [activeChannelId]);
 
-    useEffect(() => {
-        socket.on('newMessage', (payload) => {
-            dispatch(getMessage(payload))
-        })
-        inputEl.current.focus();
-    },[])
+  const [text, setText] = useState('');
 
-    useEffect(() => {
-        scrollTo(lastMessage)
-    }, [messages])
+  const submitHandler = (event) => {
+    event.preventDefault();
+    socket.emit('newMessage', {
+      message: text,
+      username: key.username,
+      channelId: activeChannelId,
+    }, (response) => {
+      if (response.status !== 'ok') throw new Error('Network error');
+      setText('');
+    });
+  };
 
-    useEffect(() => {
-        inputEl.current.focus();
-    }, [activeChannelId])
-
-    const [text, setText] = useState('');
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-        socket.emit('newMessage', {
-            message: text,
-            username: key.username,
-            channelId: activeChannelId,
-        }, (response) => {
-            if (response.status !== 'ok') throw new Error('Network error');
-            setText('');
-        });
-    }
-
-    return (
+  return (
         <div id='messages'>
             <div id='messages-box' className={styles.messagesBox}>
-                {messages.map((item, index) => {
-                    return (
+                {messages.map((item, index) => (
                         <div key={item.id} ref={messages.length === index + 1 ? lastMessage : null}>
                             <b>{item.username}</b>:&nbsp;
                             {censorship.clean(item.message)}
                         </div>
-                    )
-                })}
+                ))}
             </div>
             <Form onSubmit={submitHandler}>
                 <InputGroup className={`${styles.inputGroup} mb-3`}>
@@ -81,7 +81,7 @@ const Messages = () => {
                         aria-label={t('chatPage.messageAriaLabel')}
                         placeholder={t('chatPage.messagePlaceholder')}
                         onChange={(event) => {
-                            setText(event.target.value)
+                          setText(event.target.value);
                         }}
                         value={text}
                         ref={inputEl}
@@ -92,7 +92,7 @@ const Messages = () => {
                 </InputGroup>
             </Form>
         </div>
-    )
-}
+  );
+};
 
-export default Messages
+export default Messages;

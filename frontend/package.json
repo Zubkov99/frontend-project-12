@@ -12,6 +12,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "formik": "^2.2.9",
+    "leo-profanity": "^1.6.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -51,6 +52,8 @@
     ]
   },
   "devDependencies": {
-    "i18next": "^22.0.2"
+    "eslint": "8.22.0",
+    "eslint-plugin-react": "^7.31.10",
+    "i18next": "^22.0.4"
   }
 }

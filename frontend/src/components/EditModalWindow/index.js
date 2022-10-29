@@ -1,2 +1,3 @@
-import EditModalWindow from "./EditModalWindow";
-export default EditModalWindow
+import EditModalWindow from './EditModalWindow';
+
+export default EditModalWindow;

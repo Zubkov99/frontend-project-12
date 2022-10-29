@@ -1,2 +1,3 @@
-import ChannelsList from "./ChannelsList";
+import ChannelsList from './ChannelsList';
+
 export default ChannelsList;
