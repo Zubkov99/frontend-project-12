@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useSelector } from 'react-redux';
 import {
   Card, Col, Container, Row,
@@ -9,7 +10,7 @@ import Channels from '../Channels';
 import styles from './ChatWindow.module.css';
 
 const ChatWindow = () => {
-  const activeChannel = useSelector((state) => state.content.channels.find((item) => item.id === state.content.activeChannelId));
+    const activeChannel = useSelector((state) => state.content.channels.find((item) => item.id === state.content.activeChannelId));
 
   // TODO
   // Костыль для фронтовых тестов, потом убрать

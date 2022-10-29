@@ -15,13 +15,13 @@ const socket = io();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <React.StrictMode>
-                <SocketContext.Provider value={socket}>
-                <App />
-                </SocketContext.Provider>
-            </React.StrictMode>
-        </BrowserRouter>
-    </Provider>,
+  <Provider store={store}>
+      <BrowserRouter>
+          <React.StrictMode>
+              <SocketContext.Provider value={socket}>
+              <App />
+              </SocketContext.Provider>
+          </React.StrictMode>
+      </BrowserRouter>
+  </Provider>,
 );

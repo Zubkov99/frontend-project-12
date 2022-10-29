@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../helpers/context';
 import routes from '../helpers/routes';
-import checkDisabledButton from '../helpers/checkDisabledButton';
 
 const signup = async (username, password, setKey, redirect, setStatus, t) => {
   try {

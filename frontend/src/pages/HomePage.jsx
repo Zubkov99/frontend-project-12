@@ -18,7 +18,7 @@ const HomePage = () => {
     dispatch(fetchChannels(key.token));
   }, []);
   return (
-        <ChatWindow />
+      <ChatWindow />
   );
 };
 

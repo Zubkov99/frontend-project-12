@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './App.css';
 import React from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
@@ -7,7 +8,7 @@ import LoginPage from '../../pages/LoginPage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import SignupPage from '../../pages/SignupPage';
 import AppContext from '../../helpers/context';
-import { useLocalStorage } from '../../helpers/useLocalStorage';
+import useLocalStorage from '../../helpers/useLocalStorage';
 import Layout from '../Layout/Layout';
 
 const rollbarConfig = {
