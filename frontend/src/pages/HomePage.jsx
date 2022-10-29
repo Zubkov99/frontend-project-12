@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../helpers/сontext';
+import AppContext from '../helpers/context';
 import { fetchChannels } from '../slices/channels';
 import ChatWindow from '../components/ChatWindow';
 

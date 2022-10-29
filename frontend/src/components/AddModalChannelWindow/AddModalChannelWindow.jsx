@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -10,7 +11,7 @@ import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import SocketContext from '../../helpers/SocketContext';
 import { getChannels } from '../../slices/channels';
-import AppContext from '../../helpers/сontext';
+import AppContext from '../../helpers/context';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -48,7 +49,7 @@ const AddModalChannelWindow = (props) => {
     });
   }, [socket]);
 
-  const sendingСhannels = (event) => {
+  const sendingChannels = (event) => {
     event.preventDefault();
 
     // TODO:
@@ -85,12 +86,12 @@ const AddModalChannelWindow = (props) => {
   };
 
   return (
-        <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={sendingСhannels}>
+                <Form onSubmit={sendingChannels}>
                     <InputGroup>
                         <Form.Control
                             ref={myRef}
@@ -124,7 +125,7 @@ const AddModalChannelWindow = (props) => {
                 <Button variant="secondary" onClick={handleClose} >
                     {t('addChannelModal.closeButton')}
                 </Button>
-                <Button variant="primary" onClick={sendingСhannels}>
+                <Button variant="primary" onClick={sendingChannels}>
                     {t('addChannelModal.saveButton')}
                 </Button>
             </Modal.Footer>

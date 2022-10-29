@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import AppContext from '../../helpers/сontext';
+import AppContext from '../../helpers/context';
 import { getMessage } from '../../slices/channels';
 import SocketContext from '../../helpers/SocketContext';
 import send from '../../send.png';

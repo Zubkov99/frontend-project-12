@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import AppContext from '../helpers/сontext';
+import AppContext from '../helpers/context';
 import routes from '../helpers/routes';
 import checkDisabledButton from '../helpers/checkDisabledButton';
 

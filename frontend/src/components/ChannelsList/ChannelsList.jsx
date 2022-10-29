@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './ChannelList.module.css';
 import { setActiveChannel } from '../../slices/channels';
 import EditModalWindow from '../EditModalWindow';
-import AppContext from '../../helpers/сontext';
+import AppContext from '../../helpers/context';
 import RemoveChannelModal from '../RemoveChannelModal';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (

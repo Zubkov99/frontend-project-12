@@ -4,7 +4,7 @@ import {
   Navbar, Container, Button, DropdownButton, Dropdown,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import AppContext from '../../helpers/сontext';
+import AppContext from '../../helpers/context';
 
 const Layout = () => {
   const { key, setKey, setLang } = useContext(AppContext);

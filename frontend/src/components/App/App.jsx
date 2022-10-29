@@ -6,7 +6,7 @@ import HomePage from '../../pages/HomePage';
 import LoginPage from '../../pages/LoginPage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import SignupPage from '../../pages/SignupPage';
-import AppContext from '../../helpers/сontext';
+import AppContext from '../../helpers/context';
 import { useLocalStorage } from '../../helpers/useLocalStorage';
 import Layout from '../Layout/Layout';
 
