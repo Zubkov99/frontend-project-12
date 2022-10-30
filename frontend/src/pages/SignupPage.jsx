@@ -55,66 +55,66 @@ const SignupPage = () => {
     },
   });
   return (
-		<div className='loginContainer w-50 mx-auto'>
-			<Card>
-				<Card.Header>{t('signupPage.header')}</Card.Header>
-				<Card.Body>
-					<Form noValidate onSubmit={formik.handleSubmit}>
-						<Form.Group className="mb-3" controlId="login">
-							<Form.Label>{t('signupPage.loginLabel')}</Form.Label>
-							<Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
-							              isValid={!formik.errors.login && !!formik.values.login}
-							              isInvalid={!!formik.errors.login || !!status}
-							              {...formik.getFieldProps('login')}/>
-							<Form.Control.Feedback type="invalid">
-								{formik.errors.login}
-							</Form.Control.Feedback>
-						</Form.Group>
+        <div className='loginContainer w-50 mx-auto'>
+            <Card>
+                <Card.Header>{t('signupPage.header')}</Card.Header>
+                <Card.Body>
+                    <Form noValidate onSubmit={formik.handleSubmit}>
+                        <Form.Group className="mb-3" controlId="login">
+                            <Form.Label>{t('signupPage.loginLabel')}</Form.Label>
+                            <Form.Control type="login" placeholder={t('loginPage.loginPlaceholder')}
+                                          isValid={!formik.errors.login && !!formik.values.login}
+                                          isInvalid={!!formik.errors.login || !!status}
+                                          {...formik.getFieldProps('login')}/>
+                            <Form.Control.Feedback type="invalid">
+                                {formik.errors.login}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
-						<Form.Group className="mb-3" controlId="formBasicPassword">
-							<Form.Label>{t('signupPage.passwordLabel')}</Form.Label>
-							<Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')} isValid={!formik.errors.password && !!formik.values.passwordConfirmation}
-							              isInvalid={!!formik.errors.password}
-							              {...formik.getFieldProps('password')}>
-							</Form.Control>
-							<Form.Control.Feedback type="invalid">
-								{formik.errors.password}
-							</Form.Control.Feedback>
-						</Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>{t('signupPage.passwordLabel')}</Form.Label>
+                            <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')} isValid={!formik.errors.password && !!formik.values.passwordConfirmation}
+                                          isInvalid={!!formik.errors.password}
+                                          {...formik.getFieldProps('password')}>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                                {formik.errors.password}
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
-						<Form.Group className="mb-3" controlId="formBasicPasswordConfirmation">
-							<Form.Label>
-								{t('signupPage.confirmPassword')}
-							</Form.Label>
-							<Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
-							              isValid={
-								              !formik.errors.password && !!formik.values.passwordConfirmation
-							              }
-							              isInvalid={!!formik.errors.passwordConfirmation}
-							              {...formik.getFieldProps('passwordConfirmation')}>
-							</Form.Control>
-							<Form.Control.Feedback type="invalid">
-								{formik.errors.passwordConfirmation}
-							</Form.Control.Feedback>
-						</Form.Group>
-						{!!status
-							&& <Alert variant='danger' onClick={() => setStatus('')}>
-								{t(`signupPage.${status}`)}
-							</Alert>
-						}
-						<Button variant="primary" type="submit"
-							// TODO
-							// раскомментировать блокировку кнопки. Сделано  для тупых тестов.
+                        <Form.Group className="mb-3" controlId="formBasicPasswordConfirmation">
+                            <Form.Label>
+                                {t('signupPage.confirmPassword')}
+                            </Form.Label>
+                            <Form.Control type="password" placeholder={t('loginPage.passwordPlaceholder')}
+                                          isValid={
+                                !formik.errors.password && !!formik.values.passwordConfirmation
+                                          }
+                                          isInvalid={!!formik.errors.passwordConfirmation}
+                                          {...formik.getFieldProps('passwordConfirmation')}>
+                            </Form.Control>
+                            <Form.Control.Feedback type="invalid">
+                                {formik.errors.passwordConfirmation}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        {!!status
+                            && <Alert variant='danger' onClick={() => setStatus('')}>
+                                {t(`signupPage.${status}`)}
+                            </Alert>
+                        }
+                        <Button variant="primary" type="submit"
+                            // TODO
+                            // раскомментировать блокировку кнопки. Сделано  для тупых тестов.
 
-							// disabled={checkDisabledButton(formik)}
-						>
-							{t('signupPage.signupButton')}
-						</Button>
-					</Form>
-				</Card.Body>
-				<ToastContainer />
-			</Card>
-		</div>
+                            // disabled={checkDisabledButton(formik)}
+                        >
+                            {t('signupPage.signupButton')}
+                        </Button>
+                    </Form>
+                </Card.Body>
+                <ToastContainer />
+            </Card>
+        </div>
   );
 };
 
