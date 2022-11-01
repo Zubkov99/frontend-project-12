@@ -2,9 +2,10 @@ env:
   browser: true
   es2021: true
 extends:
-  - eslint:recommended
+  - airbnb
   - plugin:react/recommended
-  - airbnb-base
+  - plugin:functional/recommended
+  - plugin:react-hooks/recommended
 parserOptions:
   ecmaFeatures:
     jsx: true
