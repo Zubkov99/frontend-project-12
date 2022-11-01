@@ -1,0 +1,4 @@
+frontend/public/
+frontend/build/
+/node_modules/
+frontend/node_modules/
