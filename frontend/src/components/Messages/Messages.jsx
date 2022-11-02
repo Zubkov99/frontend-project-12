@@ -8,10 +8,11 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import AppContext from '../../helpers/context';
-import { getMessage } from '../../slices/channels';
 import SocketContext from '../../helpers/SocketContext';
 import send from '../../send.png';
 import styles from './Messages.module.css';
+// import { getMessage } from '../../slices/channels';
+import {getMessages} from "../../slices/messages";
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -26,10 +27,15 @@ const Messages = () => {
   const { t } = useTranslation();
 
   const activeChannelId = useSelector((state) => state.content.activeChannelId);
+  // const messages = useSelector((state) => {
+  //   const uniqMessages = _.uniqBy(state.content.messages, 'id');
+  //   return uniqMessages.filter((item) => item.channelId === activeChannelId);
+  // });
+
   const messages = useSelector((state) => {
-    const uniqMessages = _.uniqBy(state.content.messages, 'id');
-    return uniqMessages.filter((item) => item.channelId === activeChannelId);
-  });
+      const uniqMessages = _.uniqBy(state.messages.messages, 'id');
+      return uniqMessages.filter((item) => item.channelId === activeChannelId);
+  })
 
   const { key } = useContext(AppContext);
   const inputEl = useRef(null);
@@ -38,7 +44,8 @@ const Messages = () => {
 
   useEffect(() => {
     socket.on('newMessage', (payload) => {
-      dispatch(getMessage(payload));
+      // dispatch(getMessage(payload));
+        dispatch(getMessages(payload))
     });
     inputEl.current.focus();
   }, []);

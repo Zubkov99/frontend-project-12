@@ -2,10 +2,9 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../helpers/routes';
-
 const setActiveHelper = (state, id) => state.activeChannelId = id;
 
-export const fetchChannels = createAsyncThunk(
+export const fetchData = createAsyncThunk(
   'channels/fetchChannels',
   async (token) => {
     const response = await axios.get(routes.usersPath(), {
@@ -23,16 +22,13 @@ const initialState = {
   activeChannelId: 1,
 };
 
-// TODO
-// После срабатывания getChannels нужно передавать редьюсер setActiveChannel
-
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    getMessage(state, { payload }) {
-      state.messages.push(payload);
-    },
+    // getMessage(state, { payload }) {
+    //   state.messages.push(payload);
+    // },
     getChannels(state, { payload }) {
       state.channels.push(payload);
       setActiveHelper(state, payload.id);
@@ -40,7 +36,7 @@ const channelsSlice = createSlice({
     deleteChannel(state, { payload }) {
       const channelId = Number(payload.id);
       state.channels = state.channels.filter((item) => item.id !== channelId);
-      state.messages = state.messages.filter((item) => item.channelId !== channelId);
+      // state.messages = state.messages.filter((item) => item.channelId !== channelId);
       setActiveHelper(state, 1);
     },
     setActiveChannel(state, { payload }) {
@@ -63,14 +59,14 @@ const channelsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchChannels.fulfilled, (state, action) => {
-      const { channels, messages } = action.payload;
+    builder.addCase(fetchData.fulfilled, (state, action) => {
+      const { channels } = action.payload;
       state.channels = channels;
-      state.messages = messages;
+      // state.messages = messages;
     });
   },
 });
 export const {
-  getMessage, setActiveChannel, getChannels, deleteChannel, renameLocalChannel,
+  setActiveChannel, getChannels, deleteChannel, renameLocalChannel,
 } = channelsSlice.actions;
 export default channelsSlice.reducer;
