@@ -24,7 +24,7 @@ const signup = async (username, password, setKey, redirect, setStatus, t) => {
   }
 };
 
-function SignupPage() {
+const SignupPage = () => {
   const { setKey } = useContext(AppContext);
   const { t } = useTranslation();
   const [status, setStatus] = useState('');
@@ -123,6 +123,6 @@ function SignupPage() {
       </Card>
     </div>
   );
-}
+};
 
 export default SignupPage;

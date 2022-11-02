@@ -21,7 +21,7 @@ const errorStatus = {
   stopWords: 'Incorrect word',
 };
 
-function AddModalChannelWindow(props) {
+const AddModalChannelWindow = (props) => {
   const { t } = useTranslation();
   const { show, handleClose } = props;
   const [channelName, setChannelName] = useState('');
@@ -135,6 +135,6 @@ function AddModalChannelWindow(props) {
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default AddModalChannelWindow;
