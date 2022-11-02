@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -22,7 +21,7 @@ const errorStatus = {
   stopWords: 'Incorrect word',
 };
 
-const AddModalChannelWindow = (props) => {
+function AddModalChannelWindow(props) {
   const { t } = useTranslation();
   const { show, handleClose } = props;
   const [channelName, setChannelName] = useState('');
@@ -86,51 +85,56 @@ const AddModalChannelWindow = (props) => {
   };
 
   return (
-      <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={sendingChannels}>
-                    <InputGroup>
-                        <Form.Control
-                            ref={myRef}
-                            id='name'
-                            htmlFor='name'
-                            aria-describedby="basic-addon2"
-                            value={channelName}
-                            onChange={(event) => {
-                              setChannelName(event.target.value);
-                              setError('');
-                            }}
-                            isInvalid={!!statusError}
-                            isValid={!statusError && channelName}
-                            placeholder={t('addChannelModal.placeholder')}
-                        />
-                        <label htmlFor='name'
-                               className="visually-hidden"
-                        >{t('renameChannelModal.placeholder')}</label>
-                    </InputGroup>
-                    {statusError
-                        && <p style={{
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={sendingChannels}>
+          <InputGroup>
+            <Form.Control
+              ref={myRef}
+              id="name"
+              htmlFor="name"
+              aria-describedby="basic-addon2"
+              value={channelName}
+              onChange={(event) => {
+                setChannelName(event.target.value);
+                setError('');
+              }}
+              isInvalid={!!statusError}
+              isValid={!statusError && channelName}
+              placeholder={t('addChannelModal.placeholder')}
+            />
+            <label
+              htmlFor="name"
+              className="visually-hidden"
+            >
+              {t('renameChannelModal.placeholder')}
+            </label>
+          </InputGroup>
+          {statusError
+                        && (
+                        <p style={{
                           color: '#CA0A0A',
                           marginTop: '3vh',
-                        }} >
-                            {statusError}
+                        }}
+                        >
+                          {statusError}
                         </p>
-                    }
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose} >
-                    {t('addChannelModal.closeButton')}
-                </Button>
-                <Button variant="primary" onClick={sendingChannels}>
-                    {t('addChannelModal.saveButton')}
-                </Button>
-            </Modal.Footer>
-        </Modal>
+                        )}
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          {t('addChannelModal.closeButton')}
+        </Button>
+        <Button variant="primary" onClick={sendingChannels}>
+          {t('addChannelModal.saveButton')}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
-};
+}
 
 export default AddModalChannelWindow;
