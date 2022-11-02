@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import SocketContext from '../../helpers/SocketContext';
-import { getChannels } from '../../slices/channels';
+import { addChannels } from '../../slices/channels';
 import AppContext from '../../helpers/context';
 
 const censorship = filter.add(filter.getDictionary('ru'));
@@ -44,7 +44,7 @@ const AddModalChannelWindow = (props) => {
 
   useEffect(() => {
     socket.on('newChannel', (payload) => {
-      dispatch(getChannels(payload));
+      dispatch(addChannels(payload));
     });
   }, [socket]);
 

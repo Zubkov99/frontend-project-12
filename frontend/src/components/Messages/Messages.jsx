@@ -11,8 +11,7 @@ import AppContext from '../../helpers/context';
 import SocketContext from '../../helpers/SocketContext';
 import send from '../../send.png';
 import styles from './Messages.module.css';
-// import { getMessage } from '../../slices/channels';
-import {getMessages} from "../../slices/messages";
+import {addMessages} from "../../slices/messages";
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -27,10 +26,6 @@ const Messages = () => {
   const { t } = useTranslation();
 
   const activeChannelId = useSelector((state) => state.content.activeChannelId);
-  // const messages = useSelector((state) => {
-  //   const uniqMessages = _.uniqBy(state.content.messages, 'id');
-  //   return uniqMessages.filter((item) => item.channelId === activeChannelId);
-  // });
 
   const messages = useSelector((state) => {
       const uniqMessages = _.uniqBy(state.messages.messages, 'id');
@@ -44,8 +39,7 @@ const Messages = () => {
 
   useEffect(() => {
     socket.on('newMessage', (payload) => {
-      // dispatch(getMessage(payload));
-        dispatch(getMessages(payload))
+        dispatch(addMessages(payload))
     });
     inputEl.current.focus();
   }, []);
