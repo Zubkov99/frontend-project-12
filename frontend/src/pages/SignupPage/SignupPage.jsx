@@ -8,8 +8,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import AppContext from '../helpers/context';
-import routes from '../helpers/routes';
+import AppContext from '../../helpers/context';
+import routes from '../../helpers/routes';
 
 const signup = async (username, password, setKey, redirect, setStatus, t) => {
   try {

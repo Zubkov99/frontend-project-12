@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import SocketContext from '../../helpers/SocketContext';
-import { addChannels } from '../../slices/channels';
-import AppContext from '../../helpers/context';
+import SocketContext from '../../../../helpers/SocketContext';
+import { addChannels } from '../../../../slices/channels';
+import AppContext from '../../../../helpers/context';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 

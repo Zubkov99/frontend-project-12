@@ -4,14 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import styles from './ChannelList.module.css';
-import { setActiveChannel } from '../../slices/channels';
+import { setActiveChannel } from '../../../../slices/channels';
 import EditModalWindow from '../EditModalWindow';
-import AppContext from '../../helpers/context';
+import AppContext from '../../../../helpers/context';
 import RemoveChannelModal from '../RemoveChannelModal';
+import { activeChannelIdSelector } from '../../../../slices/selectors';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href=""
+    href="frontend/src/pages/HomePage/components/ChannelsList/ChannelsList"
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -37,8 +38,7 @@ function ChannelsList(props) {
   const { channels } = props;
   const dispatch = useDispatch();
   const { key } = useContext(AppContext);
-
-  const activeChannel = useSelector((state) => state.content.channels.find((item) => item.id === state.content.activeChannelId) || { id: null });
+  const activeChannelId = useSelector(activeChannelIdSelector);
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -65,7 +65,7 @@ function ChannelsList(props) {
             <ListGroup.Item
               action
               variant="dark"
-              active={activeChannel.id === id}
+              active={activeChannelId === id}
               key={id}
               onClick={() => dispatch(setActiveChannel(id))}
               className={styles.ListGroup}
@@ -87,8 +87,6 @@ function ChannelsList(props) {
                                           if (!removable) return;
                                           setCurrentId(id);
                                           handleShowRemoveModal();
-                                          // deleteChannelHandler(id, removable)
-                                          // toast(t('notificationBlock.channelRemoved'));
                                         }}
                                         >
                                           {t('chatPage.removeChannelButton')}

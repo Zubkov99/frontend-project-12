@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
 import ChannelsList from '../ChannelsList';
 import AddModalChannelWindow from '../AddModalChannelWindow';
+import { channelsSelector } from '../../../../slices/selectors';
 
 const Channels = () => {
   const { t } = useTranslation();
 
-  const channels = useSelector((state) => _.uniqBy(state.content.channels, 'id'));
+  const channels = useSelector(channelsSelector);
 
   const [show, setShow] = useState(false);
 

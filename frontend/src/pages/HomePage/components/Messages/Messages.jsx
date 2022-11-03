@@ -3,15 +3,15 @@ import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import AppContext from '../../helpers/context';
-import SocketContext from '../../helpers/SocketContext';
-import send from '../../send.png';
+import AppContext from '../../../../helpers/context';
+import SocketContext from '../../../../helpers/SocketContext';
+import send from '../../../../assets/send.png';
 import styles from './Messages.module.css';
-import {addMessages} from "../../slices/messages";
+import {addMessages} from "../../../../slices/messages";
+import { activeChannelIdSelector, messagesSelector } from '../../../../slices/selectors';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -22,19 +22,11 @@ const scrollTo = (ref) => {
 const Messages = () => {
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
-
-  const activeChannelId = useSelector((state) => state.content.activeChannelId);
-
-  const messages = useSelector((state) => {
-      const uniqMessages = _.uniqBy(state.messages.messages, 'id');
-      return uniqMessages.filter((item) => item.channelId === activeChannelId);
-  })
-
+  const activeChannelId = useSelector(activeChannelIdSelector);
+  const messages = useSelector(messagesSelector);
   const { key } = useContext(AppContext);
   const inputEl = useRef(null);
-
   const lastMessage = useRef(null);
 
   useEffect(() => {

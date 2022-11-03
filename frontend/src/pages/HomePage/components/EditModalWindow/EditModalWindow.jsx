@@ -7,8 +7,9 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
-import { renameLocalChannel } from '../../slices/channels';
-import SocketContext from '../../helpers/SocketContext';
+import { renameLocalChannel } from '../../../../slices/channels';
+import SocketContext from '../../../../helpers/SocketContext';
+import { channelsSelector } from '../../../../slices/selectors';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -34,7 +35,8 @@ const EditModalWindow = (props) => {
   const [channelName, setChannelName] = useState('');
   const [statusError, setError] = useState('');
 
-  const { channels } = useSelector((state) => state.content);
+  const { channels } = useSelector(channelsSelector);
+
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
 

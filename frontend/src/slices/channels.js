@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign,no-return-assign */
 import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import routes from '../helpers/routes';
 
 export const fetchData = createAsyncThunk(
@@ -18,6 +18,7 @@ export const fetchData = createAsyncThunk(
 const initialState = {
   channels: [],
   activeChannelId: 1,
+  username: '',
 };
 
 const channelsSlice = createSlice({
@@ -25,8 +26,11 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     addChannels(state, { payload }) {
+      const { id, author } = payload;
       state.channels.push(payload);
-      state.activeChannelId = payload.id;
+      if (author === state.username) {
+        state.activeChannelId = id;
+      }
     },
     deleteChannel(state, { payload }) {
       const channelId = Number(payload.id);
@@ -34,7 +38,7 @@ const channelsSlice = createSlice({
       state.activeChannelId = 1;
     },
     setActiveChannel(state, { payload }) {
-      if( state.activeChannelId === payload ) return;
+      if (state.activeChannelId === payload) return;
       state.activeChannelId = payload;
     },
     renameLocalChannel(state, { payload }) {
@@ -47,6 +51,10 @@ const channelsSlice = createSlice({
         };
       });
     },
+    addUserName(state, { payload }) {
+      if (state.username === payload) return;
+      state.username = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
@@ -55,7 +63,8 @@ const channelsSlice = createSlice({
     });
   },
 });
+
 export const {
-  setActiveChannel, addChannels, deleteChannel, renameLocalChannel,
+  setActiveChannel, addChannels, deleteChannel, renameLocalChannel, addUserName,
 } = channelsSlice.actions;
 export default channelsSlice.reducer;

@@ -25,6 +25,7 @@
     "@hexlet/chat-server": "^1.1.6",
     "@reduxjs/toolkit": "^1.8.5",
     "@rollbar/react": "^0.11.1",
+    "dotenv": "^16.0.3",
     "formik": "^2.2.9",
     "leo-profanity": "^1.6.1",
     "react": "^18.2.0",

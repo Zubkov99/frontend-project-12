@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useSelector } from 'react-redux';
 import {
   Card, Col, Container, Row,
@@ -8,9 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import Messages from '../Messages';
 import Channels from '../Channels';
 import styles from './ChatWindow.module.css';
+import { activeChannelSelector } from '../../../../slices/selectors';
 
-function ChatWindow() {
-  const activeChannel = useSelector((state) => state.content.channels.find((item) => item.id === state.content.activeChannelId));
+const ChatWindow = () => {
+  const activeChannel = useSelector(activeChannelSelector);
 
   // TODO
   // Костыль для фронтовых тестов, потом убрать
@@ -41,6 +41,6 @@ function ChatWindow() {
       <ToastContainer />
     </Card>
   );
-}
+};
 
 export default ChatWindow;

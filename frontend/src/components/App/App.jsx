@@ -3,13 +3,14 @@ import './App.css';
 import React from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from '../../pages/HomePage';
-import LoginPage from '../../pages/LoginPage';
-import NotFoundPage from '../../pages/NotFoundPage';
-import SignupPage from '../../pages/SignupPage';
+import HomePage from '../../pages/HomePage/HomePage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import SignupPage from '../../pages/SignupPage/SignupPage';
 import AppContext from '../../helpers/context';
 import useLocalStorage from '../../helpers/useLocalStorage';
 import Layout from '../Layout/Layout';
+
 
 const rollbarConfig = {
   accessToken: 'ff503d3bcafc4c20b3a14249c5f53c3b',

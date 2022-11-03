@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useEffect } from 'react';
 
 const useLocalStorage = (initialValue, key) => {

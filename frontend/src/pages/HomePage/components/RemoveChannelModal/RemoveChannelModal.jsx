@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { deleteChannel } from '../../slices/channels';
-import SocketContext from '../../helpers/SocketContext';
+import { deleteChannel } from '../../../../slices/channels';
+import SocketContext from '../../../../helpers/SocketContext';
 
 const RemoveChannelModal = (props) => {
   const { t } = useTranslation();
