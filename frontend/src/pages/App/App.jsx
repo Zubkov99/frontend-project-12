@@ -26,7 +26,7 @@ const rollbarConfig = {
 };
 
 const App = () => {
-  const [key, setKey] = useLocalStorage(null, 'user');
+  const [key, setKey] = useLocalStorage("", 'user');
   const [lang, setLang] = useLocalStorage('ru', 'lang');
   return (
     <Provider config={rollbarConfig}>

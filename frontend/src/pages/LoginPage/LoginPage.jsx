@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import debounce from 'lodash/debounce';
 import {
   Form, Button, Alert, Card,
 } from 'react-bootstrap';
@@ -31,6 +32,10 @@ const LoginPage = () => {
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
 
+  const validateEmailDebounceFn = debounce(fn => fn(), 1000);
+
+
+
   // const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   const formik = useFormik({
@@ -52,11 +57,19 @@ const LoginPage = () => {
       await logIn(login, password, setKey, navigate, setStatus, t);
     },
   });
+  // useEffect(() => {
+  //   console.log(formik.values.login);
+  //   debounce(formik.handleChange, 1000)
+  //   // validateEmailDebounceFn(formik.handleChange);
+  // }, [formik.values.login])
 
-  if (key) {
-    navigate('/');
-    return;
-  }
+
+  const [loginValue, setLoginValue] = useState('');
+
+  // if (key) {
+  //   navigate('/');
+  //   return;
+  // }
 
   return (
     <div className="loginContainer w-50 mx-auto">
