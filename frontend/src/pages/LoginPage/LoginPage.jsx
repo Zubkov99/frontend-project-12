@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import debounce from 'lodash/debounce';
 import {
   Form, Button, Alert, Card,
 } from 'react-bootstrap';
@@ -31,10 +30,7 @@ const LoginPage = () => {
   const { setKey, key } = useContext(AppContext);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
-
-  const validateEmailDebounceFn = debounce((fn) => fn(), 1000);
-
-  // const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const [feedback, showFeedback] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -51,22 +47,20 @@ const LoginPage = () => {
     }),
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
+      showFeedback(false);
       const { login, password } = values;
       await logIn(login, password, setKey, navigate, setStatus, t);
     },
   });
-  // useEffect(() => {
-  //   console.log(formik.values.login);
-  //   debounce(formik.handleChange, 1000)
-  //   // validateEmailDebounceFn(formik.handleChange);
-  // }, [formik.values.login])
 
-  const [loginValue, setLoginValue] = useState('');
+  useEffect(() => {
+    setTimeout(() => showFeedback(true), 4000);
+  }, [formik.values.login, formik.values.password]);
 
-  // if (key) {
-  //   navigate('/');
-  //   return;
-  // }
+  if (key) {
+    navigate('/');
+    return;
+  }
 
   return (
     <div className="loginContainer w-50 mx-auto">
@@ -80,7 +74,7 @@ const LoginPage = () => {
                 type="login"
                 placeholder={t('loginPage.loginPlaceholder')}
                 isValid={formik.touched.login && !formik.errors.login}
-                isInvalid={!!formik.errors.login || status}
+                isInvalid={(!!formik.errors.login || status) && feedback}
                 {...formik.getFieldProps('login')}
               />
               <Form.Control.Feedback type="invalid">
@@ -94,7 +88,7 @@ const LoginPage = () => {
                 type="password"
                 placeholder={t('loginPage.passwordPlaceholder')}
                 isValid={formik.touched.password && !formik.errors.password}
-                isInvalid={!!formik.errors.password || status}
+                isInvalid={(!!formik.errors.password || status) && feedback}
                 {...formik.getFieldProps('password')}
               />
               <Form.Control.Feedback type="invalid">
