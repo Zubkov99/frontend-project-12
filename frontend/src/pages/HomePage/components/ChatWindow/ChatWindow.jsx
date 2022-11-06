@@ -17,8 +17,8 @@ const ChatWindow = () => {
 
   // TODO
   // Костыль для фронтовых тестов, потом убрать
-  let activeChannelName;
-  if (activeChannel) activeChannelName = `# ${activeChannel.name}`;
+  // let activeChannelName;
+  // if (activeChannel) activeChannelName = `# ${activeChannel.name}`;
 
   return (
     <Card className={styles.cardMain}>
@@ -32,8 +32,10 @@ const ChatWindow = () => {
               {activeChannel
                                     && (
                                     <div className={`${styles.activeChannel} shadow-sm`}>
-                                      {/* <h5># {activeChannel.name}</h5> */}
-                                      <h5>{activeChannelName}</h5>
+                                      <h5>
+                                        #
+                                        {activeChannel.name}
+                                      </h5>
                                       <span>
                                         {messagesCount}
                                         {' '}

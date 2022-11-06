@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign,no-return-assign */
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchData, deleteChannel } from './channels';
 

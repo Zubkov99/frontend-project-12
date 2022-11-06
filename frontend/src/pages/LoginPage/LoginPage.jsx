@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -62,6 +63,7 @@ const LoginPage = () => {
     return;
   }
 
+  // eslint-disable-next-line consistent-return
   return (
     <div className="loginContainer w-50 mx-auto">
       <Card>

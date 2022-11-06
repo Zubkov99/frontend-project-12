@@ -34,7 +34,7 @@ const Messages = () => {
       dispatch(addMessages(payload));
     });
     inputEl.current.focus();
-  }, []);
+  }, [socket, dispatch]);
 
   useEffect(() => {
     scrollTo(lastMessage);
@@ -82,7 +82,7 @@ const Messages = () => {
             ref={inputEl}
           />
           <Button variant="outline-secondary">
-            <img src={send} height="17vh" width="17vw" />
+            <img src={send} height="17vh" width="17vw" alt={t('chatPage.sendButton')} />
           </Button>
         </InputGroup>
       </Form>
