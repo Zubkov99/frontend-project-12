@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '../HomePage/HomePage';
@@ -28,16 +28,17 @@ const rollbarConfig = {
 const App = () => {
   const [key, setKey] = useLocalStorage('', 'user');
   const [lang, setLang] = useLocalStorage('ru', 'lang');
+
+  const contextValue = useMemo(() => ({
+    key,
+    setKey,
+    lang,
+    setLang,
+  }), [key, setKey, lang, setLang]);
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <AppContext.Provider value={{
-          key,
-          setKey,
-          lang,
-          setLang,
-        }}
-        >
+        <AppContext.Provider value={contextValue}>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />

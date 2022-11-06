@@ -17,7 +17,7 @@ const HomePage = () => {
     }
     dispatch(addUserName(key.username));
     dispatch(fetchData(key.token));
-  }, []);
+  }, [dispatch, key, navigate]);
   return (
     <ChatWindow />
   );

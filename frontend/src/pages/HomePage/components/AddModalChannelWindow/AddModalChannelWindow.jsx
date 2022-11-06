@@ -38,7 +38,7 @@ const AddModalChannelWindow = (props) => {
     socket.on('newChannel', (payload) => {
       dispatch(addChannels(payload));
     });
-  }, [socket]);
+  }, [socket, dispatch]);
 
   const sendingChannels = (event) => {
     event.preventDefault();

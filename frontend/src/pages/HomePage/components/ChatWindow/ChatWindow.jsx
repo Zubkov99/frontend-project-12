@@ -15,11 +15,6 @@ const ChatWindow = () => {
   const messagesCount = useSelector(messagesSelector).length;
   const { t } = useTranslation();
 
-  // TODO
-  // Костыль для фронтовых тестов, потом убрать
-  // let activeChannelName;
-  // if (activeChannel) activeChannelName = `# ${activeChannel.name}`;
-
   return (
     <Card className={styles.cardMain}>
       <Card.Body className={styles.cardBody}>
