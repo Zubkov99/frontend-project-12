@@ -25,9 +25,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   >
     {/* //TODO */}
     {/* Раскомментить класснейм или выпилить */}
-    {/* <span> */}
-    {/*   Управление каналом */}
-    {/* </span> */}
+    <span>
+      Управление каналом
+    </span>
     {children}
     &#x25bc;
   </a>
