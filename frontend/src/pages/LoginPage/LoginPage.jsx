@@ -38,16 +38,14 @@ const LoginPage = () => {
       login: '',
       password: '',
     },
-    validationSchema: () => {
-      Yup.object({
+    validationSchema: Yup.object({
         login: Yup.string()
           .max(20, t('validationFeedback.loginMax'))
           .min(3, t('validationFeedback.loginMin'))
           .required(t('validationFeedback.loginRequired')),
         password: Yup.string()
           .required(t('validationFeedback.passwordRequired')),
-      });
-    },
+      }),
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
       const { login, password } = values;
