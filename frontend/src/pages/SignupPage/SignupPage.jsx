@@ -5,10 +5,10 @@ import axios from 'axios';
 import {
   Form, Button, Alert, Card,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import AppContext from '../../helpers/context';
+import AppContext from '../../contexts/AppContext';
 import routes from '../../helpers/routes';
 
 const signup = async (username, password, setKey, redirect, setStatus, t) => {
@@ -25,7 +25,7 @@ const signup = async (username, password, setKey, redirect, setStatus, t) => {
 };
 
 const SignupPage = () => {
-  const { setKey } = useContext(AppContext);
+  const { setKey, key } = useContext(AppContext);
   const { t } = useTranslation();
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
@@ -41,9 +41,9 @@ const SignupPage = () => {
         .min(3, t('validationFeedback.loginMin'))
         .required(t('validationFeedback.loginRequired')),
       password: Yup.string()
-      // .max(20,  t('validationFeedback.passwordMax'))
+        .max(20, t('validationFeedback.passwordMax'))
         .min(6, t('validationFeedback.passwordMin'))
-      // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+        .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
         .required(t('validationFeedback.passwordRequired')),
       passwordConfirmation: Yup.string()
         .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
@@ -54,6 +54,10 @@ const SignupPage = () => {
       await signup(login, password, setKey, navigate, setStatus, t);
     },
   });
+  if (key) {
+    navigate('/');
+    return;
+  }
   return (
     <div className="loginContainer w-50 mx-auto">
       <Card>
@@ -119,6 +123,11 @@ const SignupPage = () => {
             </Button>
           </Form>
         </Card.Body>
+        <Card.Footer>
+          {t('signupPage.footer')}
+          &nbsp;
+          <Link to="/login">{t('signupPage.goToLoginPage')}</Link>
+        </Card.Footer>
         <ToastContainer />
       </Card>
     </div>

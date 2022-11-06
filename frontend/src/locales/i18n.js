@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import resources from './locales/resources';
+import resources from './resources';
 
 const activeLanguage = localStorage.getItem('lang');
 

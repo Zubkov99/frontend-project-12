@@ -8,7 +8,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import AppContext from '../../helpers/context';
+import AppContext from '../../contexts/AppContext';
 import routes from '../../helpers/routes';
 import checkDisabledButton from '../../helpers/checkDisabledButton';
 
@@ -27,29 +27,39 @@ const logIn = async (username, password, setKey, redirect, setStatus, t) => {
 
 const LoginPage = () => {
   const { t } = useTranslation();
-  const { setKey } = useContext(AppContext);
+  const { setKey, key } = useContext(AppContext);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
+
+  // const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   const formik = useFormik({
     initialValues: {
       login: '',
       password: '',
     },
-    validationSchema: Yup.object({
-      login: Yup.string()
-        .max(20, t('validationFeedback.loginMax'))
-        .min(3, t('validationFeedback.loginMin'))
-        .required(t('validationFeedback.loginRequired')),
-      password: Yup.string()
-        .required(t('validationFeedback.passwordRequired')),
-    }),
+    validationSchema: () => {
+      Yup.object({
+        login: Yup.string()
+          .max(20, t('validationFeedback.loginMax'))
+          .min(3, t('validationFeedback.loginMin'))
+          .required(t('validationFeedback.loginRequired')),
+        password: Yup.string()
+          .required(t('validationFeedback.passwordRequired')),
+      });
+    },
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
       const { login, password } = values;
       await logIn(login, password, setKey, navigate, setStatus, t);
     },
   });
+
+  if (key) {
+    navigate('/');
+    return;
+  }
+
   return (
     <div className="loginContainer w-50 mx-auto">
       <Card>

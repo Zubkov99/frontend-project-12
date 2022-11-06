@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign,no-return-assign */
 import axios from 'axios';
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import routes from '../helpers/routes';
 
 export const fetchData = createAsyncThunk(

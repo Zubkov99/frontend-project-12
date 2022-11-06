@@ -6,20 +6,12 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import SocketContext from '../../../../helpers/SocketContext';
+import SocketContext from '../../../../contexts/SocketContext';
 import { addChannels } from '../../../../slices/channels';
-import AppContext from '../../../../helpers/context';
-
-const censorship = filter.add(filter.getDictionary('ru'));
-
-const errorStatus = {
-  notUniqValue: 'The channel name must be a unique value',
-  emptyField: 'the channel name should not be empty',
-  networkError: 'Network error',
-  stopWords: 'Incorrect word',
-};
+import AppContext from '../../../../contexts/AppContext';
+import sendWsData from '../../../../helpers/sendWsData';
+import checkForErrors from '../../../../helpers/checkForErrors';
 
 const AddModalChannelWindow = (props) => {
   const { t } = useTranslation();
@@ -50,35 +42,14 @@ const AddModalChannelWindow = (props) => {
 
   const sendingChannels = (event) => {
     event.preventDefault();
+    checkForErrors(channelName, channels, setError, t);
 
-    // TODO:
-    // оценить, насколько это норм делать проверку в функции
-
-    const duplicatedChannel = channels.find(({ name }) => name === channelName);
-
-    if (duplicatedChannel) {
-      setError(errorStatus.notUniqValue);
-      throw new Error(errorStatus.notUniqValue);
-    }
-    if (!channelName) {
-      setError(errorStatus.emptyField);
-      throw new Error(errorStatus.emptyField);
-    }
-    if (censorship.check(channelName)) {
-      setError(errorStatus.stopWords);
-      throw new Error(errorStatus.stopWords);
-    }
-
-    socket.emit('newChannel', {
+    const sendingData = {
       name: channelName,
       author: key.username,
-    }, (response) => {
-      if (response.status !== 'ok') {
-        setError(errorStatus.networkError);
-        throw new Error(errorStatus.networkError);
-      }
-      setChannelName('');
-    });
+    };
+
+    sendWsData(socket, sendingData, 'newChannel', setError);
     setError('');
     handleClose();
     toast.success(t('notificationBlock.channelAdded'));

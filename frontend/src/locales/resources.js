@@ -21,6 +21,9 @@ const resources = {
         passwordSpecialCharacters: 'Must contain one number and one lowercase',
         passwordConfirmationRequired: 'You need to confirm the password',
         passwordConfirmationMatch: 'Passwords must match\'',
+        channelLength: 'The channel name should be from 3 to 20 characters',
+        notUniqValue: 'The channel name must be a unique value',
+        stopWords: 'Incorrect word',
       },
       signupPage: {
         header: 'Register your account',
@@ -30,6 +33,8 @@ const resources = {
         signupButton: 'Sign up',
         confirmPassword: 'Enter your password again',
         ERR_NETWORK: 'Something happened to the network :C',
+        footer: 'Already have an account?',
+        goToLoginPage: 'Login',
       },
       chatPage: {
         channelsHeader: 'Channels',
@@ -38,6 +43,7 @@ const resources = {
         editChannelButton: 'Edit',
         removeChannelButton: 'Remove',
         messageAriaLabel: 'New message',
+        messagesCount: 'messages',
       },
       addChannelModal: {
         header: 'Add new channel, bro',
@@ -102,6 +108,9 @@ const resources = {
         passwordSpecialCharacters: 'Должен содержать однцу цифру и один символ в нижнем регистре',
         passwordConfirmationRequired: 'Вам нужно подтвердить пароль',
         passwordConfirmationMatch: 'Пароли должны совпадать',
+        channelLength: 'Имя канала должно содержать от 3 до 20 символов',
+        notUniqValue: 'Имя канала должно быть уникальным',
+        stopWords: 'Материться нельзя',
       },
       signupPage: {
         header: 'Регистрация',
@@ -111,6 +120,8 @@ const resources = {
         ERR_NETWORK: 'Ошибка сети',
         signupButton: 'Зарегистрироваться',
         confirmPassword: 'Подтвердите пароль',
+        footer: 'Уже есть аккаунт?',
+        goToLoginPage: 'Войдите',
       },
       chatPage: {
         channelsHeader: 'Каналы',
@@ -119,6 +130,7 @@ const resources = {
         messageAriaLabel: 'Новое сообщение',
         editChannelButton: 'Переименовать',
         removeChannelButton: 'Удалить',
+        messagesCount: 'сообщений',
       },
       addChannelModal: {
         header: 'Добавь новый канал',

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './ChannelList.module.css';
 import { setActiveChannel } from '../../../../slices/channels';
 import EditModalWindow from '../EditModalWindow';
-import AppContext from '../../../../helpers/context';
+import AppContext from '../../../../contexts/AppContext';
 import RemoveChannelModal from '../RemoveChannelModal';
 import { activeChannelIdSelector } from '../../../../slices/selectors';
 
@@ -25,9 +25,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   >
     {/* //TODO */}
     {/* Раскомментить класснейм или выпилить */}
-    <span>
-      Управление каналом
-    </span>
+    {/* <span> */}
+    {/*   Управление каналом */}
+    {/* </span> */}
     {children}
     &#x25bc;
   </a>
@@ -60,7 +60,7 @@ function ChannelsList(props) {
         {channels.map(({
           name, id, removable, author,
         }) => {
-          const newName = `# ${name}`;
+          const newName = `# ${name.length > 15 ? name.slice(0, 13)+'....' : name}`;
           return (
             <ListGroup.Item
               action
@@ -70,7 +70,9 @@ function ChannelsList(props) {
               onClick={() => dispatch(setActiveChannel(id))}
               className={styles.ListGroup}
             >
-              {newName}
+              <span style={{
+                width: '60%'
+              }}>{newName}</span>
               { author === key.username
                                     && (
                                     <Dropdown>
