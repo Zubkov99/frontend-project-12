@@ -32,9 +32,7 @@ const LoginPage = () => {
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
 
-  const validateEmailDebounceFn = debounce(fn => fn(), 1000);
-
-
+  const validateEmailDebounceFn = debounce((fn) => fn(), 1000);
 
   // const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -44,13 +42,13 @@ const LoginPage = () => {
       password: '',
     },
     validationSchema: Yup.object({
-        login: Yup.string()
-          .max(20, t('validationFeedback.loginMax'))
-          .min(3, t('validationFeedback.loginMin'))
-          .required(t('validationFeedback.loginRequired')),
-        password: Yup.string()
-          .required(t('validationFeedback.passwordRequired')),
-      }),
+      login: Yup.string()
+        .max(20, t('validationFeedback.loginMax'))
+        .min(3, t('validationFeedback.loginMin'))
+        .required(t('validationFeedback.loginRequired')),
+      password: Yup.string()
+        .required(t('validationFeedback.passwordRequired')),
+    }),
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
       const { login, password } = values;
@@ -62,7 +60,6 @@ const LoginPage = () => {
   //   debounce(formik.handleChange, 1000)
   //   // validateEmailDebounceFn(formik.handleChange);
   // }, [formik.values.login])
-
 
   const [loginValue, setLoginValue] = useState('');
 
