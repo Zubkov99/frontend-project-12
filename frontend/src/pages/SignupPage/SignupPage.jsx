@@ -26,7 +26,7 @@ const signup = async (username, password, setKey, redirect, setStatus, t) => {
 };
 
 const SignupPage = () => {
-  const { setKey, key } = useContext(AppContext);
+  const { setKey } = useContext(AppContext);
   const { t } = useTranslation();
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
@@ -55,10 +55,6 @@ const SignupPage = () => {
       await signup(login, password, setKey, navigate, setStatus, t);
     },
   });
-  if (key) {
-    navigate('/');
-    return;
-  }
 
   // eslint-disable-next-line consistent-return
   return (

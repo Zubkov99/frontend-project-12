@@ -11,10 +11,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!key) {
-      navigate('/login');
-      return;
-    }
     dispatch(addUserName(key.username));
     dispatch(fetchData(key.token));
   }, [dispatch, key, navigate]);

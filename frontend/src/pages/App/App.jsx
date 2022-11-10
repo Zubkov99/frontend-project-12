@@ -35,16 +35,17 @@ const App = () => {
     lang,
     setLang,
   }), [key, setKey, lang, setLang]);
+
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <AppContext.Provider value={contextValue}>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
+              <Route index element={key ? <HomePage /> : <LoginPage />} />
+              <Route path="/login" element={!key ? <LoginPage /> : <HomePage />} />
+              <Route path="/signup" element={!key ? <SignupPage /> : <HomePage />} />
               <Route path="*" element={<NotFoundPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
             </Route>
           </Routes>
         </AppContext.Provider>

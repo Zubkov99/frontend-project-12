@@ -28,7 +28,7 @@ const logIn = async (username, password, setKey, redirect, setStatus, t) => {
 
 const LoginPage = () => {
   const { t } = useTranslation();
-  const { setKey, key } = useContext(AppContext);
+  const { setKey } = useContext(AppContext);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
   const [feedback, showFeedback] = useState(false);
@@ -57,11 +57,6 @@ const LoginPage = () => {
   useEffect(() => {
     setTimeout(() => showFeedback(true), 4000);
   }, [formik.values.login, formik.values.password]);
-
-  if (key) {
-    navigate('/');
-    return;
-  }
 
   // eslint-disable-next-line consistent-return
   return (
