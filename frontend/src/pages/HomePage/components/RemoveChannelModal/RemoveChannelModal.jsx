@@ -1,25 +1,18 @@
-/* eslint-disable */
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { deleteChannel } from '../../../../slices/channels';
-import SocketContext from '../../../../contexts/SocketContext';
+import ApiContext from '../../../../contexts/ApiContext';
 
 const RemoveChannelModal = (props) => {
   const { t } = useTranslation();
-  const socket = useContext(SocketContext);
+  const {deleteChannelGlobal} = useContext(ApiContext);
   const dispatch = useDispatch();
 
   const deleteChannelHandler = (id) => {
-    socket.emit(
-      'removeChannel',
-      { id },
-      (response) => {
-        if (response.status !== 'ok') throw new Error('Network error');
-      },
-    );
+    deleteChannelGlobal({id})
     dispatch(deleteChannel({ id }));
     toast.success(t('notificationBlock.channelRemoved'));
   };

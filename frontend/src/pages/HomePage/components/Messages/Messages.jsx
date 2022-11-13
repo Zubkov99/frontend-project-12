@@ -6,11 +6,12 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import AppContext from '../../../../contexts/AppContext';
-import SocketContext from '../../../../contexts/SocketContext';
+import ApiContext from '../../../../contexts/ApiContext';
 import send from '../../../../assets/send.png';
 import styles from './Messages.module.css';
 import { addMessages } from '../../../../slices/messages';
-import { activeChannelIdSelector, messagesSelector } from '../../../../slices/selectors';
+import { activeChannelIdSelector } from '../../../../slices/channels';
+import { messagesSelector } from '../../../../slices/messages';
 import sendWsData from '../../../../helpers/sendWsData';
 
 const censorship = filter.add(filter.getDictionary('ru'));
@@ -20,7 +21,7 @@ const scrollTo = (ref) => {
 };
 
 const Messages = () => {
-  const socket = useContext(SocketContext);
+  const { getMessages, sendMessages } = useContext(ApiContext);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const activeChannelId = useSelector(activeChannelIdSelector);
@@ -30,11 +31,9 @@ const Messages = () => {
   const lastMessage = useRef(null);
 
   useEffect(() => {
-    socket.on('newMessage', (payload) => {
-      dispatch(addMessages(payload));
-    });
+    getMessages(dispatch)
     inputEl.current.focus();
-  }, [socket, dispatch]);
+  }, [dispatch, getMessages]);
 
   useEffect(() => {
     scrollTo(lastMessage);
@@ -54,7 +53,7 @@ const Messages = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (!sendingData.message) return;
-    sendWsData(socket, sendingData, 'newMessage');
+    sendMessages(sendingData)
     setText('');
   };
 

@@ -6,19 +6,18 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { renameLocalChannel } from '../../../../slices/channels';
-import SocketContext from '../../../../contexts/SocketContext';
-import { channelsSelector } from '../../../../slices/selectors';
-import sendWsData from '../../../../helpers/sendWsData';
+import ApiContext from '../../../../contexts/ApiContext';
+import { channelsSelector } from '../../../../slices/channels';
 import checkForErrors from '../../../../helpers/checkForErrors';
 
 const EditModalWindow = (props) => {
   const { t } = useTranslation();
 
-  const myRef = useRef();
+  const formRef = useRef();
 
   useEffect(() => {
-    if (myRef && myRef.current) {
-      myRef.current.focus();
+    if (formRef && formRef.current) {
+      formRef.current.focus();
     }
   });
 
@@ -28,7 +27,7 @@ const EditModalWindow = (props) => {
 
   const channels = useSelector(channelsSelector);
 
-  const socket = useContext(SocketContext);
+  const {renameChannelGlobal} = useContext(ApiContext);
   const dispatch = useDispatch();
 
   const sendingData = {
@@ -38,10 +37,9 @@ const EditModalWindow = (props) => {
 
   const editChannelHandler = (event) => {
     event.preventDefault();
-
     checkForErrors(channelName, channels, setError, t);
+    renameChannelGlobal(sendingData, setError)
 
-    sendWsData(socket, sendingData, 'renameChannel', setError);
     dispatch(renameLocalChannel(sendingData));
     setChannelName('');
     setError('');
@@ -58,7 +56,7 @@ const EditModalWindow = (props) => {
         <Form onSubmit={editChannelHandler}>
           <label htmlFor="name" className="visually-hidden">{t('renameChannelModal.placeholder')}</label>
           <Form.Control
-            ref={myRef}
+            ref={formRef}
             id="name"
             htmlFor="name"
             placeholder={t('renameChannelModal.placeholder')}

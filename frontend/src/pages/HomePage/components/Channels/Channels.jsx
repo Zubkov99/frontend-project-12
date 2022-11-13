@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import ChannelsList from '../ChannelsList';
 import AddModalChannelWindow from '../AddModalChannelWindow';
-import { channelsSelector } from '../../../../slices/selectors';
+import { channelsSelector } from '../../../../slices/channels';
 
 const Channels = () => {
   const { t } = useTranslation();

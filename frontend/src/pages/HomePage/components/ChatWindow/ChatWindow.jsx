@@ -8,7 +8,8 @@ import { useTranslation } from 'react-i18next';
 import Messages from '../Messages';
 import Channels from '../Channels';
 import styles from './ChatWindow.module.css';
-import { activeChannelSelector, messagesSelector } from '../../../../slices/selectors';
+import { activeChannelSelector } from '../../../../slices/channels';
+import { messagesSelector } from '../../../../slices/messages';
 
 const ChatWindow = () => {
   const activeChannel = useSelector(activeChannelSelector);

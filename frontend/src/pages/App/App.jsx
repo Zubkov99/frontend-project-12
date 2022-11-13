@@ -27,7 +27,6 @@ const rollbarConfig = {
 };
 
 const App = () => {
-  // const [key, setKey] = useLocalStorage('', 'user');
   const [lang, setLang] = useLocalStorage('ru', 'lang');
   const [getLogin, getLogout, userData] = useAuth('','user');
 

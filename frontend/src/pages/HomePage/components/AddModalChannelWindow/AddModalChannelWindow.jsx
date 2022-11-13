@@ -7,7 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import SocketContext from '../../../../contexts/SocketContext';
+import ApiContext from '../../../../contexts/ApiContext';
 import { addChannels } from '../../../../slices/channels';
 import AppContext from '../../../../contexts/AppContext';
 import sendWsData from '../../../../helpers/sendWsData';
@@ -21,7 +21,9 @@ const AddModalChannelWindow = (props) => {
 
   const { userData } = useContext(AppContext);
 
-  const socket = useContext(SocketContext);
+  // const socket = useContext(ApiContext);
+  const { getChannel, sendChannel } = useContext(ApiContext);
+
   const dispatch = useDispatch();
 
   const { channels } = useSelector((state) => state.content);
@@ -35,10 +37,11 @@ const AddModalChannelWindow = (props) => {
   });
 
   useEffect(() => {
-    socket.on('newChannel', (payload) => {
-      dispatch(addChannels(payload));
-    });
-  }, [socket, dispatch]);
+    getChannel(dispatch)
+    // socket.on('newChannel', (payload) => {
+    //   dispatch(addChannels(payload));
+    // });
+  }, [getChannel, dispatch]);
 
   const sendingChannels = (event) => {
     event.preventDefault();
@@ -49,7 +52,8 @@ const AddModalChannelWindow = (props) => {
       author: userData.username,
     };
 
-    sendWsData(socket, sendingData, 'newChannel', setError);
+    // sendWsData(socket, sendingData, 'newChannel', setError);
+    sendChannel(sendingData, setError)
     setError('');
     handleClose();
     toast.success(t('notificationBlock.channelAdded'));

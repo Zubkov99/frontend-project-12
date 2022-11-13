@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign,no-return-assign */
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchData, deleteChannel } from './channels';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { fetchData, deleteChannel, activeChannelIdSelector } from './channels';
+import _ from 'lodash';
 
 const initialState = {
   messages: [],
@@ -27,5 +28,13 @@ const messagesSlice = createSlice({
 });
 
 export const { addMessages } = messagesSlice.actions;
+
+const uniqMessages = (state) => _.uniqBy(state.messages.messages, 'id');
+
+export const messagesSelector = createSelector(
+  [uniqMessages, activeChannelIdSelector],
+  (messages, activeChannel) => messages.filter((item) => item.channelId === activeChannel),
+);
+
 
 export default messagesSlice.reducer;

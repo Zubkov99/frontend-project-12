@@ -8,7 +8,7 @@ import { setActiveChannel } from '../../../../slices/channels';
 import EditModalWindow from '../EditModalWindow';
 import AppContext from '../../../../contexts/AppContext';
 import RemoveChannelModal from '../RemoveChannelModal';
-import { activeChannelIdSelector } from '../../../../slices/selectors';
+import { activeChannelIdSelector } from '../../../../slices/channels';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
