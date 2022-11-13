@@ -37,7 +37,7 @@ function ChannelsList(props) {
   const { t } = useTranslation();
   const { channels } = props;
   const dispatch = useDispatch();
-  const { key } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
   const activeChannelId = useSelector(activeChannelIdSelector);
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -73,7 +73,7 @@ function ChannelsList(props) {
               <span style={{
                 width: '60%'
               }}>{newName}</span>
-              { author === key.username
+              { author === userData.username
                                     && (
                                     <Dropdown>
                                       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />

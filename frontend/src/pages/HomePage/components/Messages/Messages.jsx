@@ -25,7 +25,7 @@ const Messages = () => {
   const { t } = useTranslation();
   const activeChannelId = useSelector(activeChannelIdSelector);
   const messages = useSelector(messagesSelector);
-  const { key } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
   const inputEl = useRef(null);
   const lastMessage = useRef(null);
 
@@ -47,7 +47,7 @@ const Messages = () => {
   const [text, setText] = useState('');
   const sendingData = {
     message: text,
-    username: key.username,
+    username: userData.username,
     channelId: activeChannelId,
   };
 

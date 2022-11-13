@@ -19,7 +19,7 @@ const AddModalChannelWindow = (props) => {
   const [channelName, setChannelName] = useState('');
   const [statusError, setError] = useState('');
 
-  const { key } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
 
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const AddModalChannelWindow = (props) => {
 
     const sendingData = {
       name: channelName,
-      author: key.username,
+      author: userData.username,
     };
 
     sendWsData(socket, sendingData, 'newChannel', setError);

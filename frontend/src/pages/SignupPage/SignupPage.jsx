@@ -12,21 +12,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../contexts/AppContext';
 import routes from '../../helpers/routes';
 
-const signup = async (username, password, setKey, redirect, setStatus, t) => {
-  try {
-    const response = await axios.post(routes.signupPath(), { username, password });
-    setKey(response.data);
-    redirect('/', { replace: true });
-    setStatus('');
-  } catch (e) {
-    toast.error(t(`signupPage.${e.code}`));
-    if (e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST');
-    if (e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
-  }
-};
-
 const SignupPage = () => {
-  const { setKey } = useContext(AppContext);
+  const { getLogin } = useContext(AppContext);
   const { t } = useTranslation();
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
@@ -44,7 +31,7 @@ const SignupPage = () => {
       password: Yup.string()
         .max(20, t('validationFeedback.passwordMax'))
         .min(6, t('validationFeedback.passwordMin'))
-        .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
+        // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
         .required(t('validationFeedback.passwordRequired')),
       passwordConfirmation: Yup.string()
         .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
@@ -52,7 +39,16 @@ const SignupPage = () => {
     }),
     onSubmit: async (values) => {
       const { login, password } = values;
-      await signup(login, password, setKey, navigate, setStatus, t);
+      try {
+        const response = await axios.post(routes.signupPath(), { username: login, password });
+        getLogin(response.data);
+        navigate('/', { replace: true });
+        setStatus('');
+      } catch (e) {
+        toast.error(t(`signupPage.${e.code}`));
+        if (e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST');
+        if (e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
+      }
     },
   });
 

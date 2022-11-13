@@ -6,14 +6,14 @@ import { fetchData, addUserName } from '../../slices/channels';
 import ChatWindow from './components/ChatWindow';
 
 const HomePage = () => {
-  const { key } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(addUserName(key.username));
-    dispatch(fetchData(key.token));
-  }, [dispatch, key, navigate]);
+    dispatch(addUserName(userData.username));
+    dispatch(fetchData(userData.token));
+  }, [dispatch, userData, navigate]);
   return (
     <ChatWindow />
   );

@@ -13,22 +13,9 @@ import AppContext from '../../contexts/AppContext';
 import routes from '../../helpers/routes';
 import checkDisabledButton from '../../helpers/checkDisabledButton';
 
-const logIn = async (username, password, setKey, redirect, setStatus, t) => {
-  try {
-    const response = await axios.post(routes.loginPath(), { username, password });
-    setKey(response.data);
-    redirect('/', { replace: true });
-    setStatus(true);
-  } catch (e) {
-    if (e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST');
-    if (e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
-    toast.error(t(`errorFeedback.${e.code}`));
-  }
-};
-
 const LoginPage = () => {
   const { t } = useTranslation();
-  const { setKey } = useContext(AppContext);
+  const { getLogin } = useContext(AppContext);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
   const [feedback, showFeedback] = useState(false);
@@ -50,7 +37,16 @@ const LoginPage = () => {
       // alert(JSON.stringify(values, null, 2));
       showFeedback(false);
       const { login, password } = values;
-      await logIn(login, password, setKey, navigate, setStatus, t);
+      try {
+        const response = await axios.post(routes.loginPath(), { username: login, password });
+        getLogin(response.data);
+        navigate('/', { replace: true });
+        setStatus(true);
+      } catch (e) {
+        if (e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST');
+        if (e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');
+        toast.error(t(`errorFeedback.${e.code}`));
+      }
     },
   });
 

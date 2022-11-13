@@ -9,6 +9,7 @@ import SignupPage from '../SignupPage/SignupPage';
 import AppContext from '../../contexts/AppContext';
 import useLocalStorage from '../../helpers/useLocalStorage';
 import Layout from '../Layout/Layout';
+import useAuth from '../../helpers/useAuth';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
@@ -26,25 +27,32 @@ const rollbarConfig = {
 };
 
 const App = () => {
-  const [key, setKey] = useLocalStorage('', 'user');
+  // const [key, setKey] = useLocalStorage('', 'user');
   const [lang, setLang] = useLocalStorage('ru', 'lang');
+  const [getLogin, getLogout, userData] = useAuth('','user');
 
   const contextValue = useMemo(() => ({
-    key,
-    setKey,
     lang,
     setLang,
-  }), [key, setKey, lang, setLang]);
+    getLogin,
+    getLogout,
+    userData
+  }), [lang, setLang,getLogin, getLogout, userData]);
 
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <AppContext.Provider value={contextValue}>
+        <AppContext.Provider value={{
+          ...contextValue,
+          getLogin,
+          getLogout,
+          userData
+        }}>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={key ? <HomePage /> : <LoginPage />} />
-              <Route path="/login" element={!key ? <LoginPage /> : <HomePage />} />
-              <Route path="/signup" element={!key ? <SignupPage /> : <HomePage />} />
+              <Route index element={userData ? <HomePage /> : <LoginPage />} />
+              <Route path="/login" element={!userData ? <LoginPage /> : <HomePage />} />
+              <Route path="/signup" element={!userData ? <SignupPage /> : <HomePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>

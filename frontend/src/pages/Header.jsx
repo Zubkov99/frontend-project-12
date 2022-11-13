@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import AppContext from '../contexts/AppContext';
 
 const Header = () => {
-  const { key, setKey, setLang } = useContext(AppContext);
+  const { userData, getLogout, setLang } = useContext(AppContext);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
@@ -42,12 +42,12 @@ const Header = () => {
               {t('layout.rusLeng')}
             </Dropdown.Item>
           </DropdownButton>
-          {!!key
+          {!!userData
             && (
             <Button
               size="sm"
               onClick={() => {
-                setKey('');
+                getLogout();
                 navigate('/login');
               }}
             >
