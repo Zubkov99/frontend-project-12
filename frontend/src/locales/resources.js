@@ -20,7 +20,7 @@ const resources = {
         passwordRequired: 'Password is required',
         passwordSpecialCharacters: 'Must contain one number and one lowercase',
         passwordConfirmationRequired: 'You need to confirm the password',
-        passwordConfirmationMatch: 'Passwords must match\'',
+        passwordConfirmationMatch: 'Passwords must match',
         channelLength: 'The channel name should be from 3 to 20 characters',
         notUniqValue: 'The channel name must be a unique value',
         stopWords: 'Incorrect word',

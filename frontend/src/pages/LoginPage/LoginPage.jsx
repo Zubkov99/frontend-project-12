@@ -27,11 +27,11 @@ const LoginPage = () => {
     },
     validationSchema: Yup.object({
       login: Yup.string()
-        .max(20, t('validationFeedback.loginMax'))
-        .min(3, t('validationFeedback.loginMin'))
-        .required(t('validationFeedback.loginRequired')),
+        .max(20, 'loginMax')
+        .min(3, 'loginMin')
+        .required('loginRequired'),
       password: Yup.string()
-        .required(t('validationFeedback.passwordRequired')),
+        .required('passwordRequired'),
     }),
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
@@ -53,7 +53,6 @@ const LoginPage = () => {
   useEffect(() => {
     setTimeout(() => showFeedback(true), 4000);
   }, [formik.values.login, formik.values.password]);
-
   // eslint-disable-next-line consistent-return
   return (
     <div className="loginContainer w-50 mx-auto">
@@ -71,7 +70,7 @@ const LoginPage = () => {
                 {...formik.getFieldProps('login')}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.login}
+                {t(`validationFeedback.${formik.errors.login}`)}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -85,7 +84,7 @@ const LoginPage = () => {
                 {...formik.getFieldProps('password')}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.password}
+                {t(`validationFeedback.${formik.errors.password}`)}
               </Form.Control.Feedback>
             </Form.Group>
             {!!status

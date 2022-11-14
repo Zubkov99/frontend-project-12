@@ -25,17 +25,17 @@ const SignupPage = () => {
     },
     validationSchema: Yup.object({
       login: Yup.string()
-        .max(20, t('validationFeedback.loginMax'))
-        .min(3, t('validationFeedback.loginMin'))
-        .required(t('validationFeedback.loginRequired')),
+        .max(20, 'loginMax')
+        .min(3, 'loginMin')
+        .required('loginRequired'),
       password: Yup.string()
-        .max(20, t('validationFeedback.passwordMax'))
-        .min(6, t('validationFeedback.passwordMin'))
-        // .matches(/^(?=.*[a-z])(?=.*[0-9])/, t('validationFeedback.passwordSpecialCharacters'))
-        .required(t('validationFeedback.passwordRequired')),
+        .max(20, 'passwordMax')
+        .min(6, 'passwordMin')
+        // .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'passwordSpecialCharacters')
+        .required('passwordRequired'),
       passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], t('validationFeedback.passwordConfirmationMatch'))
-        .required(t('validationFeedback.passwordConfirmationRequired')),
+        .oneOf([Yup.ref('password'), null], 'passwordConfirmationMatch')
+        .required('passwordRequired'),
     }),
     onSubmit: async (values) => {
       const { login, password } = values;
@@ -69,7 +69,7 @@ const SignupPage = () => {
                 {...formik.getFieldProps('login')}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.login}
+                {t(`validationFeedback.${formik.errors.login}`)}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -83,7 +83,7 @@ const SignupPage = () => {
                 {...formik.getFieldProps('password')}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.password}
+                {t(`validationFeedback.${formik.errors.password}`)}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -101,7 +101,7 @@ const SignupPage = () => {
                 {...formik.getFieldProps('passwordConfirmation')}
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.passwordConfirmation}
+                {t(`validationFeedback.${formik.errors.passwordConfirmation}`)}
               </Form.Control.Feedback>
             </Form.Group>
             {!!status
