@@ -9,10 +9,8 @@ import AppContext from '../../../../contexts/AppContext';
 import ApiContext from '../../../../contexts/ApiContext';
 import send from '../../../../assets/send.png';
 import styles from './Messages.module.css';
-import { addMessages } from '../../../../slices/messages';
-import { activeChannelIdSelector } from '../../../../slices/channels';
 import { messagesSelector } from '../../../../slices/messages';
-import sendWsData from '../../../../helpers/sendWsData';
+import { activeChannelIdSelector } from '../../../../slices/channels';
 
 const censorship = filter.add(filter.getDictionary('ru'));
 
@@ -31,7 +29,7 @@ const Messages = () => {
   const lastMessage = useRef(null);
 
   useEffect(() => {
-    getMessages(dispatch)
+    getMessages(dispatch);
     inputEl.current.focus();
   }, [dispatch, getMessages]);
 
@@ -53,7 +51,7 @@ const Messages = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (!sendingData.message) return;
-    sendMessages(sendingData)
+    sendMessages(sendingData);
     setText('');
   };
 

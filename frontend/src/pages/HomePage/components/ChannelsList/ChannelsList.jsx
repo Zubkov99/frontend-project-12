@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import styles from './ChannelList.module.css';
-import { setActiveChannel } from '../../../../slices/channels';
+import { setActiveChannel, getUserName, activeChannelIdSelector } from '../../../../slices/channels';
 import EditModalWindow from '../EditModalWindow';
 import AppContext from '../../../../contexts/AppContext';
 import RemoveChannelModal from '../RemoveChannelModal';
-import { activeChannelIdSelector } from '../../../../slices/channels';
+// import { activeChannelIdSelector } from '../../../../slices/channels';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -51,6 +51,7 @@ function ChannelsList(props) {
   const handleCloseEditModal = () => setShowEditModal(false);
   const handleShowEditModal = () => setShowEditModal(true);
 
+  const username = useSelector(getUserName);
   return (
     <>
       <ListGroup
@@ -60,19 +61,17 @@ function ChannelsList(props) {
         {channels.map(({
           name, id, removable, author,
         }) => {
-          const newName = `# ${name.length > 15 ? name.slice(0, 13)+'....' : name}`;
+          const newName = `# ${name.length > 15 ? name.slice(0, 12)+'...' : name}`;
           return (
             <ListGroup.Item
               action
               variant="dark"
               active={activeChannelId === id}
               key={id}
-              onClick={() => dispatch(setActiveChannel(id))}
+              onClick={() => dispatch(setActiveChannel({ id, author: username }))}
               className={styles.ListGroup}
             >
-              <span style={{
-                width: '60%'
-              }}>{newName}</span>
+              <span>{newName}</span>
               { author === userData.username
                                     && (
                                     <Dropdown>

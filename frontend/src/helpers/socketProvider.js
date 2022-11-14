@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 import { addMessages } from '../slices/messages';
-import { addChannels } from '../slices/channels';
+import { addChannels, setActiveChannel } from '../slices/channels';
 
 const errorStatus = {
   networkError: 'Network error',
@@ -17,34 +17,33 @@ const sendWsData = (data, event, errorHandler) => {
   });
 };
 
-const socketProvider = () => {
-  const handlers = {
-    sendMessages(data) {
-      sendWsData(data, 'newMessage')
-    },
-    getMessages(dispatch){
-      socket.on('newMessage', (payload) => {
-        dispatch(addMessages(payload));
-      });
-    },
-    sendChannel(data, errorHandler) {
-      sendWsData(data, 'newChannel', errorHandler)
-    },
-    getChannel(dispatch){
-        socket.on('newChannel', (payload) => {
-          dispatch(addChannels(payload));
-        });
-    },
-    deleteChannelGlobal(id) {
-      sendWsData(id,'removeChannel')
-    },
-    renameChannelGlobal(data, errorHandler) {
-      sendWsData(data, 'renameChannel', errorHandler);
-    }
-  }
-  return {...handlers}
-}
+const socketProvider = () => ({
+  sendMessages(data) {
+    sendWsData(data, 'newMessage');
+  },
+  getMessages(dispatch) {
+    socket.on('newMessage', (payload) => {
+      dispatch(addMessages(payload));
+    });
+  },
+  sendChannel(data, errorHandler) {
+    sendWsData(data, 'newChannel', errorHandler);
+  },
+  getChannel(dispatch) {
+    socket.on('newChannel', (payload) => {
+      dispatch(addChannels(payload));
+      const { id, author } = payload;
+      dispatch(setActiveChannel({
+        id, author,
+      }));
+    });
+  },
+  deleteChannelGlobal(id) {
+    sendWsData(id, 'removeChannel');
+  },
+  renameChannelGlobal(data, errorHandler) {
+    sendWsData(data, 'renameChannel', errorHandler);
+  },
+});
 
-export default socketProvider
-
-
+export default socketProvider;

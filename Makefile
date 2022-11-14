@@ -9,3 +9,6 @@ start:
 
 lint-frontend:
 	make -C frontend lint
+
+lint:
+	npx eslint --ext js,jsx --no-eslintrc --config .eslintrc.yml . --fix

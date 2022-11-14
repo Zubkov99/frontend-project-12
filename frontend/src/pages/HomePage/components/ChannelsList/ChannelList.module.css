@@ -7,3 +7,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.ListGroup span {
+    width: auto;
+    max-width: 9vw;
+}

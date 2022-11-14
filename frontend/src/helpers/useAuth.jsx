@@ -17,7 +17,7 @@ const useAuth = (initialValue, localStorageKey) => {
     },
     logout() {
       localStorage.setItem(localStorageKey, JSON.stringify(''));
-      setLocalData('')
+      setLocalData('');
     },
   };
 

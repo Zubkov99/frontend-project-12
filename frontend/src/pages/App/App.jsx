@@ -28,25 +28,20 @@ const rollbarConfig = {
 
 const App = () => {
   const [lang, setLang] = useLocalStorage('ru', 'lang');
-  const [getLogin, getLogout, userData] = useAuth('','user');
+  const [getLogin, getLogout, userData] = useAuth('', 'user');
 
   const contextValue = useMemo(() => ({
     lang,
     setLang,
     getLogin,
     getLogout,
-    userData
-  }), [lang, setLang,getLogin, getLogout, userData]);
+    userData,
+  }), [lang, setLang, getLogin, getLogout, userData]);
 
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <AppContext.Provider value={{
-          ...contextValue,
-          getLogin,
-          getLogout,
-          userData
-        }}>
+        <AppContext.Provider value={contextValue}>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={userData ? <HomePage /> : <LoginPage />} />

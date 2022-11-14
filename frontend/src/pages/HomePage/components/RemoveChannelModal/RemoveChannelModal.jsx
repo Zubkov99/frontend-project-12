@@ -8,36 +8,39 @@ import ApiContext from '../../../../contexts/ApiContext';
 
 const RemoveChannelModal = (props) => {
   const { t } = useTranslation();
-  const {deleteChannelGlobal} = useContext(ApiContext);
+  const { deleteChannelGlobal } = useContext(ApiContext);
   const dispatch = useDispatch();
 
   const deleteChannelHandler = (id) => {
-    deleteChannelGlobal({id})
+    deleteChannelGlobal({ id });
     dispatch(deleteChannel({ id }));
     toast.success(t('notificationBlock.channelRemoved'));
   };
   const { show, handleClose, currentId } = props;
 
   return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header>
-                <Modal.Title>{t('removeModalChannel.header')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <span>{t('removeModalChannel.body')}</span>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose} >
-                    {t('removeModalChannel.closeButton')}
-                </Button>
-                <Button variant="danger" onClick={() => {
-                  deleteChannelHandler(currentId);
-                  handleClose();
-                }}>
-                    {t('removeModalChannel.actionButton')}
-                </Button>
-            </Modal.Footer>
-        </Modal>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header>
+        <Modal.Title>{t('removeModalChannel.header')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <span>{t('removeModalChannel.body')}</span>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          {t('removeModalChannel.closeButton')}
+        </Button>
+        <Button
+          variant="danger"
+          onClick={() => {
+            deleteChannelHandler(currentId);
+            handleClose();
+          }}
+        >
+          {t('removeModalChannel.actionButton')}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

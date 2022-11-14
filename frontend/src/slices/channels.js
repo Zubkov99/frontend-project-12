@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign,no-return-assign */
 import axios from 'axios';
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import routes from '../helpers/routes';
 import _ from 'lodash';
+import routes from '../helpers/routes';
 
 export const fetchData = createAsyncThunk(
   'channels/fetchChannels',
@@ -27,11 +27,7 @@ const channelsSlice = createSlice({
   initialState,
   reducers: {
     addChannels(state, { payload }) {
-      const { id, author } = payload;
       state.channels.push(payload);
-      if (author === state.username) {
-        state.activeChannelId = id;
-      }
     },
     deleteChannel(state, { payload }) {
       const channelId = Number(payload.id);
@@ -39,7 +35,10 @@ const channelsSlice = createSlice({
       state.activeChannelId = 1;
     },
     setActiveChannel(state, { payload }) {
-      state.activeChannelId = payload;
+      const { id, author } = payload;
+      if (author === state.username) {
+        state.activeChannelId = id;
+      }
     },
     renameLocalChannel(state, { payload }) {
       const channelId = Number(payload.id);
@@ -64,9 +63,10 @@ const channelsSlice = createSlice({
   },
 });
 
-
 export const channelsSelector = (state) => _.uniqBy(state.content.channels, 'id');
 export const activeChannelIdSelector = (state) => state.content.activeChannelId || null;
+
+export const getUserName = (state) => state.content.username;
 
 export const activeChannelSelector = createSelector(
   [channelsSelector, activeChannelIdSelector],

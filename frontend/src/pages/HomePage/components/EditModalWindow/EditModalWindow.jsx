@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { renameLocalChannel } from '../../../../slices/channels';
+import { renameLocalChannel, channelsSelector } from '../../../../slices/channels';
 import ApiContext from '../../../../contexts/ApiContext';
-import { channelsSelector } from '../../../../slices/channels';
 import checkForErrors from '../../../../helpers/checkForErrors';
 
 const EditModalWindow = (props) => {
@@ -27,7 +26,7 @@ const EditModalWindow = (props) => {
 
   const channels = useSelector(channelsSelector);
 
-  const {renameChannelGlobal} = useContext(ApiContext);
+  const { renameChannelGlobal } = useContext(ApiContext);
   const dispatch = useDispatch();
 
   const sendingData = {
@@ -38,7 +37,7 @@ const EditModalWindow = (props) => {
   const editChannelHandler = (event) => {
     event.preventDefault();
     checkForErrors(channelName, channels, setError, t);
-    renameChannelGlobal(sendingData, setError)
+    renameChannelGlobal(sendingData, setError);
 
     dispatch(renameLocalChannel(sendingData));
     setChannelName('');
