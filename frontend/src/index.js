@@ -11,7 +11,7 @@ import store from './slices/index';
 import ApiContext from './contexts/ApiContext';
 import socketProvider from './helpers/socketProvider';
 
-const wsHandlers = { ...socketProvider() };
+const wsHandlers = socketProvider();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

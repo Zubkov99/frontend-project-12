@@ -1,17 +1,12 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import styles from './NotFoundPage.module.css';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
   return (
-    <div style={{
-      marginRight: 'auto',
-      marginLeft: 'auto',
-      width: '40%',
-      marginTop: '10vh',
-    }}
-    >
+    <div className={styles.mainPage}>
       <h1>
         {t('notFoundPage.header')}
       </h1>
