@@ -1,39 +1,38 @@
-/* eslint-disable */
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import ChannelsList from '../ChannelsList';
-import AddModalChannelWindow from '../AddModalChannelWindow';
 import { channelsSelector } from '../../../../slices/channels';
+import { setActiveModal } from '../../../../slices/modalWindows';
+import modalWindowKeys from '../../../../helpers/modalWindowKeys';
 
 const Channels = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const channels = useSelector(channelsSelector);
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const showAddModal = () => dispatch(setActiveModal(modalWindowKeys.addModalChannelWindow));
 
   return (
-        <>
-            <div style={{
-              marginBottom: '5vh',
-            }}>
-                <b>{t('chatPage.channelsHeader')}</b>
-                <Button variant="outline-dark"
-                        size="sm"
-                        style={{ marginLeft: '1vw' }}
-                        onClick={handleShow}
-                >
-                    {t('chatPage.channelsAddButton')}
-                </Button>
-            </div>
-            <ChannelsList channels={channels} />
-            <AddModalChannelWindow show={show} handleClose={handleClose}/>
-        </>
+    <>
+      <div style={{
+        marginBottom: '5vh',
+      }}
+      >
+        <b>{t('chatPage.channelsHeader')}</b>
+        <Button
+          variant="outline-dark"
+          size="sm"
+          style={{ marginLeft: '1vw' }}
+          onClick={showAddModal}
+        >
+          {t('chatPage.channelsAddButton')}
+        </Button>
+      </div>
+      <ChannelsList channels={channels} />
+    </>
   );
 };
 

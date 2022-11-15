@@ -10,18 +10,22 @@ import { toast } from 'react-toastify';
 import ApiContext from '../../../../contexts/ApiContext';
 import AppContext from '../../../../contexts/AppContext';
 import checkForErrors from '../../../../helpers/checkForErrors';
+import { getActiveModal, setActiveModal } from '../../../../slices/modalWindows';
+import modalWindowKeys from '../../../../helpers/modalWindowKeys';
 
-const AddModalChannelWindow = (props) => {
+const AddModalChannelWindow = () => {
+  const dispatch = useDispatch();
+  const activeModal = useSelector(getActiveModal);
+  const checkForShow = () => activeModal === modalWindowKeys.addModalChannelWindow;
   const { t } = useTranslation();
-  const { show, handleClose } = props;
+  const handleClose = () => dispatch(setActiveModal(null));
+
   const [channelName, setChannelName] = useState('');
   const [statusError, setError] = useState('');
 
   const { userData } = useContext(AppContext);
 
   const { getChannel, sendChannel } = useContext(ApiContext);
-
-  const dispatch = useDispatch();
 
   const { channels } = useSelector((state) => state.content);
 
@@ -54,7 +58,10 @@ const AddModalChannelWindow = (props) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal
+      show={checkForShow()}
+      onHide={handleClose}
+    >
       <Modal.Header closeButton>
         <Modal.Title>{t('addChannelModal.header')}</Modal.Title>
       </Modal.Header>
@@ -95,7 +102,10 @@ const AddModalChannelWindow = (props) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button
+          variant="secondary"
+          onClick={handleClose}
+        >
           {t('addChannelModal.closeButton')}
         </Button>
         <Button variant="primary" onClick={sendingChannels}>

@@ -3,7 +3,6 @@ import { useState } from 'react';
 const useAuth = (initialValue, localStorageKey) => {
   const getValue = () => {
     const storage = localStorage.getItem(localStorageKey);
-    console.log(storage);
     if (storage) return JSON.parse(storage);
     return initialValue;
   };

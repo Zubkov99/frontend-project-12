@@ -1,25 +1,43 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { deleteChannel } from '../../../../slices/channels';
 import ApiContext from '../../../../contexts/ApiContext';
+import {
+  getActiveModal,
+  getExtraData,
+  setActiveModal,
+  setExtraData,
+} from '../../../../slices/modalWindows';
+import modalWindowKeys from '../../../../helpers/modalWindowKeys';
 
-const RemoveChannelModal = (props) => {
+const RemoveChannelModal = () => {
   const { t } = useTranslation();
   const { deleteChannelGlobal } = useContext(ApiContext);
+
   const dispatch = useDispatch();
+  const activeModal = useSelector(getActiveModal);
+  const currentId = useSelector(getExtraData);
+  const checkForShow = () => activeModal === modalWindowKeys.removeChannelWindow;
 
   const deleteChannelHandler = (id) => {
     deleteChannelGlobal({ id });
     dispatch(deleteChannel({ id }));
     toast.success(t('notificationBlock.channelRemoved'));
   };
-  const { show, handleClose, currentId } = props;
+
+  const handleClose = () => {
+    dispatch(setActiveModal(null));
+    dispatch(setExtraData(null));
+  };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal
+      show={checkForShow()}
+      onHide={handleClose}
+    >
       <Modal.Header>
         <Modal.Title>{t('removeModalChannel.header')}</Modal.Title>
       </Modal.Header>

@@ -1,15 +1,14 @@
-/* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import styles from './ChannelList.module.css';
 import { setActiveChannel, getUserName, activeChannelIdSelector } from '../../../../slices/channels';
-import EditModalWindow from '../EditModalWindow';
 import AppContext from '../../../../contexts/AppContext';
-import RemoveChannelModal from '../RemoveChannelModal';
-// import { activeChannelIdSelector } from '../../../../slices/channels';
+import { setActiveModal, setExtraData } from '../../../../slices/modalWindows';
+import modalWindowKeys from '../../../../helpers/modalWindowKeys';
 
+// eslint-disable-next-line react/display-name
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
     href="frontend/src/pages/HomePage/components/ChannelsList/ChannelsList"
@@ -33,61 +32,57 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </a>
 ));
 
-function ChannelsList(props) {
+const ChannelsList = (props) => {
   const { t } = useTranslation();
   const { channels } = props;
   const dispatch = useDispatch();
   const { userData } = useContext(AppContext);
   const activeChannelId = useSelector(activeChannelIdSelector);
 
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [currentId, setCurrentId] = useState(null);
+  const handleShowEditModal = (currentId) => {
+    dispatch(setActiveModal(modalWindowKeys.eitModalChannelWindow));
+    dispatch(setExtraData(currentId));
+  };
 
-  const [showRemoveModal, setShowRemoveModal] = useState(false);
-
-  const handleCloseRemoveModal = () => setShowRemoveModal(false);
-  const handleShowRemoveModal = () => setShowRemoveModal(true);
-
-  const handleCloseEditModal = () => setShowEditModal(false);
-  const handleShowEditModal = () => setShowEditModal(true);
+  const handleShowRemoveModal = (currentId) => {
+    dispatch(setActiveModal(modalWindowKeys.removeChannelWindow));
+    dispatch(setExtraData(currentId));
+  };
 
   const username = useSelector(getUserName);
   return (
-    <>
-      <ListGroup
-        variant="flush"
-        className={styles.ChannelsContainer}
-      >
-        {channels.map(({
-          name, id, removable, author,
-        }) => {
-          const newName = `# ${name.length > 15 ? name.slice(0, 12)+'...' : name}`;
-          return (
-            <ListGroup.Item
-              action
-              variant="dark"
-              active={activeChannelId === id}
-              key={id}
-              onClick={() => dispatch(setActiveChannel({ id, author: username }))}
-              className={styles.ListGroup}
-            >
-              <span>{newName}</span>
-              { author === userData.username
+    <ListGroup
+      variant="flush"
+      className={styles.ChannelsContainer}
+    >
+      {channels.map(({
+        name, id, removable, author,
+      }) => {
+        const newName = `# ${name.length > 15 ? `${name.slice(0, 12)}...` : name}`;
+        return (
+          <ListGroup.Item
+            action
+            variant="dark"
+            active={activeChannelId === id}
+            key={id}
+            onClick={() => dispatch(setActiveChannel({ id, author: username }))}
+            className={styles.ListGroup}
+          >
+            <span>{newName}</span>
+            { author === userData.username
                                     && (
                                     <Dropdown>
                                       <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
                                       <Dropdown.Menu>
                                         <Dropdown.Item onClick={() => {
-                                          setCurrentId(id);
-                                          handleShowEditModal();
+                                          handleShowEditModal(id);
                                         }}
                                         >
                                           {t('chatPage.editChannelButton')}
                                         </Dropdown.Item>
                                         <Dropdown.Item onClick={() => {
                                           if (!removable) return;
-                                          setCurrentId(id);
-                                          handleShowRemoveModal();
+                                          handleShowRemoveModal(id);
                                         }}
                                         >
                                           {t('chatPage.removeChannelButton')}
@@ -95,14 +90,11 @@ function ChannelsList(props) {
                                       </Dropdown.Menu>
                                     </Dropdown>
                                     )}
-            </ListGroup.Item>
-          );
-        })}
-      </ListGroup>
-      <EditModalWindow show={showEditModal} handleClose={handleCloseEditModal} currentId={currentId} />
-      <RemoveChannelModal show={showRemoveModal} handleClose={handleCloseRemoveModal} currentId={currentId} />
-    </>
+          </ListGroup.Item>
+        );
+      })}
+    </ListGroup>
   );
-}
+};
 
 export default ChannelsList;

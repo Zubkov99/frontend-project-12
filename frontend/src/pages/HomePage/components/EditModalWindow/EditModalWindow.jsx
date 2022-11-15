@@ -8,11 +8,22 @@ import { toast } from 'react-toastify';
 import { renameLocalChannel, channelsSelector } from '../../../../slices/channels';
 import ApiContext from '../../../../contexts/ApiContext';
 import checkForErrors from '../../../../helpers/checkForErrors';
+import modalWindowKeys from '../../../../helpers/modalWindowKeys';
+import {
+  setExtraData,
+  getActiveModal,
+  getExtraData,
+  setActiveModal,
+} from '../../../../slices/modalWindows';
 
-const EditModalWindow = (props) => {
+const EditModalWindow = () => {
   const { t } = useTranslation();
 
   const formRef = useRef();
+  const dispatch = useDispatch();
+  const activeModal = useSelector(getActiveModal);
+  const currentId = useSelector(getExtraData);
+  const checkForShow = () => activeModal === modalWindowKeys.eitModalChannelWindow;
 
   useEffect(() => {
     if (formRef && formRef.current) {
@@ -20,14 +31,16 @@ const EditModalWindow = (props) => {
     }
   });
 
-  const { show, handleClose, currentId } = props;
+  const handleClose = () => {
+    dispatch(setActiveModal(null));
+    dispatch(setExtraData(null));
+  };
   const [channelName, setChannelName] = useState('');
   const [statusError, setError] = useState('');
 
   const channels = useSelector(channelsSelector);
 
   const { renameChannelGlobal } = useContext(ApiContext);
-  const dispatch = useDispatch();
 
   const sendingData = {
     id: currentId,
@@ -47,7 +60,10 @@ const EditModalWindow = (props) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal
+      show={checkForShow()}
+      onHide={handleClose}
+    >
       <Modal.Header closeButton>
         <Modal.Title>{t('renameChannelModal.header')}</Modal.Title>
       </Modal.Header>
