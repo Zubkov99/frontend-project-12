@@ -1,15 +1,10 @@
 import './App.css';
 import React, { useMemo } from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
-import { Routes, Route } from 'react-router-dom';
-import HomePage from '../HomePage/HomePage';
-import LoginPage from '../LoginPage/LoginPage';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import SignupPage from '../SignupPage/SignupPage';
-import AppContext from '../../contexts/AppContext';
-import useLocalStorage from '../../helpers/useLocalStorage';
-import Layout from '../Layout/Layout';
-import useAuth from '../../helpers/useAuth';
+import AppContext from '../contexts/AppContext';
+import useLocalStorage from '../helpers/useLocalStorage';
+import useAuth from '../helpers/useAuth';
+import RoutesComponent from './Routes';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
@@ -42,14 +37,7 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <AppContext.Provider value={contextValue}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={userData ? <HomePage /> : <LoginPage />} />
-              <Route path="/login" element={!userData ? <LoginPage /> : <HomePage />} />
-              <Route path="/signup" element={!userData ? <SignupPage /> : <HomePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
+          <RoutesComponent />
         </AppContext.Provider>
       </ErrorBoundary>
     </Provider>

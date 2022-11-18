@@ -5,7 +5,7 @@ import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import App from './pages/App';
+import App from './App';
 import './locales/i18n';
 import store from './slices/index';
 import ApiContext from './contexts/ApiContext';
