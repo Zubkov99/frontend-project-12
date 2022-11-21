@@ -6,21 +6,17 @@ import { toast } from 'react-toastify';
 import { deleteChannel } from '../../../../../slices/channels';
 import ApiContext from '../../../../../contexts/ApiContext';
 import {
-  getActiveModal,
   getExtraData,
   setActiveModal,
   setExtraData,
 } from '../../../../../slices/modalWindows';
-import modalWindowKeys from '../../modalWindowKeys';
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation();
   const { deleteChannelGlobal } = useContext(ApiContext);
 
   const dispatch = useDispatch();
-  // const activeModal = useSelector(getActiveModal);
   const currentId = useSelector(getExtraData);
-  // const checkForShow = () => activeModal === modalWindowKeys.removeChannelWindow;
 
   const deleteChannelHandler = (id) => {
     deleteChannelGlobal({ id });
