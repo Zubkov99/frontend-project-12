@@ -5,25 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { renameLocalChannel, channelsSelector } from '../../../../slices/channels';
-import ApiContext from '../../../../contexts/ApiContext';
-import checkForErrors from '../../../../helpers/checkForErrors';
-import modalWindowKeys from '../../../../helpers/modalWindowKeys';
+import { renameLocalChannel, channelsSelector } from '../../../../../slices/channels';
+import ApiContext from '../../../../../contexts/ApiContext';
+import checkForErrors from '../../checkForErrors';
+import modalWindowKeys from '../../modalWindowKeys';
 import {
   setExtraData,
   getActiveModal,
   getExtraData,
   setActiveModal,
-} from '../../../../slices/modalWindows';
+} from '../../../../../slices/modalWindows';
 
 const EditModalWindow = () => {
   const { t } = useTranslation();
 
   const formRef = useRef();
   const dispatch = useDispatch();
-  const activeModal = useSelector(getActiveModal);
+  // const activeModal = useSelector(getActiveModal);
   const currentId = useSelector(getExtraData);
-  const checkForShow = () => activeModal === modalWindowKeys.eitModalChannelWindow;
+  // const checkForShow = () => activeModal === modalWindowKeys.eitModalChannelWindow;
 
   useEffect(() => {
     if (formRef && formRef.current) {
@@ -61,7 +61,7 @@ const EditModalWindow = () => {
 
   return (
     <Modal
-      show={checkForShow()}
+      show
       onHide={handleClose}
     >
       <Modal.Header closeButton>

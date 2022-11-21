@@ -5,7 +5,6 @@ const censorship = filter.add(filter.getDictionary('ru'));
 const errorStatus = {
   notUniqValue: 'The channel name must be a unique value',
   emptyField: 'the channel name should not be empty',
-  networkError: 'Network error',
   stopWords: 'Incorrect word',
 };
 

@@ -6,7 +6,7 @@ import styles from './ChannelList.module.css';
 import { setActiveChannel, getUserName, activeChannelIdSelector } from '../../../../slices/channels';
 import AppContext from '../../../../contexts/AppContext';
 import { setActiveModal, setExtraData } from '../../../../slices/modalWindows';
-import modalWindowKeys from '../../../../helpers/modalWindowKeys';
+import modalWindowKeys from '../modalWindowKeys';
 
 // eslint-disable-next-line react/display-name
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (

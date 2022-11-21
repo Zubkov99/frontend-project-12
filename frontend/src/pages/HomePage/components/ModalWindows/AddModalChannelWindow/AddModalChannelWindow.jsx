@@ -7,16 +7,16 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import ApiContext from '../../../../contexts/ApiContext';
-import AppContext from '../../../../contexts/AppContext';
-import checkForErrors from '../../../../helpers/checkForErrors';
-import { getActiveModal, setActiveModal } from '../../../../slices/modalWindows';
-import modalWindowKeys from '../../../../helpers/modalWindowKeys';
+import ApiContext from '../../../../../contexts/ApiContext';
+import AppContext from '../../../../../contexts/AppContext';
+import checkForErrors from '../../checkForErrors';
+import { getActiveModal, setActiveModal } from '../../../../../slices/modalWindows';
+import modalWindowKeys from '../../modalWindowKeys';
 
 const AddModalChannelWindow = () => {
   const dispatch = useDispatch();
-  const activeModal = useSelector(getActiveModal);
-  const checkForShow = () => activeModal === modalWindowKeys.addModalChannelWindow;
+  // const activeModal = useSelector(getActiveModal);
+  // const checkForShow = () => activeModal === modalWindowKeys.addModalChannelWindow;
   const { t } = useTranslation();
   const handleClose = () => dispatch(setActiveModal(null));
 
@@ -59,7 +59,7 @@ const AddModalChannelWindow = () => {
 
   return (
     <Modal
-      show={checkForShow()}
+      show
       onHide={handleClose}
     >
       <Modal.Header closeButton>

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-const useAuth = (initialValue, localStorageKey) => {
+const useAuth = () => {
+  const initialValue = '';
+  const localStorageKey = 'user';
+
   const getValue = () => {
     const storage = localStorage.getItem(localStorageKey);
     if (storage) return JSON.parse(storage);
@@ -15,8 +18,8 @@ const useAuth = (initialValue, localStorageKey) => {
       localStorage.setItem(localStorageKey, JSON.stringify(data));
     },
     logout() {
-      localStorage.setItem(localStorageKey, JSON.stringify(''));
-      setLocalData('');
+      localStorage.setItem(localStorageKey, JSON.stringify(initialValue));
+      setLocalData(initialValue);
     },
   };
 

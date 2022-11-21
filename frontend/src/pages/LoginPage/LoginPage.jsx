@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../contexts/AppContext';
 import routes from '../../helpers/routes';
-import checkDisabledButton from '../../helpers/checkDisabledButton';
+import checkDisabledButton from '../HomePage/components/checkDisabledButton';
 
 const LoginPage = () => {
   const { t } = useTranslation();

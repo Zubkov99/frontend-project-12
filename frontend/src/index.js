@@ -10,6 +10,7 @@ import './locales/i18n';
 import store from './slices/index';
 import ApiContext from './contexts/ApiContext';
 import socketProvider from './helpers/socketProvider';
+import ContextProvider from './App/ContextProvider';
 
 const wsHandlers = socketProvider();
 
@@ -19,7 +20,9 @@ root.render(
     <BrowserRouter>
       <React.StrictMode>
         <ApiContext.Provider value={wsHandlers}>
-          <App />
+          <ContextProvider>
+            <App />
+          </ContextProvider>
         </ApiContext.Provider>
       </React.StrictMode>
     </BrowserRouter>
