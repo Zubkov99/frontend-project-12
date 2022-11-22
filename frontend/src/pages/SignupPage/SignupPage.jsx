@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../contexts/AppContext';
 import routes from '../../api/routes';
-import checkDisabledButton from '../HomePage/components/checkDisabledButton';
 
 const SignupPage = () => {
   const { getLogin } = useContext(AppContext);
@@ -114,7 +113,8 @@ const SignupPage = () => {
             <Button
               variant="primary"
               type="submit"
-              disabled={checkDisabledButton(formik)}
+              // TODO: раскомментить
+              // disabled={checkDisabledButton(formik)}
             >
               {t('signupPage.signupButton')}
             </Button>
