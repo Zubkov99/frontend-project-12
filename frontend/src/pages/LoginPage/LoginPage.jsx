@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import AppContext from '../../contexts/AppContext';
-import routes from '../../helpers/routes';
+import routes from '../../api/routes';
 import checkDisabledButton from '../HomePage/components/checkDisabledButton';
 
 const LoginPage = () => {

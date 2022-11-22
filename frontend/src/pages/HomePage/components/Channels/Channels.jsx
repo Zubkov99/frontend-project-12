@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ChannelsList from '../ChannelsList';
 import { channelsSelector } from '../../../../slices/channels';
 import { setActiveModal } from '../../../../slices/modalWindows';
-import modalWindowKeys from '../ModalWindows/modalWindowKeys';
+import modalWindowKeys from '../../../../slices/modalWindowKeys';
 
 const Channels = () => {
   const { t } = useTranslation();

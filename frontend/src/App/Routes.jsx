@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import React, { useContext } from 'react';
-import Layout from '../pages/Layout/Layout';
+import Layout from '../pages/СommonComponents/Layout/Layout';
 import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import SignupPage from '../pages/SignupPage/SignupPage';

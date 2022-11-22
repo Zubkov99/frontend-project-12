@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import App from './App';
-import useLanguage from '../helpers/useLanguage';
-import useAuth from '../helpers/useAuth';
+import useLanguage from '../contexts/useLanguage';
+import useAuth from '../contexts/useAuth';
 
 const ContextProvider = () => {
   const [lang, setLang] = useLanguage('ru', 'lang');

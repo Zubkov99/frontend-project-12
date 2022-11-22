@@ -4,7 +4,7 @@ import {
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import AppContext from '../contexts/AppContext';
+import AppContext from '../../contexts/AppContext';
 
 const Header = () => {
   const { userData, getLogout, setLang } = useContext(AppContext);

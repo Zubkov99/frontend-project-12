@@ -9,7 +9,7 @@ import App from './App';
 import './locales/i18n';
 import store from './slices/index';
 import ApiContext from './contexts/ApiContext';
-import socketProvider from './helpers/socketProvider';
+import socketProvider from './api/socketProvider';
 import ContextProvider from './App/ContextProvider';
 
 const wsHandlers = socketProvider();
