@@ -25,7 +25,7 @@ const checkForErrors = (channelName, channels, setError, t) => {
         setError(t('validationFeedback.notUniqValue'));
         throw new Error(errorStatus.notUniqValue);
       }
-      if (censorship.check(channelName)) {
+      if (censorship.check(value)) {
         setError(t('validationFeedback.stopWords'));
         throw new Error(errorStatus.stopWords);
       }
