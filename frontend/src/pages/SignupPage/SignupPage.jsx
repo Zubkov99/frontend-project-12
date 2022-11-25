@@ -45,6 +45,7 @@ const SignupPage = () => {
         navigate('/', { replace: true });
         setStatus('');
       } catch (e) {
+        formik.errors.login = e.code;
         toast.error(t(`signupPage.${e.code}`));
         if (e.code === 'ERR_BAD_REQUEST') setStatus('ERR_BAD_REQUEST');
         if (e.code === 'ERR_NETWORK') setStatus('ERR_NETWORK');

@@ -24,6 +24,7 @@ const resources = {
         channelLength: 'The channel name should be from 3 to 20 characters',
         notUniqValue: 'The channel name must be a unique value',
         stopWords: 'Incorrect word',
+        ERR_BAD_REQUEST: 'The login is already used by another user',
       },
       signupPage: {
         header: 'Register your account',
@@ -112,6 +113,7 @@ const resources = {
         channelLength: 'Имя канала должно содержать от 3 до 20 символов',
         notUniqValue: 'Имя канала должно быть уникальным',
         stopWords: 'Материться нельзя',
+        ERR_BAD_REQUEST: 'Этот логин уже использует другой пользователь',
       },
       signupPage: {
         header: 'Регистрация',
